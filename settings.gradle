@@ -1,0 +1,9 @@
+include ':MPChartLib'
+include ':mvvmhabit'
+include ':baselibrary'
+include ':pickerview'
+include ':wheelview'
+include ':update'
+include ':shapeloading'
+include ':app'
+

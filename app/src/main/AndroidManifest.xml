@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.youwu.shopowner_saas">
+
+
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 访问网络的变化, 需要某些信息用于网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAG"/>
+
+    <!-- 访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--9.0后前台服务需要申请权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!-- 自动聚焦权限 -->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <!-- 拨打电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" /><!-- mqtt必须 -->
+
+
+    <application
+        android:name="com.youwu.shopowner_saas.app.AppApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.youwu.shopowner_saas.ui.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+        <activity android:name="com.youwu.shopowner_saas.ui.main.MainActivity" />
+
+        <activity android:name="com.youwu.shopowner_saas.ui.set_up.StoreSetUpActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.set_up.SettingsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_goods.ConfirmOrderActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_goods.OrderReceivingActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_goods.OrderDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_goods.RefundOrderDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_record.OrderGoodsListActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_record.BookDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.report_form.SalesOverviewActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.set_up.ModifyPasswordActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.LossReportingActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.LossReportingDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.InventoryActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.InventoryDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.SellOffActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.SellOffDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.ReturnGoodsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.ReturnGoodsDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_record.RecordActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.order_record.RefundDetailsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.GoodsSetUpActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.SetUpGoodsActivity"/>
+        <activity android:name="com.youwu.shopowner_saas.ui.goods_operate.RecordInventoryDetailsActivity"/>
+
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" /> <!--//自带服务-->
+        <service android:name="com.youwu.shopowner_saas.mqtt.service.MQTTService"
+            android:enabled="true"
+            android:exported="true"/> <!--//你的MQTT服务-->
+        <receiver
+            android:name="com.youwu.shopowner_saas.NotificationClickReceiver">
+        </receiver>
+
+    </application>
+
+</manifest>
