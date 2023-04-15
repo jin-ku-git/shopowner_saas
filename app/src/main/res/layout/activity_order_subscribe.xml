@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.main.sousuo.SubscribeOrderViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="SubscribeOrderViewModel" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/conner"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_45dp"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:layout_width="@dimen/size_20dp"
+            android:layout_height="@dimen/size_20dp"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:src="@mipmap/fanhui"
+            binding:onClickCommand="@{viewModel.ReturnOnClick}"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="预约单"
+            android:textSize="@dimen/size_16dp"
+            android:textColor="@color/main_black"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/size_15dp"
+            />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="@dimen/dp60"
+            android:layout_height="wrap_content"
+            android:text="送达\n时间"
+            android:textColor="@color/main_black_85"
+            android:textSize="@dimen/size_16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+        <View
+            android:layout_width="@dimen/dp1"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp5"
+            android:layout_marginTop="@dimen/dp5"
+            android:background="@color/color_hui_d4"
+            />
+        <TextView
+            android:layout_width="@dimen/dp60"
+            android:layout_height="wrap_content"
+            android:text="明天"
+            android:textColor="@color/main_color"
+            android:textSize="@dimen/size_16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.order_num}"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="单"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.open_close}"
+            android:textSize="@dimen/dp14"
+            android:textColor="@color/black_alpha50"
+            android:layout_gravity="center"
+            binding:onClickCommand="@{viewModel.btOpenOnClick}"
+            />
+        <TextView
+            android:id="@+id/bth_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="排序"
+            android:textSize="@dimen/dp14"
+            android:textColor="@color/black_alpha50"
+            android:layout_gravity="center"
+            binding:onClickCommand="@{viewModel.bthSortOnClick}"
+            android:drawableLeft="@mipmap/paixu"
+            android:drawablePadding="@dimen/size_3dp"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginLeft="@dimen/size_10dp"
+            />
+
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/main_smartrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/size_15dp"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+        >
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50dp"
+            style="@style/RefreshStyle"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    />
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40dp"
+            style="@style/RefreshStyle"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <!-- 空视图 -->
+    <LinearLayout
+        android:id="@+id/null_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white"
+        android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+        >
+        <ImageView
+            android:layout_width="@dimen/size_175dp"
+            android:layout_height="@dimen/size_175dp"
+            android:src="@mipmap/null_view"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp30"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无订单"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_15sp"
+            android:textColor="@color/main_color"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

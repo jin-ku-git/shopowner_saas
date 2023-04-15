@@ -1,51 +1,62 @@
 package com.youwu.shopowner_saas.ui.fragment;
 
 
-import static me.goldze.mvvmhabit.base.BaseActivity.toPrettyFormat;
-
+import static com.youwu.shopowner_saas.utils_view.TimeUtil.getTimeList;
+import static com.youwu.shopowner_saas.utils_view.TimeUtil.getTimeYearList;
 import android.app.Dialog;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import com.alibaba.fastjson.JSON;
+import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.interfaces.OnConfirmListener;
-import com.xuexiang.xui.widget.button.SmoothCheckBox;
+import com.lxj.xpopup.util.XPopupUtils;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youwu.shopowner_saas.BR;
 import com.youwu.shopowner_saas.R;
 import com.youwu.shopowner_saas.app.AppApplication;
 import com.youwu.shopowner_saas.app.AppViewModelFactory;
 import com.youwu.shopowner_saas.databinding.FragmentOneBinding;
-import com.youwu.shopowner_saas.queue.LogTask;
-import com.youwu.shopowner_saas.queue.TaskPriority;
+import com.youwu.shopowner_saas.service.Bean;
+import com.youwu.shopowner_saas.service.Constant;
+import com.youwu.shopowner_saas.service.HttpCallback;
+import com.youwu.shopowner_saas.service.HttpHelper;
+import com.youwu.shopowner_saas.service.MyHashMap;
 import com.youwu.shopowner_saas.toast.RxToast;
-import com.youwu.shopowner_saas.ui.fragment.adapter.WMOrderAdapter;
+import com.youwu.shopowner_saas.ui.fragment.adapter.AfterSalesOrderAdapter;
+import com.youwu.shopowner_saas.ui.fragment.adapter.OneOrderAdapter;
+import com.youwu.shopowner_saas.ui.fragment.adapter.SpinnerAdapter;
 import com.youwu.shopowner_saas.ui.fragment.bean.MqttBean;
-import com.youwu.shopowner_saas.ui.fragment.bean.XXCOrderBean;
-import com.youwu.shopowner_saas.ui.order_goods.OrderDetailsActivity;
-import com.youwu.shopowner_saas.ui.order_goods.OrderReceivingActivity;
-import com.youwu.shopowner_saas.ui.order_goods.RefundOrderDetailsActivity;
+import com.youwu.shopowner_saas.ui.fragment.bean.OrderBean;
+import com.youwu.shopowner_saas.ui.fragment.bean.SpinnerBean;
+import com.youwu.shopowner_saas.ui.fragment.custom.CustomBubbleAttachPopup;
+import com.youwu.shopowner_saas.ui.main.sousuo.OrderSouSuoActivity;
 import com.youwu.shopowner_saas.utils_view.DividerItemDecorations;
-
+import com.youwu.shopowner_saas.utils_view.TimeUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
 import me.goldze.mvvmhabit.base.BaseFragment;
 import me.goldze.mvvmhabit.utils.KLog;
 
@@ -57,14 +68,31 @@ import me.goldze.mvvmhabit.utils.KLog;
 public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
 
+    private int order_aftermarket=1;// 1订单 2售后
+    private String appointment_time;//预约配送日期
+    List<String> TimeList=new ArrayList<>();
+
     String  StoreId;//店铺id
 
 
-    WMOrderAdapter wmOrderAdapter;
+    OneOrderAdapter oneOrderAdapter;
+    AfterSalesOrderAdapter afterSalesOrderAdapter;
     int widths;//屏幕长
     int height;//屏幕宽
 
-    private ArrayList<XXCOrderBean> xxcOrderBeans = new ArrayList<>();
+    private ArrayList<OrderBean> orderBeans = new ArrayList<>();
+
+
+    private ArrayList<OrderBean> RefundOrderBeans = new ArrayList<>();
+
+
+    int num=0;
+
+    int page=1;//页数
+    int limit=15;//每页多少条
+
+    int default_option=1;
+
 
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,29 +113,344 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
     @Override
     public void onResume() {
         super.onResume();
-        initWMData();
+        if (num!=0){
+            initDatainfo();
+        }
+
+        viewModel.new_store_info();
+    }
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+        viewModel.IntegerEvent.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                switch (integer){
+                    case 0://搜索
+                        Bundle bundle=new Bundle();
+                        bundle.putInt("type",order_aftermarket);
+                        startActivity(OrderSouSuoActivity.class,bundle);
+                        break;
+                    case 1://排序
+                        CustomBubbleAttachPopup popup= (CustomBubbleAttachPopup) new XPopup.Builder(getContext())
+
+                                .atView(binding.bthSort)
+                                .hasShadowBg(false) // 去掉半透明背景
+                                .offsetY(XPopupUtils.dp2px(getContext(), 6))
+                                .asCustom(new CustomBubbleAttachPopup(getContext())
+                                                .setBubbleBgColor(getResources().getColor(R.color.main_white))  //气泡背景
+                                                .setArrowWidth(XPopupUtils.dp2px(getContext(), 5))
+                                                .setArrowHeight(XPopupUtils.dp2px(getContext(), 6))
+                                                .setArrowRadius(XPopupUtils.dp2px(getContext(), 3))
+                                );
+                        popup.setOnChoiceener(new CustomBubbleAttachPopup.OnChoiceener() {
+                            @Override
+                            public void onChoice(int data) {
+                                KLog.i("传输的数据"+data);
+                                sortList(data);
+                                default_option=data;
+
+                            }
+                        });
+                        popup.show();
+
+                        break;
+                    case 2://展开
+                        for (int i=0;i<orderBeans.size();i++){
+                            orderBeans.get(i).setType(1);
+                        }
+
+                        KLog.d("展开了");
+                        oneOrderAdapter.notifyDataSetChanged();
+                        break;
+                    case 3://收起
+                        for (int i=0;i<orderBeans.size();i++){
+                            orderBeans.get(i).setType(0);
+                        }
+                        KLog.d("收起了");
+                        oneOrderAdapter.notifyDataSetChanged();
+                        break;
+                    case 4://出餐成功
+                    case 5://接单成功
+                    case 6://拒单
+                    case 7://退款审核同意
+                    case 8://退款审核拒绝
+                        initDatainfo();
+                        break;
+                    case 9:
+                    case 10:
+                        page=1;
+                        break;
+
+
+
+                }
+            }
+        });
+        //全部、待接单、带出餐
+        viewModel.status_order.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer==0){
+                    binding.wholeLayout.setVisibility(View.VISIBLE);
+                }else {
+                    binding.wholeLayout.setVisibility(View.GONE);
+                }
+                initDatainfo();
+            }
+        });
+
+        //
+        viewModel.getOrder_list.observe(this, new Observer<ArrayList<OrderBean>>() {
+            @Override
+            public void onChanged(ArrayList<OrderBean> List) {
+                orderBeans.clear();
+
+                orderBeans.addAll(List);
+
+                initWMRecyclerView();
+
+
+            }
+        });
+
+        viewModel.RefundOrderBeans_list.observe(this, new Observer<ArrayList<OrderBean>>() {
+            @Override
+            public void onChanged(ArrayList<OrderBean> orderBeans) {
+                KLog.d("page:"+page);
+                if (page==1){
+                    RefundOrderBeans.clear();
+                    RefundOrderBeans.addAll(orderBeans);
+                }else {
+                    for(int i=0;i<orderBeans.size();i++){
+                        RefundOrderBeans.add(orderBeans.get(i));
+                    }
+                }
+
+                if (RefundOrderBeans.size()==0){
+                    viewModel.null_type.set(0);
+                }else {
+                    viewModel.null_type.set(1);
+                }
+                initASRecyclerView();
+
+            }
+        });
+        //全部、已取消
+        viewModel.status_order_one.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                initDatainfo();
+            }
+        });
+
+
+    }
+
+    /**
+     * 排序
+     * @param data  //1、降序  2、升序
+     */
+    private void sortList(int data) {
+        if (data==1){//降序
+            //通过比较器比较时间
+            Collections.sort(orderBeans, new Comparator<OrderBean>() {
+                @Override
+                public int compare(OrderBean o1, OrderBean o2) {
+                    Date date1 = TimeUtil.stringToDate(o1.getCreated_at());
+                    Date date2 = TimeUtil.stringToDate(o2.getCreated_at());
+                    //按照降序排列，如果按升序排列用after即可
+                    if (date1.before(date2)) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
+
+        }else {//升序
+            Collections.sort(orderBeans, new Comparator<OrderBean>() {
+                @Override
+                public int compare(OrderBean o1, OrderBean o2) {
+                    Date date1 = TimeUtil.stringToDate(o1.getCreated_at());
+                    Date date2 = TimeUtil.stringToDate(o2.getCreated_at());
+                    //按照降序排列，如果按升序排列用after即可
+                    if (date1.after(date2)) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                }
+            });
+        }
+        if (oneOrderAdapter!=null){
+            oneOrderAdapter.notifyDataSetChanged();
+        }
 
     }
 
     @Override
     public void initData() {
         super.initData();
-        /**
-         * 检查更新
-         */
-//        viewModel.getAppVersion();
-        viewModel.order_status.set(1);
+
+        viewModel.bth_one.set(1);
+        viewModel.bth_two.set(0);
+        viewModel.null_type.set(1);
+        viewModel.bth_AfterSales.set(1);
         getScreenSize();
         viewModel.getMe();
-        initWMData();
+
+        viewModel.DJD_num.set(0);
+        viewModel.DCC_num.set(0);
+
+
+
        StoreId= AppApplication.spUtils.getString("StoreId");
-        viewModel.goods_count(StoreId);
+
+       viewModel.open_close.set("展开");
+
+        initTabData();
+        initSpinner();
+
+//        Collections.reverse(orderBeans); 反转数据
+
+
+        //刷新
+        binding.mainSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                initDatainfo();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+
+
+        binding.refundSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
+                initDatainfo();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+        //加载
+        binding.refundSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                //获取订单列表
+                initDatainfo();
+                refreshLayout.finishLoadMore(true);//加载完成
+            }
+        });
+
         //检查是否已经注册
         if(!EventBus.getDefault().isRegistered(this)){//是否注册eventbus的判断
             EventBus.getDefault().register(this);
         }
 
     }
+    //时间下拉框选择
+    private void initSpinner() {
+
+        List<String> lists= getTimeList(7);
+
+        TimeList= getTimeYearList(7);
+        TimeList.add(0,"只可以选择7天以内日期");
+        appointment_time=TimeList.get(1);
+        List<SpinnerBean> list=new ArrayList<>();
+        SpinnerBean Bean=new SpinnerBean();
+        Bean.setId(0);
+        Bean.setName("只可以选择7天以内日期");
+        list.add(Bean);
+        for (int i=0;i<lists.size();i++){
+            KLog.d("时间："+lists.get(i));
+            SpinnerBean spinnerBean=new SpinnerBean();
+            spinnerBean.setId(i+1);
+            spinnerBean.setName(lists.get(i));
+            spinnerBean.setSelect(false);
+            list.add(spinnerBean);
+        }
+
+
+
+        SpinnerAdapter adapter=new SpinnerAdapter(getContext(),list);
+
+
+        binding.DropdownBox.setAdapter(adapter);
+        binding.DropdownBox.setSelection(1);
+
+        binding.DropdownBox.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                for (int i=0;i<list.size();i++){
+                    list.get(i).setSelect(false);
+                }
+                list.get(pos).setSelect(true);
+
+                appointment_time=TimeList.get(pos);
+
+                initDatainfo();
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+
+    }
+
+    private void initTabData() {
+
+
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                //0订单 1售后
+
+                switch (tab.getPosition()){
+                    case 0://订单
+                        order_aftermarket=1;
+                        binding.AfterSalesLayout.setVisibility(View.GONE);
+                        binding.OrderLayout.setVisibility(View.VISIBLE);
+                        initDatainfo();
+                        break;
+                    case 1://售后
+                        order_aftermarket=2;
+                        binding.AfterSalesLayout.setVisibility(View.VISIBLE);
+                        binding.OrderLayout.setVisibility(View.GONE);
+                        initDatainfo();
+                        break;
+                }
+
+
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    private void initDatainfo() {
+        num++;
+        if (order_aftermarket==1){
+            viewModel.new_order_list(appointment_time,viewModel.bth_one.get(),viewModel.bth_two.get());
+        }else {
+            viewModel.new_refund_order_list(page,limit);
+        }
+
+
+    }
+
     /**
      * 获取屏幕长和高
      */
@@ -120,166 +463,168 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         height = size.y;
     }
 
-    /**
-     * 获取小程序订单列表
-     *
-     */
-    private void initWMData() {
-        viewModel.getxcx_order_count();
 
-        viewModel.xcx_order_list(viewModel.order_status.get() + "");
-    }
 
     //MainActivity传递的数据
     @Subscribe
     public void onString(String  type) {
         KLog.d("MainActivity传递1："+type);
         if ("1".equals(type)){
-            initWMData();
+            page=1;
+            initDatainfo();
         }
     };
     //MainActivity传递的数据
     @Subscribe
     public void onMQttBean(MqttBean mqttBean) {
         KLog.d("MainActivity传递："+mqttBean);
-
-        initWMData();
+        page=1;
+        initDatainfo();
     };
 
-    @Override
-    public void initViewObservable() {
-        super.initViewObservable();
-        viewModel.IntegerEvent.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                switch (integer){
-                    case 1://待接单
 
-                        viewModel.order_status.set(1);
-                        initWMData();
-                        break;
-                        case 2://待出餐
-
-                            viewModel.order_status.set(2);
-                            initWMData();
-                        break;
-                        case 3://退款
-                            viewModel.order_status.set(3);
-                            initWMData();
-                        break;
-                    case 4:
-
-                        new LogTask("DEFAULT","您有一个待处理订单，请及时处理！")
-                                .setPriority(TaskPriority.DEFAULT) //设置优先级，默认是DEFAULT
-                                .enqueue(); //入队
-                        break;
-                    case 5:
-                        initWMData();
-                        break;
-                    case 6://同意
-                        initWMData();
-                        RxToast.showTipToast(getActivity(),"已同意！");
-                        break;
-                    case 7://拒绝
-                        initWMData();
-                        RxToast.showTipToast(getActivity(),"已拒绝！");
-                        break;
-
-                }
-            }
-        });
-        //小程序订单列表返回
-        viewModel.xxc_order_list.observe(this, new Observer<ArrayList<XXCOrderBean>>() {
-            @Override
-            public void onChanged(ArrayList<XXCOrderBean> xxcOrder) {
-                xxcOrderBeans = xxcOrder;
-
-                initWMRecyclerView();
-
-            }
-        });
-
-    }
     /**
-     * 小程序订单
+     * 订单列表
      */
     private void initWMRecyclerView() {
 
+        sortList(default_option);
 
         //创建adapter
-        wmOrderAdapter = new WMOrderAdapter(getContext(), xxcOrderBeans);
+        oneOrderAdapter = new OneOrderAdapter(getContext(), orderBeans,viewModel.bth_two.get());
         //给RecyclerView设置adapter
-        binding.wmRecyclerView.setAdapter(wmOrderAdapter);
+        binding.mainRecyclerView.setAdapter(oneOrderAdapter);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
 
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-        binding.wmRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+        binding.mainRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
         //设置item的分割线
-        if (binding.wmRecyclerView.getItemDecorationCount() == 0) {
-            binding.wmRecyclerView.addItemDecoration(new DividerItemDecorations(getContext(), DividerItemDecorations.VERTICAL));
+        if (binding.mainRecyclerView.getItemDecorationCount() == 0) {
+            binding.mainRecyclerView.addItemDecoration(new DividerItemDecorations(getContext(), DividerItemDecorations.VERTICAL));
         }
-
-        wmOrderAdapter.setOnItemClickListener(new WMOrderAdapter.OnItemClickListener() {
+        oneOrderAdapter.setOnClickListener(new OneOrderAdapter.OnClickListener() {
             @Override
-            public void OnItemClick(View view, XXCOrderBean data, int position) {
-
-                    Bundle bundle=new Bundle();
-                    bundle.putString("order_sn",data.getOrder_sn());
-                    startActivity(OrderDetailsActivity.class,bundle);
-
-            }
-        });
-
-        wmOrderAdapter.setOnClickListener(new WMOrderAdapter.OnClickListener() {
-            @Override
-            public void onClick(final XXCOrderBean data, int position, final int status) {
-
-                if (status==3){
-                    new  XPopup.Builder(getContext())
-                            .maxWidth((int) (widths * 0.8))
-                            .maxHeight((int) (height*0.5))
-                            .asConfirm("提示", "拒单会退款，是否拒单?", "取消", "确认", new OnConfirmListener() {
-                                @Override
-                                public void onConfirm() {
-                                    viewModel.edit_order_status(data.getOrder_sn(), status + "");
-                                }
-                            }, null,false)
-                            .show();
-                }else if (status==4){
-                    new  XPopup.Builder(getContext())
-                            .maxWidth((int) (widths * 0.8))
-                            .maxHeight((int) (height*0.5))
-                            .asConfirm("提示", "是否出餐？", "取消", "确认", new OnConfirmListener() {
-                                @Override
-                                public void onConfirm() {
-                                    viewModel.edit_order_status(data.getOrder_sn(), status + "");
-                                }
-                            }, null,false)
-                            .show();
-
-                }else {
-                    viewModel.edit_order_status(data.getOrder_sn(), status + "");
+            public void onClick(OrderBean data, int position,int type) {
+                switch (type){
+                    case 2://接单
+                        viewModel.new_update_order(type,data.getOrder_sn(),"");
+                        break;
+                    case 3://拒单
+                        SelectionDialog(data,null,type);
+                        break;
+                    case 4://出餐
+                        viewModel.new_update_order(type,data.getOrder_sn(),"");
+                        break;
                 }
 
-
             }
-        });
 
-        wmOrderAdapter.setSelectionStatusOnClickListener(new WMOrderAdapter.SelectionStatusOnClickListener() {
+        });
+        oneOrderAdapter.setPhoneOnClickListener(new OneOrderAdapter.PhoneOnClickListener() {
             @Override
-            public void SelectionStatusonClick(XXCOrderBean lists, int position, int status) {
-
-                SelectionDialog(lists.getOrder_sn(),status);
+            public void PhoneOnClick(OrderBean lists, int position) {
+                callPhone(lists.getMember_phone());
             }
         });
+        oneOrderAdapter.setStampOnClickListener(new OneOrderAdapter.StampOnClickListener() {
+            @Override
+            public void StampOnClick(OrderBean lists, int position) {
+                PrintOrder(lists.getOrder_sn());
+
+            }
+        });
+    }
+
+    /**
+     * 打印
+     * @param order_sn  订单id
+     */
+    private void PrintOrder(String order_sn) {
+        //访问网络
+        String url = Constant.URL_ZONG + "saas_order_info/printOrder";
+        Log.i("打印小票",url);
+        MyHashMap<String> mParams = new MyHashMap<String>();
+        mParams.put("order_id",order_sn);
+
+        //访问网络
+        HttpHelper.obtain().post(url,
+                mParams, new HttpCallback<Bean>() {
+                    @Override
+                    public void onSuccess(Bean expressBean) {
+                        String JsonData = new Gson().toJson(expressBean);
+                        KLog.i("打印结果："+JsonData);
+
+                        if (expressBean.rc == 0) {
+                            Log.i("onSuccess: ", expressBean.result.toString());
+
+                            RxToast.normal("打印成功");
+                        } else{
+                            RxToast.normal(expressBean.des);
+                        }
+                    }
+                    @Override
+                    public void onFailed(String string) {
+                        RxToast.normal("网络请求失败，请检查网络");
+
+                    }
+                });
+    }
+
+    /**
+     * 售后订单
+     */
+    private void initASRecyclerView() {
+
+
+        //创建adapter
+        oneOrderAdapter = new OneOrderAdapter(getContext(), RefundOrderBeans,viewModel.bth_two.get());
+        //给RecyclerView设置adapter
+        binding.AfterSalesRecyclerView.setAdapter(oneOrderAdapter);
+        //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
+
+        //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
+        binding.AfterSalesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+        //设置item的分割线
+        if (binding.AfterSalesRecyclerView.getItemDecorationCount() == 0) {
+            binding.AfterSalesRecyclerView.addItemDecoration(new DividerItemDecorations(getContext(), DividerItemDecorations.VERTICAL));
+        }
+
+        oneOrderAdapter.setDrawbackOnClickListener(new OneOrderAdapter.DrawbackOnClickListener() {
+            @Override
+            public void DrawbackonOnClick(OrderBean.OrderRefundBean lists, int position, int type) {
+                if (type==5){//拒绝
+                    SelectionDialog(null,lists,type);
+                }else {//同意
+                    new  XPopup.Builder(getContext())
+
+                            .asConfirm("提示", "请确认是否同意退款", "取消", "同意退款", new OnConfirmListener() {
+                                @Override
+                                public void onConfirm() {
+
+                                    viewModel.new_audit_refund(1,lists.getRefund_sn(),"");
+                                }
+                            }, null,false)
+                            .show();
+                }
+
+            }
+        });
+        oneOrderAdapter.setPhoneOnClickListener(new OneOrderAdapter.PhoneOnClickListener() {
+            @Override
+            public void PhoneOnClick(OrderBean lists, int position) {
+                callPhone(lists.getMember_phone());
+            }
+        });
+
+
 
     }
-    SmoothCheckBox yes_check;
-    SmoothCheckBox no_check;
+
+
     /**
-     * 退款拒绝还是同意弹窗
+     * 拒单弹窗
      */
-    private void SelectionDialog(final String order_sn, final int status) {
+    private void SelectionDialog(OrderBean data,OrderBean.OrderRefundBean lists,int type) {
 
         final Dialog dialog = new Dialog(getContext(), R.style.BottomDialog);
 
@@ -291,7 +636,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         int height = size.y;
 
         //获取界面
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_selection, null);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.dialog_resist_order, null);
         //将界面填充到AlertDiaLog容器
         dialog.setContentView(dialogView);
         ViewGroup.LayoutParams layoutParams = dialogView.getLayoutParams();
@@ -305,81 +650,59 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         dialog.show();
 
         //初始化控件
-        TextView close_text = (TextView) dialogView.findViewById(R.id.close_text);//返回
-        TextView selection_name = (TextView) dialogView.findViewById(R.id.selection_name);//
-        TextView content = (TextView) dialogView.findViewById(R.id.content);//
-        LinearLayout refund_layout = (LinearLayout) dialogView.findViewById(R.id.refund_layout);//
-        LinearLayout agree_layout = (LinearLayout) dialogView.findViewById(R.id.agree_layout);//
-        final EditText reason = (EditText) dialogView.findViewById(R.id.reason);//
-        final TextView cancel = (TextView) dialogView.findViewById(R.id.cancel);//取消
+        TextView cancel_text = (TextView) dialogView.findViewById(R.id.cancel_text);//返回
+        TextView determine_text = (TextView) dialogView.findViewById(R.id.determine_text);//
+        TextView top_text = (TextView) dialogView.findViewById(R.id.top_text);//
+        EditText edit_text = (EditText) dialogView.findViewById(R.id.edit_text);//
 
-        yes_check = dialog.findViewById(R.id.yes_check);
-        no_check = dialog.findViewById(R.id.no_check);
-        yes_check.setChecked(true);
-        no_check.setChecked(false);
 
-        final TextView confirm = (TextView) dialogView.findViewById(R.id.confirm);//确定
-        if (status == 1) {
-            selection_name.setText("同意");
-            agree_layout.setVisibility(View.VISIBLE);
-            refund_layout.setVisibility(View.GONE);
-
-        } else {
-            selection_name.setText("拒绝");
-            agree_layout.setVisibility(View.GONE);
-            refund_layout.setVisibility(View.VISIBLE);
+        if (data==null){
+            top_text.setText("拒绝退款");
+        }else if (lists==null){
+            top_text.setText("拒单");
         }
+
+
         //返回
-        close_text.setOnClickListener(new View.OnClickListener() {
+        cancel_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
-        yes_check.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
 
-                if (isChecked){
-                    no_check.setChecked(false);
-                }
-                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
-            }
-        });
-        no_check.setOnCheckedChangeListener(new SmoothCheckBox.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SmoothCheckBox checkBox, boolean isChecked) {
-                if (isChecked){
-                    yes_check.setChecked(false);
-                }
-                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
+        cancel_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
         //确定
-        confirm.setOnClickListener(new View.OnClickListener() {
+        determine_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String refund_reason;
-                refund_reason=reason.getText().toString();
-                if (refund_reason==null){
-                    refund_reason="";
-                }
-                viewModel.audit_order_refund(status,order_sn,refund_reason,yes_check.isChecked()?"1":"2",dialog);
 
-                KLog.d("同意：" + yes_check.isChecked() + "\n拒绝：" + no_check.isChecked());
+                if ("".equals(edit_text.getText().toString())||edit_text.getText().toString()==null){
+                    RxToast.normal("请填写拒绝原因");
+                }else {
+                    dialog.dismiss();
+                    if (data==null){//退款审核
+                        viewModel.new_audit_refund(2,lists.getRefund_sn(),edit_text.getText().toString());
+                    }else if (lists==null){
+                        viewModel.new_update_order(type,data.getOrder_sn(),edit_text.getText().toString());
+                    }
+
+
+                    KLog.i("拒单理由："+edit_text.getText().toString());
+                }
+
 
             }
         });
 
     }
+
 
 
     @Override

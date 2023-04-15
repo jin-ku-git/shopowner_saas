@@ -47,13 +47,27 @@ public class MainViewModel extends BaseViewModel<DemoRepository> {
             IntegerEvent.setValue(3);
         }
     });
-    //3
+    //4
     public BindingCommand fourOnClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
             IntegerEvent.setValue(4);
         }
     });
+    //5
+    public BindingCommand DianPuOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            IntegerEvent.setValue(5);
+        }
+    });
 
+    //6
+    public BindingCommand MyOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            IntegerEvent.setValue(6);
+        }
+    });
 
 }

@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.finance.fragment.CustomerFragmentViewModel" />
+        <import type="android.view.View"/>
+        <import type="android.graphics.Typeface"/>
+        <variable
+            name="viewModel"
+            type="CustomerFragmentViewModel" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/dp10"
+        >
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/NestedScrollView"
+            android:overScrollMode="never"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/radius_white"
+                    android:padding="@dimen/dp10"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="顾客分析"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/dp20"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/main_black"
+                            />
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tab_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+
+                            app:tabGravity="fill"
+                            app:tabIndicatorColor="@color/main_color"
+                            app:tabIndicatorFullWidth="false"
+                            app:tabIndicatorHeight="4dp"
+                            app:tabMode="scrollable"
+                            app:tabSelectedTextColor="@color/main_color"
+                            app:tabTextColor="#545454"
+                            app:tabIndicator="@drawable/shape_indicator_radius"
+                            app:tabMinWidth="40dip"
+                            app:tabContentStart="20dp"
+                            app:tabMaxWidth="200dp"
+                            app:tabPaddingStart="10dp"
+                            app:tabPaddingEnd="10dp"
+                            app:tabRippleColor="@null"
+                            android:layout_alignParentRight="true"
+                            >
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="全部顾客" />
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="新客" />
+                            <com.google.android.material.tabs.TabItem
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="老客" />
+
+                        </com.google.android.material.tabs.TabLayout>
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="@dimen/dp8"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="顾客概览"
+                            android:textSize="@dimen/dp15"
+                            android:textColor="@color/main_black"
+
+                            />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            />
+                        <Spinner
+                            android:id="@+id/DropdownBox"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:layout_gravity="center"
+                            android:dropDownVerticalOffset="45dp"
+                            />
+
+                    </LinearLayout>
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp300" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp10"
+                        >
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp15"
+                            android:paddingBottom="@dimen/dp15"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+                                <View
+                                    android:layout_width="@dimen/dp15"
+                                    android:layout_height="@dimen/dp15"
+                                    android:background="#68bbc4"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="@dimen/dp8"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="下单新客     9"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="占比  58.9%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp16"
+                                android:layout_marginTop="@dimen/dp5"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="比同行"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                                <ImageView
+                                    android:layout_width="@dimen/dp20"
+                                    android:layout_height="@dimen/dp20"
+                                    android:src="@mipmap/lv_descend"
+                                    android:layout_gravity="center"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.5"
+                                    android:textColor="@color/app_color_00df7f"
+                                    android:textSize="@dimen/dp16"
+                                    android:layout_marginStart="@dimen/size_5dp"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/dp15"
+                            android:paddingBottom="@dimen/dp15"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+                                <View
+                                    android:layout_width="@dimen/dp15"
+                                    android:layout_height="@dimen/dp15"
+                                    android:background="#5087ec"
+                                    android:layout_gravity="center"
+                                    android:layout_marginEnd="@dimen/dp8"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="下单新客     8"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="占比  41.1%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp16"
+                                android:layout_marginTop="@dimen/dp5"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="比同行"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                                <ImageView
+                                    android:layout_width="@dimen/dp20"
+                                    android:layout_height="@dimen/dp20"
+                                    android:src="@mipmap/lv_descend"
+                                    android:layout_gravity="center"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.5"
+                                    android:textColor="@color/app_color_00df7f"
+                                    android:textSize="@dimen/dp16"
+                                    android:layout_marginStart="@dimen/size_5dp"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="* 复购率=复购人数/下单人数，复购人数为多次下单的顾客数"
+                        android:textSize="@dimen/dp12"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radius_hui_f5f6fa_8dp"
+                        android:padding="@dimen/dp8"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="复购率"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp25"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="比同行"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                                <ImageView
+                                    android:layout_width="@dimen/dp20"
+                                    android:layout_height="@dimen/dp20"
+                                    android:src="@mipmap/lv_descend"
+                                    android:layout_gravity="center"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.5"
+                                    android:textColor="@color/app_color_00df7f"
+                                    android:textSize="@dimen/dp16"
+                                    android:layout_marginStart="@dimen/size_5dp"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="复购人数"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp25"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="比同行"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                                <ImageView
+                                    android:layout_width="@dimen/dp20"
+                                    android:layout_height="@dimen/dp20"
+                                    android:src="@mipmap/lv_descend"
+                                    android:layout_gravity="center"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.5"
+                                    android:textColor="@color/app_color_00df7f"
+                                    android:textSize="@dimen/dp16"
+                                    android:layout_marginStart="@dimen/size_5dp"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="下单总人数"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="8%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp25"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="比同行"
+                                    android:textSize="@dimen/dp16"
+                                    android:textColor="@color/main_black"
+                                    />
+                                <ImageView
+                                    android:layout_width="@dimen/dp20"
+                                    android:layout_height="@dimen/dp20"
+                                    android:src="@mipmap/upper"
+                                    android:layout_gravity="center"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="4.5"
+                                    android:textColor="@color/app_color_fa572c"
+                                    android:textSize="@dimen/dp16"
+                                    android:layout_marginStart="@dimen/size_5dp"
+                                    />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp10"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="顾客趋势"
+                            android:textSize="@dimen/dp18"
+                            android:textColor="@color/main_black"
+                            android:layout_centerVertical="true"
+                            />
+                        <Spinner
+                            android:id="@+id/DropdownBoxTwo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown"
+                            android:layout_gravity="center"
+                            android:dropDownVerticalOffset="45dp"
+                            android:layout_alignParentRight="true"
+                            />
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_45dp"
+                        android:orientation="horizontal"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="下单人数"
+                            android:textColor="@{viewModel.bth_one==0?@color/main_color:@color/main_black_85}"
+                            android:textSize="@{viewModel.bth_one==0?@dimen/size_18dp:@dimen/size_14dp}"
+
+                            android:layout_gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:gravity="center"
+                            binding:onClickCommand="@{viewModel.OrdersNumberOnClick}"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="复购人数"
+                            android:textColor="@{viewModel.bth_one==1?@color/main_color:@color/main_black_85}"
+                            android:textSize="@{viewModel.bth_one==1?@dimen/size_18dp:@dimen/size_14dp}"
+
+                            android:layout_gravity="center"                        android:gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:layout_marginLeft="@dimen/size_6dp"
+
+
+                            binding:onClickCommand="@{viewModel.RepurchaseNumberOnClick}"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="复购率"
+                            android:textColor="@{viewModel.bth_one==2?@color/main_color:@color/main_black_85}"
+                            android:textSize="@{viewModel.bth_one==2?@dimen/size_18dp:@dimen/size_14dp}"
+
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:layout_marginLeft="@dimen/size_6dp"
+
+
+                            binding:onClickCommand="@{viewModel.RepurchaseRateOnClick}"
+                            />
+
+
+                    </LinearLayout>
+                    <com.github.mikephil.charting.charts.LineChart
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:background="@drawable/radius_white"
+                    android:padding="@dimen/dp10"
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="顾客分布"
+                        android:textSize="@dimen/dp30"
+                        android:textStyle="bold"
+                        android:textColor="@color/main_black"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_45dp"
+                        android:orientation="horizontal"
+
+
+
+
+
+
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="下单频次"
+                            android:textColor="@{viewModel.bth_two==0?@color/main_white:@color/main_black_85}"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:background="@{viewModel.bth_two==0?@drawable/radius_blue_5dp:null}"
+                            binding:onClickCommand="@{viewModel.OrderFrequencyOnClick}"
+                            />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="距离上次下单时间"
+                            android:textColor="@{viewModel.bth_two==1?@color/main_white:@color/main_black_85}"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:layout_marginLeft="@dimen/size_6dp"
+                            android:layout_weight="1"
+                            android:background="@{viewModel.bth_two==1?@drawable/radius_blue_5dp:null}"
+                            binding:onClickCommand="@{viewModel.OrderDistanceOnClick}"
+                            />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/dp10">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=">3单"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="5人"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                android:layout_alignParentRight="true"
+                                />
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <com.xuexiang.xui.widget.progress.HorizontalProgressView
+                                android:id="@+id/hpv_math_one"
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_weight="1"
+                                app:hpv_end_color="@color/main_color"
+                                app:hpv_end_progress="50"
+                                app:hpv_isTracked="true"
+                                app:hpv_progress_duration="1800"
+                                app:hpv_progress_textColor="#696969"
+                                app:hpv_progress_textVisibility="false"
+                                app:hpv_start_color="@color/main_color"
+                                app:hpv_track_color="#f4f4f4"
+                                app:hpv_track_width="8dp" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="50%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/dp10">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2~3单"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="37人"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                android:layout_alignParentRight="true"
+                                />
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <com.xuexiang.xui.widget.progress.HorizontalProgressView
+                                android:id="@+id/hpv_math_two"
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_weight="1"
+                                app:hpv_end_color="@color/main_color"
+                                app:hpv_end_progress="11"
+                                app:hpv_isTracked="true"
+                                app:hpv_progress_duration="1800"
+                                app:hpv_progress_textColor="#696969"
+                                app:hpv_progress_textVisibility="false"
+                                app:hpv_start_color="@color/main_color"
+                                app:hpv_track_color="#f4f4f4"
+                                app:hpv_track_width="8dp" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="16.2%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/dp10">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1单"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="37人"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15"
+                                android:layout_alignParentRight="true"
+                                />
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            >
+                            <com.xuexiang.xui.widget.progress.HorizontalProgressView
+                                android:id="@+id/hpv_math_three"
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_weight="1"
+                                app:hpv_end_color="@color/main_color"
+                                app:hpv_end_progress="81"
+                                app:hpv_isTracked="true"
+                                app:hpv_progress_duration="1800"
+                                app:hpv_progress_textColor="#696969"
+                                app:hpv_progress_textVisibility="false"
+                                app:hpv_start_color="@color/main_color"
+                                app:hpv_track_color="#f4f4f4"
+                                app:hpv_track_width="8dp" />
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="81.3%"
+                                android:textColor="@color/main_black"
+                                android:textSize="@dimen/dp15" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</layout>

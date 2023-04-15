@@ -37,6 +37,15 @@ public class CommunityBean  implements Serializable {
     private String category_name;// 分类名称
     private String store_goods_id;
     private String store_goods_sku;
+    private boolean Select;
+
+    public boolean isSelect() {
+        return Select;
+    }
+
+    public void setSelect(boolean select) {
+        Select = select;
+    }
 
     public String getStore_goods_id() {
         return store_goods_id;

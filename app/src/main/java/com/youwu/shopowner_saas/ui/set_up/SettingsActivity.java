@@ -27,6 +27,7 @@ import com.youwu.shopowner_saas.utils_view.StatusBarUtil;
 import me.goldze.mvvmhabit.base.BaseActivity;
 
 /**
+ * 设置页面
  * 2022/09/14
  */
 public class SettingsActivity extends BaseActivity<ActivitySettingsBinding, SettingsViewModel> {

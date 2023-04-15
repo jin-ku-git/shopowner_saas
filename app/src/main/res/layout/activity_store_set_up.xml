@@ -13,18 +13,16 @@
             type="StoreSetUpViewModel" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/top_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_45dp"
-            android:background="@drawable/bg_white_bottom"
-            android:orientation="horizontal">
+            android:background="@drawable/bg_white_bottom">
 
             <ImageView
                 android:layout_width="@dimen/fanhui_img_30dp"
@@ -51,385 +49,237 @@
             android:layout_height="match_parent"
             android:background="#F4F8FB"
             android:orientation="vertical"
-            >
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/size_10dp"
-
-            android:paddingTop="@dimen/size_20dp"
-            android:paddingBottom="@dimen/size_20dp"
-            android:paddingRight="@dimen/size_15dp"
-            android:paddingLeft="@dimen/size_15dp"
-            android:background="@drawable/radius_white_10dp"
+            android:layout_marginTop="@dimen/dp45"
+            android:layout_marginBottom="@dimen/dp60"
+            android:padding="@dimen/dp10"
             >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:background="@drawable/radius_white"
+                android:padding="@dimen/dp10"
+                android:orientation="vertical"
                 >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="自动接单："
-                    android:textSize="@dimen/size_14dp"
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    />
-                <RadioGroup
-                    android:id="@+id/hide_radius_group"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/hide_radius_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:text="是"
-                        android:checked="@{viewModel.singleLiveField.is_order==1?true:false}"
-                        android:layout_weight="1"
-                        android:textSize="12sp" />
-
-                    <RadioButton
-                        android:id="@+id/hide_radius_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@null"
-                        android:text="否"
-                        android:checked="@{viewModel.singleLiveField.is_order==1?false:true}"
-                        android:layout_weight="1"
-                        android:textSize="12sp" />
-
-                </RadioGroup>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/size_15dp"
-                >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="营业时间："
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/size_14dp"
-                    />
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/size_45dp"
-                    android:background="@drawable/radius_hui_xian_5dp"
+                    android:layout_height="@dimen/dp40"
                     >
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingRight="@dimen/size_25dp"
-                        android:paddingLeft="@dimen/size_25dp"
-                        android:layout_marginRight="@dimen/size_5dp"
-                        binding:onClickCommand="@{viewModel.StateOnClick}"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@={viewModel.start_time}"
-                            android:hint="开始时间"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
-                            android:textColor="@color/main_black"
-                            />
-
-
-                    </LinearLayout>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="至"
-                        android:textSize="@dimen/size_14dp"
+                        android:text="门店名称"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dp15"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="惠民早餐"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:textSize="@dimen/dp15"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺头像"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dp15"
+                        />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp40"
+                        android:layout_height="@dimen/dp40"
+                        android:src="@mipmap/loading"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+
+                        />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/radius_white"
+                android:padding="@dimen/dp10"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/dp15"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="营业状态"
                         android:textColor="@color/main_black"
                         android:layout_gravity="center"
+                        android:textSize="@dimen/dp15"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
                         />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:paddingRight="@dimen/size_25dp"
-                        android:paddingLeft="@dimen/size_25dp"
-                        android:layout_marginLeft="@dimen/size_5dp"
-                        binding:onClickCommand="@{viewModel.EndOnClick}"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/radius_lv_b5ecda_3dp"
+                        android:paddingStart="@dimen/dp5"
+                        android:paddingEnd="@dimen/dp5"
+                        android:paddingTop="@dimen/dp3"
+                        android:paddingBottom="@dimen/dp3"
+                        android:layout_gravity="center"
+                        binding:onClickCommand="@{viewModel.StoreStatusOnClick}"
                         >
+                        <View
+                            android:layout_width="@dimen/dp13"
+                            android:layout_height="@dimen/dp13"
+                            android:background="@drawable/yuan_lv_business"
+                            android:layout_marginEnd="@dimen/dp5"
+                            android:layout_gravity="center"
+                            />
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@={viewModel.end_time}"
-                            android:hint="结束时间"
-                            android:textSize="@dimen/size_14dp"
-                            android:layout_gravity="center"
+                            android:text="营业中"
                             android:textColor="@color/main_black"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:textSize="@dimen/dp13"
                             />
-
-
                     </LinearLayout>
-
-
+                    <ImageView
+                        android:layout_width="@dimen/dp15"
+                        android:layout_height="@dimen/dp15"
+                        android:src="@mipmap/black_sanjiao"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/dp5"
+                        />
 
                 </LinearLayout>
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/dp10"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="取餐方式："
-                    android:textColor="@color/main_black_85"
-                    android:layout_marginTop="@dimen/dp6"
-                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="门店电话"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dp15"
+                        />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="12345648985"
+                        android:textSize="@dimen/dp14"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+
+                        />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:layout_height="@dimen/dp40"
+                    android:orientation="horizontal"
                     >
-                    <CheckBox
-                        android:id="@+id/mode_one"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@{viewModel.oneBool}"
-                        android:text="自提"
+                        android:text="门店地址"
+                        android:textColor="@color/main_black"
+                        android:layout_gravity="center"
+                        android:textSize="@dimen/dp15"
                         />
-                    <CheckBox
-                        android:id="@+id/mode_two"
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="堂食"
-                        android:checked="@{viewModel.twoBool}"
-                        />
-                    <CheckBox
-                        android:id="@+id/mode_three"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="外卖"
-                        android:checked="@{viewModel.threeBool}"
-                        />
-                    <CheckBox
-                        android:id="@+id/mode_four"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="配送到柜"
-                        android:checked="@{viewModel.fourBool}"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_40dp"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="飞鹅打印："
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/size_14dp"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    />
-                <RadioGroup
-                    android:id="@+id/feie_radius_group"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/feie_radius_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:text="连接"
-                        android:checked="@{viewModel.singleLiveField.is_link==1?true:false}"
-
+                        android:text="12333311111111113333"
+                        android:textSize="@dimen/dp14"
+                        android:textColor="@color/main_black"
+                        android:layout_gravity="center"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:gravity="right"
                         android:layout_weight="1"
-                        android:textSize="12sp" />
+                        android:layout_marginEnd="@dimen/dp10"
 
-                    <RadioButton
-                        android:id="@+id/feie_radius_no"
+                        />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp40"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@null"
-                        android:text="不连接"
-                        android:checked="@{viewModel.singleLiveField.is_link==1?false:true}"
-
-                        android:layout_weight="1"
-                        android:textSize="12sp" />
-
-                </RadioGroup>
-
-            </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:text="营业时间"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:textSize="@dimen/dp15"
+                        />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
-                android:layout_marginTop="@dimen/dp10"
-                >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="KEY："
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/size_14dp"
-                    />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="06:00-14:30"
+                        android:textSize="@dimen/dp14"
+                        android:textColor="@color/main_black"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/xian_hui_4dp"
-                    android:paddingLeft="@dimen/dp10"
-                    >
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="请输入KEY值"
-                        android:text="@={viewModel.KeyName}"
-                        android:textColor="@color/textColor"
-                        android:gravity="left|center"
-                        android:textColorHint="@color/textColorHint"
-                        android:textSize="@dimen/dp15" />
-                </LinearLayout>
+                        />
+                </RelativeLayout>
+
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp40"
-                android:orientation="horizontal"
-                android:visibility="@{viewModel.state?View.VISIBLE:View.GONE}"
-                android:layout_marginTop="@dimen/dp10"
-                >
-                <TextView
-                    android:layout_width="@dimen/dp80"
-                    android:layout_height="wrap_content"
-                    android:text="SN："
-                    android:textColor="@color/main_black_85"
-                    android:layout_gravity="center"
-                    android:textSize="@dimen/size_14dp"
-                    />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@drawable/xian_hui_4dp"
-                    android:paddingLeft="@dimen/dp10"
-                    >
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="请输入SN值"
-                        android:text="@={viewModel.ValueName}"
-                        android:gravity="left|center"
-                        android:textColor="@color/textColor"
-                        android:textColorHint="@color/textColorHint"
-                        android:textSize="@dimen/dp15" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            
         </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp40"
-                android:text="打印测试"
-                android:textSize="@dimen/size_14dp"
-                android:textColor="@color/main_white"
-                android:background="@drawable/radius_blue_8dp"
-                android:gravity="center"
-                android:layout_marginStart="@dimen/size_5dp"
-                android:layout_marginEnd="@dimen/size_5dp"
-                binding:onClickCommand="@{viewModel.PrintTestOnClick}"
-                />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_48dp"
-                android:orientation="horizontal"
-
-                android:layout_marginTop="@dimen/size_15dp"
-                >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="重置"
-                    android:textSize="@dimen/size_14dp"
-                    android:textColor="@color/main_black_85"
-                    android:background="@drawable/radius_hui_xian_5dp"
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/size_5dp"
-                    android:layout_marginEnd="@dimen/size_5dp"
-                    binding:onClickCommand="@{viewModel.ResetOnClick}"
-                    />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="确认"
-                    android:textSize="@dimen/size_14dp"
-                    android:textColor="@color/main_white"
-                    android:background="@drawable/radius_blue_8dp"
-                    android:gravity="center"
-                    android:layout_marginStart="@dimen/size_5dp"
-                    android:layout_marginEnd="@dimen/size_5dp"
-                    binding:onClickCommand="@{viewModel.ConfirmOnClick}"
-                    />
-
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bottom_text"
-                android:textSize="@dimen/dp12"
-                android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/dp10"
-                />
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:text="保存"
+            android:textSize="@dimen/size_14dp"
+            android:textColor="@color/main_white"
+            android:background="@drawable/radius_blue_8dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dp15"
+            android:layout_marginEnd="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp10"
+            />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>

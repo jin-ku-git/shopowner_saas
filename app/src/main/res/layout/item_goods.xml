@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <com.xuexiang.xui.widget.button.SmoothCheckBox
+            android:id="@+id/yes_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:scb_color_checked="@color/main_color"
+            app:scb_stroke_width="@dimen/size_1dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/size_8dp"
+
+            />
+
+        <ImageView
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp60"
+            android:src="@mipmap/loading"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:layout_gravity="center"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/size_10dp"
+            android:layout_marginTop="@dimen/size_10dp"
+            android:layout_marginLeft="@dimen/size_8dp"
+            >
+            <TextView
+                android:id="@+id/CommodityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="商品名称"
+                android:textSize="@dimen/size_14dp"
+                android:textColor="@color/black"
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/CommodityPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥7.9"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/size_18dp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/CommodityNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x1"
+                    android:textSize="@dimen/size_14dp"
+                    android:textColor="@color/main_black"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <com.youwu.shopowner_saas.button.AnimShopButton
+            android:id="@+id/btnEleList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:addEnableBgColor="#3190E8"
+            app:addEnableFgColor="#ffffff"
+            app:hintBgColor="#3190E8"
+            app:hintBgRoundValue="15dp"
+            app:hintFgColor="#ffffff"
+            app:ignoreHintArea="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/size_10dp"
+           />
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/cutApartView"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@drawable/xu_xian"
+        android:layout_marginLeft="@dimen/size_38dp"
+        />
+
+</LinearLayout>

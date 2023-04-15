@@ -57,7 +57,7 @@ public class GodosSetUpRightAdapter extends RecyclerView.Adapter<GodosSetUpRight
 //        holder.mItemGoodsImg;
         holder.goods_name.setText(data.getGoods_name());//获取实体类中的name字段并设置
         holder.goods_price.setText(data.getGoods_price());//获取实体类中的name字段并设置
-        holder.StockQuantity.setText(data.getStock()+"");
+
 
 
         Glide.with(context).load(data.getGoods_img()).placeholder(R.mipmap.loading).into(holder.goods_image);
@@ -127,7 +127,7 @@ public class GodosSetUpRightAdapter extends RecyclerView.Adapter<GodosSetUpRight
         private CustomRoundAngleImageView goods_image;//商品图片
 
         private TextView SetUP,PutShelves,LowerShelf;
-        private TextView StockQuantity;
+
 
 
 
@@ -141,7 +141,7 @@ public class GodosSetUpRightAdapter extends RecyclerView.Adapter<GodosSetUpRight
             SetUP =  itemView.findViewById(R.id.SetUP);
             PutShelves =  itemView.findViewById(R.id.PutShelves);
             LowerShelf =  itemView.findViewById(R.id.LowerShelf);
-            StockQuantity =  itemView.findViewById(R.id.StockQuantity);
+
 
 
 

@@ -460,5 +460,58 @@ public class HttpDataSourceImpl implements HttpDataSource {
     public Observable<BaseBean<Object>> UPDATE_STORE_GOODS(String type, String goods_sku, String package_id, String GoodsName, String GoodsPrice, String MarketValue, String status, String GoodsStock, String store_goods_id, String store_goods_sku) {
         return apiService.UPDATE_STORE_GOODS(type,goods_sku,package_id,GoodsName,GoodsPrice,MarketValue,status,GoodsStock,store_goods_id,store_goods_sku);
     }
-
+    /**
+     * 订单列表
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address) {
+        return apiService.NEW_ORDER_LIST(appointment_time,type,order_taking_status,order_sn,goods_name,member_phone,member_address);
+    }
+    /**
+     * 退款订单列表
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_REFUND_ORDER_LIST(String refund_type,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit) {
+        return apiService.NEW_REFUND_ORDER_LIST(refund_type,order_sn,goods_name,member_phone,member_address,page,limit);
+    }
+    /**
+     * 修改订单状态
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_UPDATE_ORDER(String status, String order_sn) {
+        return apiService.NEW_UPDATE_ORDER(status,order_sn);
+    }
+    /**
+     * 审核退款订单
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_AUDIT_REFUND(String audit_status, String refund_sn,String remark) {
+        return apiService.NEW_AUDIT_REFUND(audit_status,refund_sn,remark);
+    }
+    /**
+     * 更新门店信息
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_UPDATE_STORE(String is_order) {
+        return apiService.NEW_UPDATE_STORE(is_order);
+    }
+    /**
+     * 获取门店信息
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> NEW_STORE_INFO() {
+        return apiService.NEW_STORE_INFO();
+    }
 }

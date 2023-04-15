@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -271,7 +272,7 @@ public class RxToast {
         toastTextView.setTextColor(textColor);
         toastTextView.setText(message);
         toastTextView.setTypeface(Typeface.create(TOAST_TYPEFACE, Typeface.NORMAL));
-
+        currentToast.setGravity(Gravity.CENTER, 0, 0);//居中
         currentToast.setView(toastLayout);
         currentToast.setDuration(duration);
         return currentToast;

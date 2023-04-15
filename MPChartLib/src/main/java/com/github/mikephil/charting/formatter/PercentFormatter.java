@@ -1,6 +1,7 @@
 
 package com.github.mikephil.charting.formatter;
 
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.utils.ViewPortHandler;
@@ -18,7 +19,7 @@ public class PercentFormatter implements IValueFormatter, IAxisValueFormatter
 
     protected DecimalFormat mFormat;
 
-    public PercentFormatter() {
+    public PercentFormatter(PieChart chart1) {
         mFormat = new DecimalFormat("###,###,##0.0");
     }
 

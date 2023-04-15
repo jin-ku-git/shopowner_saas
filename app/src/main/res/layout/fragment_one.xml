@@ -18,243 +18,555 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F7F7F7"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp55"
+            >
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/dp3"
+
+                app:tabIndicatorColor="@color/main_color"
+
+                app:tabIndicatorFullWidth="false"
+                app:tabIndicatorHeight="6dp"
+                app:tabMinWidth="20dip"
+                app:tabContentStart="40dp"
+                app:tabMaxWidth="0dp"
+                app:tabSelectedTextColor="@color/main_color"
+                app:tabTextColor="@color/black"
+                app:tabIndicator="@drawable/shape_indicator_radius"
+                app:tabRippleColor="@null"
+                app:tabTextAppearance="@style/MyTabItem"
+                >
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="订单"
+                    />
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="售后" />
+
+
+            </com.google.android.material.tabs.TabLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.ordersAccepting}"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/size_12dp"
+                android:background="@drawable/radius_pink_45"
+                android:layout_gravity="center"
+                android:paddingBottom="@dimen/size_3dp"
+                android:paddingTop="@dimen/size_3dp"
+                android:paddingLeft="@dimen/size_6dp"
+                android:paddingRight="@dimen/size_6dp"
+                />
+            <ImageView
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:src="@mipmap/sousuo"
+                android:layout_gravity="center"
+                binding:onClickCommand="@{viewModel.ivSouSuoClick}"
+                />
+
+            <ImageView
+                android:layout_width="@dimen/dp26"
+                android:layout_height="@dimen/dp26"
+                android:src="@mipmap/black_shezhi"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/size_8dp"
+                android:layout_marginLeft="@dimen/dp10"
+                binding:onClickCommand="@{viewModel.SetUpOnClick}"
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_weight="1"
-            >
-            <RelativeLayout
-                android:layout_width="@dimen/size_125dp"
-                android:layout_height="@dimen/size_40dp"
-                android:background="@drawable/radius_blue_right_xia_10"
 
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@={viewModel.store_name}"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_13dp"
-                    android:textColor="@color/main_white"
-                    android:layout_centerInParent="true"
-                    />
-            </RelativeLayout>
+            >
+            <!-- 订单 -->
             <LinearLayout
+                android:id="@+id/OrderLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_margin="@dimen/size_10dp"
+
                 >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="门店统计"
-                    android:textSize="@dimen/dp15"
-                    android:textColor="@color/main_black_85"
-                    android:textStyle="bold"
-                    />
-                <LinearLayout
-                    android:layout_width="@dimen/dp150"
-                    android:layout_height="@dimen/dp80"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:background="@drawable/radius_white_10dp"
-
-                    android:gravity="center"
-
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="商品总量("
-                        android:textColor="@color/main_black_85"
-                        android:textSize="@dimen/size_15dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{viewModel.goods_count}"
-                        android:textColor="@color/main_black_85"
-                        android:textSize="@dimen/size_15dp"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=")"
-                        android:textColor="@color/main_black_85"
-                        android:textSize="@dimen/size_15dp"
-                        />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="待处理"
-                    android:textSize="@dimen/dp15"
-                    android:textColor="@color/main_black_85"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:layout_marginBottom="@dimen/size_10dp"
-                    />
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dp50"
                     android:orientation="horizontal"
                     >
-                    <RelativeLayout
+
+                    <Spinner
+                        android:id="@+id/DropdownBox"
+                        android:layout_width="@dimen/dp100"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:layout_gravity="center"
+                        android:dropDownVerticalOffset="45dp"
+                        />
+
+                    <View
+                        android:layout_width="@dimen/dp1"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/dp5"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:background="@color/color_hui_d4"
+                        />
+                    <TextView
+                        android:layout_width="@dimen/dp60"
+                        android:layout_height="wrap_content"
+                        android:text="全部"
+                        android:textColor="@{viewModel.bth_one==1?@color/main_color:@color/main_black_85}"
+                        android:textSize="@dimen/size_16dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        binding:onClickCommand="@{viewModel.bthOneOnClick}"
+                        />
+                    <TextView
+                        android:layout_width="@dimen/dp60"
+                        android:layout_height="wrap_content"
+                        android:text="已取消"
+                        android:textColor="@{viewModel.bth_one==2?@color/main_color:@color/main_black_85}"
+                        android:textSize="@dimen/size_16dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        binding:onClickCommand="@{viewModel.bthCanceledOnClick}"
+                        />
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp50"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@{viewModel.order_status==1?@drawable/radius_blue_10dp:@drawable/radius_white_10dp}"
-                        android:layout_margin="@dimen/size_8dp"
-                        binding:onClickCommand="@{viewModel.order_wait_countOnClick}"
-                        >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:text="@{@string/order_wait_count+viewModel.order_wait_count+@string/right_brackets}"
-                            android:textColor="@{viewModel.order_status==1?@color/main_white:@color/main_black_85}"
-                            android:textSize="@dimen/dp14" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp50"
-                        android:layout_weight="1"
-                        android:background="@{viewModel.order_status==2?@drawable/radius_blue_10dp:@drawable/radius_white_10dp}"
-
-                        android:layout_margin="@dimen/size_8dp"
-                        binding:onClickCommand="@{viewModel.order_mak_countOnClick}"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/order_mak_count+viewModel.order_mak_count+@string/right_brackets}"
-                            android:layout_centerInParent="true"
-                            android:textColor="@{viewModel.order_status==2?@color/main_white:@color/main_black_85}"
-
-                            android:textSize="@dimen/dp14"
-                            />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp50"
-                        android:layout_weight="1"
-                        android:background="@{viewModel.order_status==3?@drawable/radius_blue_10dp:@drawable/radius_white_10dp}"
-                        android:layout_margin="@dimen/size_8dp"
-                        binding:onClickCommand="@{viewModel.order_refund_countOnClick}"
-                        android:visibility="gone"
-                        >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{@string/order_refund_count+viewModel.order_refund_count+@string/right_brackets}"
-                            android:layout_centerInParent="true"
-                            android:textColor="@{viewModel.order_status==3?@color/main_white:@color/main_black_85}"
-
-                            android:textSize="@dimen/dp14"
-                            />
-                    </RelativeLayout>
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="预订单"
+                        android:textSize="@dimen/size_14dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        binding:onClickCommand="@{viewModel.subscribeOnClick}"
+                        />
+                    <ImageView
+                        android:layout_width="@dimen/dp15"
+                        android:layout_height="@dimen/dp15"
+                        android:src="@mipmap/black_sanjiao"
+                        android:layout_gravity="center"
+                        binding:onClickCommand="@{viewModel.subscribeOnClick}"
+                        />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="@dimen/dp100"
-                    android:layout_height="@dimen/dp100"
-                    android:text="测试语音"
-                    android:gravity="center"
-                    android:textColor="@color/main_black_85"
-                    android:background="@drawable/radius_white_10dp"
-                    binding:onClickCommand="@{viewModel.BaiDuOnClick}"
-                    android:visibility="gone"
-
-                    />
-
-                <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                    android:id="@+id/sc_smartrefreshlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingBottom="@dimen/size_15dp"
-                    android:layout_marginTop="@dimen/size_10dp"
-                    android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
-                    >
-
-                    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_50dp"
-                        style="@style/RefreshStyle"/>
-
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-
-                        >
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            >
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/wm_recyclerView"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:overScrollMode="never"
-                                android:layout_marginTop="@dimen/size_10dp"
-                                />
-                        </RelativeLayout>
-
-                    </androidx.core.widget.NestedScrollView>
-                    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/size_40dp"
-                        style="@style/RefreshStyle"/>
-                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
-
-                <!-- 空视图 -->
                 <LinearLayout
-                    android:id="@+id/null_view"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.bth_one==1?View.VISIBLE:View.GONE}"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_45dp"
+                        android:orientation="horizontal"
+                        android:background="@color/main_white_f1"
+                        android:paddingLeft="@dimen/size_10dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="全部"
+                            android:textColor="@{viewModel.bth_two==0?@color/main_white:@color/main_black_85}"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:gravity="center"
+                            android:background="@{viewModel.bth_two==0?@drawable/radius_blue_5dp:null}"
+                            binding:onClickCommand="@{viewModel.bthTwoOnClick}"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/order_wait_count+viewModel.DJD_num+@string/right_brackets}"
+                            android:textColor="@{viewModel.bth_two==1?@color/main_white:@color/main_black_85}"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:layout_marginLeft="@dimen/size_6dp"
+                            android:background="@{viewModel.bth_two==1?@drawable/radius_blue_5dp:null}"
+                            binding:onClickCommand="@{viewModel.bthPendingOnClick}"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/order_mak_count+viewModel.DCC_num+@string/right_brackets}"
+                            android:textColor="@{viewModel.bth_two==2?@color/main_white:@color/main_black_85}"
+                            android:textSize="@dimen/size_14dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:paddingBottom="@dimen/size_5dp"
+                            android:paddingTop="@dimen/size_5dp"
+                            android:paddingRight="@dimen/size_10dp"
+                            android:paddingLeft="@dimen/size_10dp"
+                            android:layout_marginLeft="@dimen/size_6dp"
+                            android:background="@{viewModel.bth_two==2?@drawable/radius_blue_5dp:null}"
+                            binding:onClickCommand="@{viewModel.bthToServedOnClick}"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/whole_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/main_white_f1"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="共"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginLeft="15dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.order_num}"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="单"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="进行中"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/size_10dp"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.order_in_progress}"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="单，已取消"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.order_Canceled}"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="单"
+                            android:textSize="@dimen/size_13dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+
+                            />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@={viewModel.open_close}"
+                            android:textSize="@dimen/dp14"
+                            android:textColor="@color/black_alpha50"
+                            android:layout_gravity="center"
+                            binding:onClickCommand="@{viewModel.btOpenOnClick}"
+                            />
+
+                        <TextView
+                            android:id="@+id/bth_sort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="排序"
+                            android:textSize="@dimen/dp14"
+                            android:textColor="@color/black_alpha50"
+                            android:layout_gravity="center"
+                            binding:onClickCommand="@{viewModel.bthSortOnClick}"
+                            android:drawableLeft="@mipmap/paixu"
+                            android:drawablePadding="@dimen/size_3dp"
+                            android:layout_marginRight="@dimen/dp8"
+                            android:layout_marginLeft="@dimen/size_10dp"
+                            />
+
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@color/main_white"
-                    android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                    android:background="@color/main_white_f1"
                     >
-                    <ImageView
-                        android:layout_width="@dimen/size_175dp"
-                        android:layout_height="@dimen/size_175dp"
-                        android:src="@mipmap/null_view"
-                        android:scaleType="center"
+
+
+
+                    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                        android:id="@+id/main_smartrefreshlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                        >
+
+                        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_50dp"
+                            style="@style/RefreshStyle"/>
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:overScrollMode="never"
+
+                            >
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                >
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/main_recyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:overScrollMode="never"
+                                    android:layout_marginTop="@dimen/size_10dp"
+                                    />
+                            </RelativeLayout>
+
+                        </androidx.core.widget.NestedScrollView>
+                        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_40dp"
+                            style="@style/RefreshStyle"/>
+                    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+                    <!-- 空视图 -->
+                    <LinearLayout
+                        android:id="@+id/null_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/main_white"
+                        android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/size_175dp"
+                            android:layout_height="@dimen/size_175dp"
+                            android:src="@mipmap/null_view"
+                            android:scaleType="center"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp30"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="暂无订单"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_15sp"
+                            android:textColor="@color/main_color"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 售后 -->
+            <LinearLayout
+                android:id="@+id/AfterSalesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_50dp"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="待退款"
+                        android:textColor="@{viewModel.bth_AfterSales==1?@color/main_color:@color/main_black_85}"
+                        android:textSize="@dimen/dp16"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        binding:onClickCommand="@{viewModel.bthAfterSalesOnClick}"
+                        android:layout_marginLeft="@dimen/dp15"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="暂无订单"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_15sp"
-                        android:textColor="@color/main_color"
+                        android:text="已处理退款"
+                        android:textColor="@{viewModel.bth_AfterSales==2?@color/main_color:@color/main_black_85}"
+                        android:textSize="@dimen/dp16"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        binding:onClickCommand="@{viewModel.bthProcessedOnClick}"
+                        android:layout_marginLeft="@dimen/dp20"
                         />
+
                 </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+
+                    >
+
+                    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                        android:id="@+id/refund_smartRefreshLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingBottom="@dimen/size_15dp"
+                        android:layout_marginTop="@dimen/size_10dp"
+                        android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                        >
+
+                        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_50dp"
+                            style="@style/RefreshStyle"/>
+
+                        <androidx.core.widget.NestedScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:overScrollMode="never"
+
+                            >
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                >
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/AfterSalesRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:overScrollMode="never"
+                                    android:layout_marginTop="@dimen/size_10dp"
+                                    />
+                            </RelativeLayout>
+
+                        </androidx.core.widget.NestedScrollView>
+                        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/size_40dp"
+                            style="@style/RefreshStyle"/>
+                    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+                    <!-- 空视图 -->
+                    <LinearLayout
+                        android:id="@+id/null_view_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/main_white"
+                        android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                        >
+                        <ImageView
+                            android:layout_width="@dimen/size_175dp"
+                            android:layout_height="@dimen/size_175dp"
+                            android:src="@mipmap/null_view"
+                            android:scaleType="center"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp30"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="暂无订单"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/text_15sp"
+                            android:textColor="@color/main_color"
+                            android:layout_gravity="center"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
-
-
 
         </LinearLayout>
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bottom_text"
             android:textSize="@dimen/dp12"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp10"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingTop="@dimen/size_5dp"
+            android:background="@color/main_white_f1"
             />
 
     </LinearLayout>

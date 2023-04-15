@@ -18,6 +18,8 @@
     <string name="order_wait_count">待接单(</string>
     <string name="order_mak_count">待出餐(</string>
     <string name="order_refund_count">退款(</string>
+    <string name="order_yi_xia_jia">已下架(</string>
+    <string name="order_shou_qing">售罄(</string>
     <string name="right_brackets">)</string>
     <string name="gong">共</string>
     <string name="species_heji">种商品，合计：</string>
@@ -57,4 +59,16 @@
     <string name="style_height">倍高</string>
 
 
+    <string name="to">至</string>
+    <string name="common">共</string>
+    <string name="sky">天</string>
+    <string name="sun">日</string>
+    <string name="mon">一</string>
+    <string name="tue">二</string>
+    <string name="wed">三</string>
+    <string name="thu">四</string>
+    <string name="fri">五</string>
+    <string name="sat">六</string>
+    <string name="starTime">开始时间</string>
+    <string name="endTime">结束时间</string>
 </resources>

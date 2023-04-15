@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:attr="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.fragment.DianPuViewModel" />
+
+        <variable
+            name="viewModel"
+            type="DianPuViewModel" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F7F7F7"
+        android:padding="10dp">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:layout_marginBottom="@dimen/dp20"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp30"
+                        android:text="惠民早餐"
+                        android:textStyle="bold"
+                        android:textColor="@color/main_black"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_weight="1"
+                        />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radius_lv_business_3dp"
+                        android:paddingLeft="@dimen/dp4"
+                        android:paddingRight="@dimen/dp4"
+                        android:paddingBottom="@dimen/dp2"
+                        android:paddingTop="@dimen/dp2"
+                        android:layout_gravity="center"
+                        >
+                        <View
+                            android:layout_width="@dimen/dp13"
+                            android:layout_height="@dimen/dp13"
+                            android:background="@drawable/yuan_lv_business"
+                            android:layout_centerVertical="true"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="营业中"
+                            android:textSize="@dimen/dp14"
+                            android:textColor="@color/main_black_85"
+                            android:layout_marginLeft="@dimen/dp17"
+                            android:layout_centerVertical="true"
+                            />
+                    </RelativeLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:background="@drawable/radius_white_10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp15"
+                    android:paddingBottom="@dimen/dp15">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/size_12dp"
+                            android:text="今日收入"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14" />
+
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="10"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/dp30"
+                                android:textStyle="bold"/>
+
+
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="@dimen/size_35dp"
+                            android:layout_gravity="center"
+                            android:background="@color/main_black_85" />
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/size_12dp"
+                                android:text="订单数"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/size_14dp" />
+
+
+                                <TextView
+
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="￥308"
+                                    android:textColor="@color/main_black_85"
+                                    android:textSize="@dimen/dp30"
+                                    android:textStyle="bold"/>
+
+
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layout_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:background="@drawable/radius_white_10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp15"
+                    android:paddingBottom="@dimen/dp25">
+
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_marginRight="@dimen/dp5"
+                            android:orientation="vertical"
+                            binding:onClickCommand="@{viewModel.GoodsSetUpOnClick}"
+                            >
+
+                            <com.youwu.shopowner_saas.utils_view.ScaleLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                attr:widthToHeight="1"
+                                android:padding="@dimen/dp10"
+                                >
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@mipmap/loading"
+                                />
+
+                            </com.youwu.shopowner_saas.utils_view.ScaleLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="@dimen/size_12dp"
+                                android:text="商品管理"
+                                android:textColor="@color/main_black_85"
+                                android:textSize="@dimen/dp14" />
+
+
+                        </LinearLayout>
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+
+                        binding:onClickCommand="@{viewModel.AccountOnClick}"
+                        >
+
+                        <com.youwu.shopowner_saas.utils_view.ScaleLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            attr:widthToHeight="1"
+                            android:padding="@dimen/dp10"
+                            >
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@mipmap/loading"
+                                />
+
+                        </com.youwu.shopowner_saas.utils_view.ScaleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/size_12dp"
+                            android:text="财务对账"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+                        binding:onClickCommand="@{viewModel.OperatingDataOnClick}">
+
+                        <com.youwu.shopowner_saas.utils_view.ScaleLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            attr:widthToHeight="1"
+                            android:padding="@dimen/dp10"
+                            >
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@mipmap/loading"
+                                />
+
+                        </com.youwu.shopowner_saas.utils_view.ScaleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/size_12dp"
+                            android:text="经营数据"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+                        binding:onClickCommand="@{viewModel.PingJiaOnClick}"
+                        >
+
+                        <com.youwu.shopowner_saas.utils_view.ScaleLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            attr:widthToHeight="1"
+                            android:padding="@dimen/dp10"
+                            >
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@mipmap/loading"
+                                />
+
+                        </com.youwu.shopowner_saas.utils_view.ScaleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/size_12dp"
+                            android:text="顾客评价"
+                            android:textColor="@color/main_black_85"
+                            android:textSize="@dimen/dp14" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottom_text"
+            android:textSize="@dimen/dp12"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+</layout>

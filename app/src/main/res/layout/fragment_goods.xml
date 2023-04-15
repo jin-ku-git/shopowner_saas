@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.finance.fragment.GoodsFragmentViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="GoodsFragmentViewModel" />
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white"
+        android:padding="@dimen/dp10"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp14"
+                android:textColor="@color/main_black"
+                android:layout_gravity="center"
+                android:text="按销售额"/>
+            <ImageView
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:src="@mipmap/upper"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dp14"
+                android:textColor="@color/main_black"
+                android:layout_gravity="center"
+                android:text="按销量"
+                android:layout_marginStart="@dimen/dp15"/>
+            <ImageView
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15"
+                android:src="@mipmap/upper"
+                android:layout_gravity="center"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                />
+            <Spinner
+                android:id="@+id/DropdownBox"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                android:layout_gravity="center"
+                android:dropDownVerticalOffset="45dp"
+                />
+
+
+        </LinearLayout>
+
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/SmartRefreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/size_15dp"
+                android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                >
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_50dp"
+                    style="@style/RefreshStyle"/>
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/goods_recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:overScrollMode="never"
+                            android:layout_marginTop="@dimen/size_10dp"
+                            />
+                    </RelativeLayout>
+
+                </androidx.core.widget.NestedScrollView>
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_40dp"
+                    style="@style/RefreshStyle"/>
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+            <!-- 空视图 -->
+            <LinearLayout
+                android:id="@+id/null_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/main_white"
+                android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                >
+                <ImageView
+                    android:layout_width="@dimen/size_175dp"
+                    android:layout_height="@dimen/size_175dp"
+                    android:src="@mipmap/null_view"
+                    android:scaleType="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp30"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无订单"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_15sp"
+                    android:textColor="@color/main_color"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

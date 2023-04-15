@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.youwu.shopowner_saas.ui.finance.OperatingDataViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/TextColor_F8F8F8"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:orientation="horizontal"
+            android:background="@color/main_white"
+            >
+            <ImageView
+                android:layout_width="@dimen/size_20dp"
+                android:layout_height="@dimen/size_20dp"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.ReturnOnClick}"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="@dimen/size_15dp"
+                android:text="经营数据"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/dp18" />
+        </RelativeLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp45"
+            app:tabIndicatorColor="@color/main_color"
+
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="3dp"
+            app:tabMinWidth="20dip"
+            app:tabContentStart="40dp"
+            app:tabMaxWidth="0dp"
+            app:tabSelectedTextColor="@color/main_color"
+            app:tabTextColor="@color/black"
+            app:tabIndicator="@drawable/shape_indicator_radius"
+            app:tabRippleColor="@null"
+            app:tabTextAppearance="@style/MyTabItem"
+            android:background="@color/main_white"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fitsSystemWindows="true"
+            android:overScrollMode="never"/>
+
+
+    </LinearLayout>
+</layout>

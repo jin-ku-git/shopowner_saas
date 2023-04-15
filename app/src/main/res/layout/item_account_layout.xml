@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/radius_white_10dp"
+    android:padding="@dimen/dp10"
+    android:layout_marginBottom="@dimen/dp10"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp6"
+        >
+        <TextView
+            android:id="@+id/order_sn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值单号：11111111111111111"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:paddingTop="@dimen/dp3"
+            android:paddingBottom="@dimen/dp3"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值时间：2023-01-06 10:23:33"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:paddingTop="@dimen/dp3"
+            android:paddingBottom="@dimen/dp3"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="交易流水号：11111111111111111"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:paddingTop="@dimen/dp3"
+            android:paddingBottom="@dimen/dp3"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值金额：0.1"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:paddingTop="@dimen/dp3"
+            android:paddingBottom="@dimen/dp3"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="充值方式：微信"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:paddingTop="@dimen/dp3"
+            android:paddingBottom="@dimen/dp3"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/order_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="已支付"
+        android:textColor="@color/main_white"
+        android:textSize="@dimen/dp14"
+        android:layout_gravity="right"
+        android:background="@drawable/radius_orange_top_right_bottom_left_10dp"
+        android:paddingBottom="@dimen/dp6"
+        android:paddingTop="@dimen/dp6"
+        android:paddingLeft="@dimen/dp20"
+        android:paddingRight="@dimen/dp20"
+        android:layout_alignParentRight="true"
+        />
+
+
+
+
+</RelativeLayout>
+
+
+
+</LinearLayout>

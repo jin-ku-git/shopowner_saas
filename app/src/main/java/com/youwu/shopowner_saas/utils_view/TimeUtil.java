@@ -67,6 +67,8 @@ public class TimeUtil {
         return date2.getTime() / 1000 + 86399 + "";
     }
 
+
+
     public static String getDateToString(long milSecond, String pattern) {
 
         Date date = new Date(milSecond);
@@ -76,6 +78,33 @@ public class TimeUtil {
         return format.format(date);
 
     }
+
+    /**
+     * 字符串转时间戳
+     * @param time
+     * @param format
+     * @return
+     */
+    public static long getTimeStemp(String time, String format) {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (!"".equals(format)) {
+            simpleDateFormat = new SimpleDateFormat(format);
+        }
+
+        long timeStemp = 0;
+        try {
+
+            Date date = simpleDateFormat.parse(time);
+
+            timeStemp = date.getTime();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return timeStemp;
+    }
+
 
     /**
      * 获取当天开始时间
@@ -481,6 +510,72 @@ public class TimeUtil {
 
 
     /**
+     * 获取最近7天日期集合（某个月间隔多少天的日期集合）
+     * @param k
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static List getTimeList( int k) {
+        List list = new ArrayList();
+
+        for (int i=0;i<k;i++){
+            SimpleDateFormat dateFormat= new SimpleDateFormat("MM.dd");
+            Calendar currentCal = Calendar.getInstance();
+
+            currentCal.add(Calendar.DATE, (0-i));
+            String toDate=dateFormat.format(currentCal.getTime());
+
+            list.add(toDate);
+        }
+
+        return list;
+    }
+
+    /**
+     * 获取最近7天日期集合（某个月间隔多少天的日期集合）
+     * @param k
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static List getTimeYearList( int k) {
+        List list = new ArrayList();
+
+        for (int i=0;i<k;i++){
+            SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd");
+            Calendar currentCal = Calendar.getInstance();
+
+            currentCal.add(Calendar.DATE, (0-i));
+            String toDate=dateFormat.format(currentCal.getTime());
+
+            list.add(toDate);
+        }
+
+        return list;
+    }
+
+    /**
+     * 获取当前日期几个月后的结合
+     * @param k
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static List getTimeDaysList(int k) {
+        List list = new ArrayList();
+
+            for (int i=0;i<k;i++){
+                SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy.MM");
+                Calendar currentCal = Calendar.getInstance();
+
+                currentCal.add(Calendar.MONTH, (0-i));
+                String toDate=dateFormat.format(currentCal.getTime());
+
+                list.add("   "+toDate+"   ");
+                }
+        return list;
+    }
+
+
+    /**
      * 获取某年某月按天切片日期集合（某个月间隔多少天的日期集合）
      * @param beginYear
      * @param beginMonth
@@ -501,9 +596,40 @@ public class TimeUtil {
         return list;
     }
 
+    /**
+     * 获取两个日期相差的月数
+     */
+    public static int getMonthDiff(Date d1, Date d2) {
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(d1);
+        c2.setTime(d2);
+        int year1 = c1.get(Calendar.YEAR);
+        int year2 = c2.get(Calendar.YEAR);
+        int month1 = c1.get(Calendar.MONTH);
+        int month2 = c2.get(Calendar.MONTH);
+        int day1 = c1.get(Calendar.DAY_OF_MONTH);
+        int day2 = c2.get(Calendar.DAY_OF_MONTH);
+        // 获取年的差值?
+        int yearInterval = year1 - year2;
+        // 如果 d1的 月-日 小于 d2的 月-日 那么 yearInterval-- 这样就得到了相差的年数
+        if (month1 < month2 || month1 == month2 && day1 < day2) {
+            yearInterval--;
+        }
+        // 获取月数差值
+        int monthInterval = (month1 + 12) - month2;
+        if (day1 < day2) {
+            monthInterval--;
+        }
+        monthInterval %= 12;
+        int monthsDiff = Math.abs(yearInterval * 12 + monthInterval);
+        return monthsDiff;
+    }
+
+
 
     /**
-     * 获取某年某月到某年某月按天的切片日期集合（间隔天数的集合）
+     * 获取某年某月按某年某月到天的切片日期集合（间隔天数的集合）
      * @param beginYear
      * @param beginMonth
      * @param endYear
@@ -940,6 +1066,94 @@ public class TimeUtil {
         }
         return jj;
     }
+
+    public static Date stringToDate(String dateString){
+        //从第一个字符开始解析
+        ParsePosition position = new ParsePosition(0);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dateValue = simpleDateFormat.parse(dateString,position);
+        return dateValue;
+    }
+
+    /**
+     * 判断给定字符串时间是否为今日
+     * @param sdate
+     * @return boolean
+     */
+    public static boolean isToday(String sdate){
+        boolean b = false;
+        Date time = toDate(sdate);
+        Date today = new Date();
+        if(time != null){
+            String nowDate = dateFormater2.get().format(today);
+            String timeDate = dateFormater2.get().format(time);
+            if(nowDate.equals(timeDate)){
+                b = true;
+            }
+        }
+        return b;
+    }
+
+    /**
+     * 将字符串转位日期类型
+     * @param sdate
+     * @return
+     */
+    public static Date toDate(String sdate) {
+        try {
+            return dateFormater.get().parse(sdate);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    private final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+    };
+
+    private final static ThreadLocal<SimpleDateFormat> dateFormater2 = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd");
+        }
+    };
+
+
+    //两个时间戳是否是同一天 时间戳是long型的（11或者13）
+    public static boolean isSameData(String currentTime,String lastTime) {
+        try {
+            Calendar nowCal = Calendar.getInstance();
+            Calendar dataCal = Calendar.getInstance();
+            SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+            SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+            Long nowLong = new Long(currentTime);
+            Long dataLong = new Long(lastTime);
+            String data1 = df1.format(nowLong);
+            String data2 = df2.format(dataLong);
+            java.util.Date now = df1.parse(data1);
+            java.util.Date date = df2.parse(data2);
+            nowCal.setTime(now);
+            dataCal.setTime(date);
+            return isSameDay(nowCal, dataCal);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean isSameDay(Calendar cal1, Calendar cal2) {
+        if(cal1 != null && cal2 != null) {
+            return cal1.get(Calendar.ERA) == cal2.get(Calendar.ERA)
+                    && cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
+                    && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+        } else {
+            return false;
+        }
+    }
+
 
 
     /**

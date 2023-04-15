@@ -16,6 +16,7 @@ import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.core.ImageViewerPopupView;
 import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener;
 import com.lxj.xpopup.interfaces.XPopupImageLoader;
+import com.lxj.xpopup.util.SmartGlideImageLoader;
 import com.youwu.shopowner_saas.R;
 import com.youwu.shopowner_saas.ui.fragment.bean.ScrollBean;
 
@@ -85,7 +86,7 @@ public class RefundImageRecycleAdapter extends RecyclerView.Adapter<RefundImageR
 
                                 popupView.updateSrcView((ImageView)holder.refund_goods_image );
                             }
-                        },new ImageLoader())
+                        },new SmartGlideImageLoader( R.mipmap.loading))
                         .show();
             }
         });
@@ -191,25 +192,6 @@ public class RefundImageRecycleAdapter extends RecyclerView.Adapter<RefundImageR
     }
 
 
-    public static class ImageLoader implements XPopupImageLoader {
-
-        @Override
-        public void loadImage(final int position, @NonNull final Object url, @NonNull final ImageView imageView) {
-            //如果你确定你的图片没有超级大的，直接这样写就行
-
-            Glide.with(imageView).load(url).apply(new RequestOptions().placeholder(R.mipmap.loading).override(Target.SIZE_ORIGINAL)).into(imageView);
-        }
-
-        @Override
-        public File getImageFile(@NonNull Context context, @NonNull Object uri) {
-            try {
-                return Glide.with(context).downloadOnly().load(uri).submit().get();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-    }
 }
 
 

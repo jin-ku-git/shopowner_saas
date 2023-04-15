@@ -100,7 +100,7 @@ public class RetrofitClient {
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CacheInterceptor(mContext))
-//                .addInterceptor(new MonitorInterceptor(mContext))//查看测试接口
+                .addInterceptor(new MonitorInterceptor(mContext))//查看测试接口
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -176,3 +176,4 @@ public class RetrofitClient {
         return null;
     }
 }
+

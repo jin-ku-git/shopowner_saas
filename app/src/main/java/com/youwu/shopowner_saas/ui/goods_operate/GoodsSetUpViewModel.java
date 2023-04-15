@@ -5,6 +5,7 @@ import static com.youwu.shopowner_saas.app.AppApplication.toPrettyFormat;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
@@ -14,6 +15,7 @@ import com.youwu.shopowner_saas.toast.RxToast;
 import com.youwu.shopowner_saas.ui.fragment.bean.CommunityBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.GroupBean;
 import com.youwu.shopowner_saas.ui.goods_operate.bean.RowsBean;
+import com.youwu.shopowner_saas.ui.group.GroupManageActivity;
 
 import java.util.ArrayList;
 
@@ -48,6 +50,10 @@ public class GoodsSetUpViewModel extends BaseViewModel<DemoRepository> {
     //商品群组列表
     public SingleLiveEvent<ArrayList<CommunityBean>> goodList = new SingleLiveEvent<>();
 
+    public ObservableField<Integer> bth_two=new ObservableField<>();//状态 0 全部 1、已下架 2、售罄
+    public ObservableField<Integer> YXJ_num=new ObservableField<>();//已下架数量
+    public ObservableField<Integer> SQ_num=new ObservableField<>();//售罄数量
+
 
     public GoodsSetUpViewModel(@NonNull Application application, DemoRepository repository) {
         super(application,repository);
@@ -61,8 +67,62 @@ public class GoodsSetUpViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
+    //全部点击事件
+    public BindingCommand bthwholeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            bth_two.set(0);
 
+        }
+    });
+    //已下架点击事件
+    public BindingCommand bthYiXiaJiaOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            bth_two.set(1);
 
+        }
+    });
+    //售罄点击事件
+    public BindingCommand bthShouQingOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            bth_two.set(2);
+
+        }
+    });
+    //分组管理点击事件
+    public BindingCommand GroupManageOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+                startActivity(GroupManageActivity.class);
+
+        }
+    });
+    //批量操作点击事件
+    public BindingCommand BatchOperationOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+                startActivity(BatchOperationActivity.class);
+
+        }
+    });
+    //商品排序点击事件
+    public BindingCommand GoodsSortOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+                startActivity(GoodsSortActivity.class);
+
+        }
+    });
+    //新建商品点击事件
+    public BindingCommand NewCommodityOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            startActivity(NewCommodityActivity.class);
+
+        }
+    });
 
     /**
      * 获取群组

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/view_yuan"
+        android:layout_width="@dimen/dp15"
+        android:layout_height="@dimen/dp15"
+        android:background="@drawable/bth_yuan_red"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dp8"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="@dimen/size_11dp"
+        android:textColor="@color/main_white"
+        />
+</LinearLayout>

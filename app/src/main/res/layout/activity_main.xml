@@ -81,7 +81,7 @@
                             app:focus_icon="@mipmap/m1"
                             android:layout_gravity="center"
                             app:is_selected="true"
-                            app:text="菜单"
+                            app:text="首页"
                             binding:onClickCommand="@{viewModel.oneOnClick}"/>
                     </RelativeLayout>
                     <RelativeLayout
@@ -105,11 +105,33 @@
 
                             app:text="订货" />
                     </RelativeLayout>
+
+                    <!-- 2023/03/06加 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:visibility="gone"
+                        >
 
+                        <com.sz.jjj.baselibrary.widget.reveallayout.CircularRevealButton
+                            android:id="@+id/dian_pu_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:anim_show="true"
+                            app:defocus_color="#C8C8C8"
+                            app:defocus_icon="@mipmap/s2"
+                            app:focus_color="@color/color_main"
+                            app:focus_icon="@mipmap/m2"
+                            binding:onClickCommand="@{viewModel.DianPuOnClick}"
+
+                            app:text="店铺" />
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         >
 
                         <com.sz.jjj.baselibrary.widget.reveallayout.CircularRevealButton
@@ -145,6 +167,27 @@
                             app:focus_icon="@mipmap/m4"
                             binding:onClickCommand="@{viewModel.fourOnClick}"
                             app:text="我的" />
+                    </RelativeLayout>
+
+                    <!-- 2023/03/06加 -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        >
+
+                        <com.sz.jjj.baselibrary.widget.reveallayout.CircularRevealButton
+                            android:id="@+id/my_home"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            app:anim_show="true"
+                            app:defocus_color="#C8C8C8"
+                            app:defocus_icon="@mipmap/s4"
+                            app:focus_color="@color/color_main"
+                            app:focus_icon="@mipmap/m4"
+                            binding:onClickCommand="@{viewModel.MyOnClick}"
+                            app:text="我的(新)" />
                     </RelativeLayout>
 
 

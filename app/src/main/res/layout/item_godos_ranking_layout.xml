@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res-auto"
+    xmlns:roundiv="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        android:paddingStart="@dimen/dp10"
+        android:paddingEnd="@dimen/dp10"
+        >
+        <RelativeLayout
+            android:layout_width="@dimen/dp65"
+            android:layout_height="@dimen/dp65"
+
+            >
+            <com.youwu.shopowner_saas.utils_view.CustomRoundAngleImageView
+                android:id="@+id/iv_goods"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:background="@color/color_hui_cecece"
+                roundiv:radius="@dimen/dp6" />
+            <TextView
+                android:id="@+id/tv_ranking"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"
+                android:text="01"
+                android:textSize="@dimen/dp13"
+                android:gravity="center"
+                android:textColor="@color/main_white"
+                android:background="@drawable/radius_blue_3dp"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/dp10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="牛肉粉丝汤"
+                android:textSize="@dimen/dp22"
+                android:textColor="@color/main_black"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                >
+
+                    <TextView
+                        android:id="@+id/tv_sales"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="销售额 ￥22.2"
+
+                        android:textSize="@dimen/dp13"
+                        android:textColor="@color/main_color"
+                        android:background="@drawable/radius_blue_xian_2dp"
+                        android:paddingBottom="@dimen/dp2"
+                        android:paddingTop="@dimen/dp2"
+                        android:paddingStart="@dimen/dp5"
+                        android:paddingEnd="@dimen/dp5"
+
+
+                        />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="销量 6"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/dp14"
+                    android:layout_marginStart="@dimen/dp15"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

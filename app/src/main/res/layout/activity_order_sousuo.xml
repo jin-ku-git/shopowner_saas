@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.main.sousuo.OrderSouSuoViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="OrderSouSuoViewModel" />
+    </data>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/conner"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/radius_white_bottom_10dp"
+        >
+        <ImageView
+            android:layout_width="@dimen/size_20dp"
+            android:layout_height="@dimen/size_20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:src="@mipmap/fanhui"
+            binding:onClickCommand="@{viewModel.ReturnOnClick}"
+            />
+        <Spinner
+            android:id="@+id/DropdownBox"
+            android:layout_width="@dimen/size_100dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            android:layout_gravity="center"
+            android:dropDownVerticalOffset="45dp"
+            />
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/tv_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/size_10dp"
+                android:background="@drawable/bj_f5f5f5_45dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="@dimen/size_10dp"
+                android:paddingBottom="@dimen/size_10dp"
+                android:hint="请输入搜索内容"
+                android:text="@={viewModel.SearchContent}"
+                android:textColor="@color/main_black_85"
+                android:textSize="@dimen/text_14sp" />
+
+            <ImageView
+                android:id="@+id/sousuo"
+                android:layout_width="@dimen/size_20dp"
+                android:layout_height="@dimen/size_20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_8dp"
+                android:src="@mipmap/sousuo" />
+
+
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:textSize="@dimen/size_16dp"
+            android:textColor="@color/main_black"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/size_15dp"
+            binding:onClickCommand="@{viewModel.SouSuoClick}"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginLeft="@dimen/size_10dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.order_num}"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="相关订单"
+            android:textSize="@dimen/size_13dp"
+            android:layout_marginTop="@dimen/size_3dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/bth_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="排序"
+            android:textSize="@dimen/dp14"
+            android:textColor="@color/black_alpha50"
+            android:layout_gravity="center"
+            binding:onClickCommand="@{viewModel.bthSortOnClick}"
+            android:drawableLeft="@mipmap/paixu"
+            android:drawablePadding="@dimen/size_3dp"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginLeft="@dimen/size_10dp"
+            />
+
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/main_smartrefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/size_15dp"
+        android:layout_marginTop="@dimen/size_10dp"
+        android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+        >
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_50dp"
+            style="@style/RefreshStyle"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/order_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:overScrollMode="never"
+                    android:layout_marginTop="@dimen/size_10dp"
+                    />
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_40dp"
+            style="@style/RefreshStyle"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <!-- 空视图 -->
+    <LinearLayout
+        android:id="@+id/null_view_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white"
+        android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+        >
+        <ImageView
+            android:layout_width="@dimen/size_175dp"
+            android:layout_height="@dimen/size_175dp"
+            android:src="@mipmap/null_view"
+            android:scaleType="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp30"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂无订单"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_15sp"
+            android:textColor="@color/main_color"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+</layout>

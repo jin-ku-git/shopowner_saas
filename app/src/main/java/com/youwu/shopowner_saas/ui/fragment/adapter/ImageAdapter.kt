@@ -8,8 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.interfaces.OnSrcViewUpdateListener
 
 import com.lxj.xpopup.interfaces.XPopupImageLoader
+import com.lxj.xpopup.util.SmartGlideImageLoader
 import com.youwu.shopowner_saas.R
 import com.youwu.shopowner_saas.ui.fragment.bean.SaleBillBean
 import com.youwu.shopowner_saas.utils_view.CustomRoundAngleImageView
@@ -50,13 +53,13 @@ class ImageAdapter(private val mContext: Context, private val mList: List<SaleBi
 
 
         holder.sp_image.setOnClickListener {
-//            XPopup.Builder(holder.itemView.context).asImageViewer(holder.sp_image, position, list,
-////                    OnSrcViewUpdateListener { popupView, position ->
-////
-////                        popupView.updateSrcView(holder.sp_image)
-////
-////                    },ImageLoaders())
-////                    .show()
+            XPopup.Builder(holder.itemView.context).asImageViewer(holder.sp_image, position, list,
+                    OnSrcViewUpdateListener { popupView, position ->
+
+                        popupView.updateSrcView(holder.sp_image)
+
+                    }, SmartGlideImageLoader( R.mipmap.loading))
+                    .show()
 
             if(mreasonListener!=null){
                 mreasonListener!!.onReason()
@@ -128,20 +131,3 @@ class ImageAdapter(private val mContext: Context, private val mList: List<SaleBi
 
 }
 
-class ImageLoaders : XPopupImageLoader {
-    override fun loadImage(position: Int, url: Any, imageView: ImageView) {
-        //必须指定Target.SIZE_ORIGINAL，否则无法拿到原图，就无法享用天衣无缝的动画
-//        Glide.with(imageView).load(url).apply(RequestOptions().placeholder(R.mipmap.loading).override(Target.SIZE_ORIGINAL)).into(imageView)
-
-        Glide.with(imageView).load(url).into(imageView)
-    }
-
-    override fun getImageFile(context: Context, uri: Any): File? {
-        try {
-            return Glide.with(context).downloadOnly().load(uri).submit().get()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
-}

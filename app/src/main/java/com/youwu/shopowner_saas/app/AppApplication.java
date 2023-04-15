@@ -4,6 +4,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.text.InputFilter;
+import android.text.Spanned;
+
+import androidx.multidex.MultiDex;
 
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.TtsMode;
@@ -21,6 +25,8 @@ import com.lxj.xpopup.XPopup;
 import com.xuexiang.xui.XUI;
 import com.youwu.shopowner_saas.BuildConfig;
 import com.youwu.shopowner_saas.R;
+import com.youwu.shopowner_saas.service.HttpHelper;
+import com.youwu.shopowner_saas.service.VolleyProcessor;
 import com.youwu.shopowner_saas.toast.RxToast;
 import com.youwu.shopowner_saas.ui.login.LoginActivity;
 import com.youwu.shopowner_saas.update_model.OkHttp3Connection;
@@ -49,6 +55,12 @@ public class AppApplication extends BaseApplication {
     public static String speed = "5";
     public static String volume = "5";
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        //解决4.x运行崩溃的问题
+        MultiDex.install(this);
+    }
+    @Override
     public void onCreate() {
         super.onCreate();
         //是否开启打印日志
@@ -56,6 +68,12 @@ public class AppApplication extends BaseApplication {
         //初始化全局异常崩溃
         initCrash();
         context = getApplicationContext();
+
+        //解决4.x运行崩溃的问题
+        MultiDex.install(this);
+
+        //初始化Volley方式网络请求代理
+        HttpHelper.init(new VolleyProcessor(this));
 
 
         spUtils = new SPUtils("com.youwu.shopowner_saas");
@@ -174,6 +192,20 @@ public class AppApplication extends BaseApplication {
         return list;
     }
 
+    /**
+     * 去除小数点后多余的0
+     *
+     * @param s
+     * @return
+     */
+    public static String subZeroAndDot(String s) {
+        if (s.indexOf(".") > 0) {
+            s = s.replaceAll("0+?$", "");//去掉多余的0
+            s = s.replaceAll("[.]$", "");//如最后一位是.则去掉
+        }
+        return s;
+    }
+
     /** 安卓系统获取设备序列号*/
     public String getSerialNumber() {
         String serial = null;
@@ -181,6 +213,28 @@ public class AppApplication extends BaseApplication {
             serial = android.os.Build.SERIAL;
         } catch (Exception e) { }
         return serial;
+    }
+
+    public static int getStrCunt(String mainStr, String subStr) {
+        // 声明一个要返回的变量
+        int count = 0;
+        // 声明一个初始的下标，从初始位置开始查找
+        int index = 0;
+        // 获取主数据的长度
+        int mainStrLength = mainStr.length();
+        // 获取要查找的数据长度
+        int subStrLength = subStr.length();
+        // 如果要查找的数据长度大于主数据的长度则返回0
+        if (subStrLength > mainStrLength) {
+            return 0;
+        }
+        // 循环使用indexOf查找出现的下标，如果出现一次则count++
+        while ((index = mainStr.indexOf(subStr, index)) != -1) {
+            count++;
+            // 从找到的位置下标加上要查找的字符串长度，让指针往后移动继续查找
+            index += subStrLength;
+        }
+        return count;
     }
 
 

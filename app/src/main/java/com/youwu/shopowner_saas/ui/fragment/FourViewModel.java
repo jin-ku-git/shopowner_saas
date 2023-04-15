@@ -10,12 +10,13 @@ import androidx.databinding.ObservableField;
 import com.youwu.shopowner_saas.data.DemoRepository;
 import com.youwu.shopowner_saas.toast.RxToast;
 import com.youwu.shopowner_saas.ui.goods_operate.GoodsSetUpActivity;
-import com.youwu.shopowner_saas.ui.order_record.OrderGoodsListActivity;
+
 import com.youwu.shopowner_saas.ui.order_record.RecordActivity;
 import com.youwu.shopowner_saas.ui.report_form.SalesOverviewActivity;
 import com.youwu.shopowner_saas.ui.set_up.ModifyPasswordActivity;
+import com.youwu.shopowner_saas.ui.set_up.OrderSetUpActivity;
 import com.youwu.shopowner_saas.ui.set_up.SettingsActivity;
-import com.youwu.shopowner_saas.ui.set_up.StoreSetUpActivity;
+
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -187,7 +188,7 @@ public class FourViewModel extends BaseViewModel<DemoRepository> {
     public BindingCommand StoreSetonClick = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            startActivity(StoreSetUpActivity.class);
+            startActivity(OrderSetUpActivity.class);
         }
     });
     //报表

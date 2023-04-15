@@ -25,10 +25,21 @@ public class XXCOrderBean implements Serializable {
     private double pay_amount;
     private int order_status;//订单状态
     private String time_msg;//下单时间
+    public int type;//展开还是收起 1、关闭 2、打开
     private List<GoodsListBean> goods_list;
+
+    private List<OrderDetailsBean> order_details;
 
 
     private OrderRefundDataBean order_refund_data;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getPay_sn() {
         return pay_sn;
@@ -130,6 +141,16 @@ public class XXCOrderBean implements Serializable {
         private String goods_name;
         private double goods_price;
         private int goods_quantity;
+        private int Select_quantity;
+        private boolean status;
+
+        public boolean isStatus() {
+            return status;
+        }
+
+        public void setStatus(boolean status) {
+            this.status = status;
+        }
 
         public String getGoods_name() {
             return goods_name;
@@ -153,6 +174,14 @@ public class XXCOrderBean implements Serializable {
 
         public void setGoods_quantity(int goods_quantity) {
             this.goods_quantity = goods_quantity;
+        }
+
+        public int getSelect_quantity() {
+            return Select_quantity;
+        }
+
+        public void setSelect_quantity(int select_quantity) {
+            Select_quantity = select_quantity;
         }
     }
 
@@ -237,6 +266,50 @@ public class XXCOrderBean implements Serializable {
 
         public void setOrder_refund_reason(String order_refund_reason) {
             this.order_refund_reason = order_refund_reason;
+        }
+    }
+
+    public List<OrderDetailsBean> getOrder_details() {
+        return order_details;
+    }
+
+    public void setOrder_details(List<OrderDetailsBean> order_details) {
+        this.order_details = order_details;
+    }
+
+    public static class OrderDetailsBean {
+        /**
+         * goods_name : 火山石烤肠-规格：1根/份
+         * goods_thumb : https://images2.youwuu.com/avatar/452072763730040454.jpg
+         * goods_quantity : 1
+         */
+
+        private String goods_name;
+        private String goods_thumb;
+        private int goods_quantity;
+
+        public String getGoods_name() {
+            return goods_name;
+        }
+
+        public void setGoods_name(String goods_name) {
+            this.goods_name = goods_name;
+        }
+
+        public String getGoods_thumb() {
+            return goods_thumb;
+        }
+
+        public void setGoods_thumb(String goods_thumb) {
+            this.goods_thumb = goods_thumb;
+        }
+
+        public int getGoods_quantity() {
+            return goods_quantity;
+        }
+
+        public void setGoods_quantity(int goods_quantity) {
+            this.goods_quantity = goods_quantity;
         }
     }
 

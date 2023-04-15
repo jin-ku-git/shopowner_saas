@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:attr="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.youwu.shopowner_saas.ui.set_up.StoreCodeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white_f9"
+        >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="门店收款码"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="门店收款码"
+            android:textSize="@dimen/dp25"
+            android:textStyle="bold"
+            android:textColor="@color/main_black"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp15"
+            />
+
+
+        <com.youwu.shopowner_saas.utils_view.ScaleLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp30"
+            android:layout_marginEnd="@dimen/dp30"
+            attr:widthToHeight="1"
+            android:padding="@dimen/dp10"
+            >
+            <ImageView
+                android:id="@+id/iv_store"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/loading"
+                />
+
+        </com.youwu.shopowner_saas.utils_view.ScaleLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp35"
+            android:text="下载门店收款码"
+            android:textColor="@color/main_white"
+            android:textSize="@dimen/dp14"
+            android:background="@drawable/radius_blue_5dp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dp40"
+            android:layout_marginEnd="@dimen/dp40"
+            android:layout_marginTop="@dimen/dp30"
+            binding:onClickCommand="@{viewModel.DownloadOnClick}"
+
+            />
+
+    </LinearLayout>
+
+    </RelativeLayout>
+</layout>

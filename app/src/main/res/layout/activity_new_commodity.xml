@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.youwu.shopowner_saas.ui.goods_operate.NewCommodityViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white_f9"
+        >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="新建商品"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="完成"
+                android:textColor="@color/main_black_85"
+                android:background="@drawable/radius_yellow_45dp"
+                android:paddingTop="@dimen/dp5"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingLeft="@dimen/dp15"
+                android:paddingRight="@dimen/dp15"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp10"
+                binding:onClickCommand="@{viewModel.AccomplishOnClick}"
+                />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            android:background="@color/main_white"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="基础信息"
+                android:textSize="@dimen/dp15"
+                android:textColor="@color/main_black_85"
+
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_10dp"
+                android:overScrollMode="never" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品名称："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品名称"
+                    android:text="@={viewModel.GoodsName}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="群组："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    android:layout_gravity="center"
+
+                    />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.GroupName}"
+                    android:textColor="@color/main_black"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/size_14dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:src="@mipmap/black_sanjiao"
+                    android:layout_gravity="center"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="商品分类："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    android:layout_gravity="center"
+
+                    />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.GroupClassify}"
+                    android:textColor="@color/main_black"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/size_14dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:src="@mipmap/black_sanjiao"
+                    android:layout_gravity="center"
+
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp10"
+            android:background="@color/main_white"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="售卖信息"
+                android:textSize="@dimen/dp15"
+                android:textColor="@color/main_black_85"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="份量："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="约"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品份量"
+                    android:text="@={viewModel.GoodsWeight}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="售价："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品售价"
+                    android:text="@={viewModel.GoodsSells}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="市场价："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+
+                    />
+                <EditText
+
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_45dp"
+
+                    android:background="@null"
+                    android:hint="请输入商品市场价"
+                    android:text="@={viewModel.MarketPrices}"
+                    android:selectAllOnFocus="true"
+                    android:textSize="@dimen/size_14dp"
+                    android:theme="@style/WhiteEditText" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="@dimen/dp100"
+                    android:layout_height="wrap_content"
+                    android:text="库存："
+                    android:textColor="@color/main_black_85"
+                    android:textSize="@dimen/dp14"
+                    android:layout_gravity="center"
+
+                    />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@={viewModel.GoodsStock}"
+                    android:textColor="@color/main_black"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/size_14dp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:src="@mipmap/black_sanjiao"
+                    android:layout_gravity="center"
+
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:text="删除商品"
+            android:textSize="@dimen/dp16"
+            android:textColor="@color/color_red"
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp40"
+            android:background="@color/main_white"
+            binding:onClickCommand="@{viewModel.DeleteOnClick}"
+            />
+
+    </RelativeLayout>
+</layout>

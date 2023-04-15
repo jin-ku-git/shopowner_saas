@@ -217,32 +217,33 @@
 
 
 
-                <!-- 空视图 -->
-                <LinearLayout
-                    android:id="@+id/null_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:background="@color/main_white"
-                    android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
-                    >
-                    <ImageView
-                        android:layout_width="@dimen/size_175dp"
-                        android:layout_height="@dimen/size_175dp"
-                        android:src="@mipmap/null_view"
-                        android:scaleType="center"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="暂无订单"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/text_15sp"
-                        android:textColor="@color/main_color"
-                        />
-                </LinearLayout>
-
+            <!-- 空视图 -->
+            <LinearLayout
+                android:id="@+id/null_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/main_white"
+                android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                >
+                <ImageView
+                    android:layout_width="@dimen/size_175dp"
+                    android:layout_height="@dimen/size_175dp"
+                    android:src="@mipmap/null_view"
+                    android:scaleType="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp30"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无订单"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_15sp"
+                    android:textColor="@color/main_color"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
 
             </LinearLayout>
 

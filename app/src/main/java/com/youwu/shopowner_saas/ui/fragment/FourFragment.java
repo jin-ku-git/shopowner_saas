@@ -87,7 +87,7 @@ public class FourFragment extends BaseFragment<FragmentFourBinding,FourViewModel
                         EventBus.getDefault().post(new EventBusBean(3,3));
                         break;
                     case 4://退款
-
+                        EventBus.getDefault().post(new EventBusBean(3,4));
                         break;
                     case 5://核销
                         startQrCode();

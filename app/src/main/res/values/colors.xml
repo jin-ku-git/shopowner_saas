@@ -10,27 +10,38 @@
 
 
     <color name="main_color">#2196FF</color>
-    <color name="main_yellow">#F7B500</color>
+    <color name="main_yellow">#ffd068</color>
     <color name="main_green">#6DD400</color>
     <color name="main_white">#FFFFFF</color>
     <color name="main_black">#000000</color>
     <color name="main_black_25">#40000000</color>
     <color name="main_black_50">#80000000</color>
     <color name="main_black_85">#BF000000</color>
+
     <color name="main_black_54">#545454</color>
     <color name="main_black_5B">#5B5B5B</color>
     <color name="main_black_32">#292A32</color>
+    <color name="main_white_f1">#f1f1f1</color>
+    <color name="main_white_f2">#f2f2f2</color>
+    <color name="main_white_f6">#f6f6f6</color>
+    <color name="main_white_f9">#f9f9f9</color>
     <color name="main_touming">#00000000</color>
     <color name="text_main_top">#8B95AE</color>
     <color name="text_39">#393939</color>
     <color name="color_hui">#F7F7F7</color>
     <color name="color_hui_777">#777777</color>
+    <color name="color_hui_cecece">#cecece</color>
+    <color name="color_hui_f5f6fa">#f5f6fa</color>
     <color name="color_red">#F80000</color>
+    <color name="color_red_66">#33F80000</color>
     <color name="color_hui_f8fcff">#F8FCFF</color>
     <color name="color_hui_d4">#D4D4D4</color>
     <color name="color_molv">#58A55C</color>
     <color name="color_molan">#5087EC</color>
+    <color name="color_c5e0fe">#c5e0fe</color>
     <color name="color_molv_d7">#72CDD7</color>
+    <color name="color_1684fc">#1684fc</color>
+    <color name="color_eeeeee">#eeeeee</color>
 
     <color name="color_main">#2196FF</color>
 
@@ -50,7 +61,42 @@
     <color name="color_lv">#FF4BB25D</color>
     <color name="white_alpha80">#ccffffff</color>
     <color name="color_lv_qian">#34CC5F</color>
+    <color name="color_lv_b5ecda">#b5ecda</color>
     <color name="color_huang">#FFFF8C00</color>
     <color name="dividerColor">#F2F3F5</color>
+    <color name="yellowbgColor">#fdfbef</color>
+    <color name="TextYellowColor">#fc8b15</color>
+    <color name="TextOrangeColor">#fd6502</color>
+    <color name="TextPinkColor">#fdc9bb</color>
+    <color name="TextE6Color">#c7903c</color>
+    <color name="TextF2Color">#f27806</color>
+    <color name="TextColor_FFDFD9">#ffdfd9</color>
+    <color name="TextColor_FC1313">#fc1313</color>
+    <color name="TextColor_F8F8F8">#f8f8f8</color>
+    <color name="TextColor_FA572C">#fa572c</color>
+    <color name="TextColor_black_1a">#1a000000</color>
+    <color name="TextColor_lv_business">#00df7f</color>
+    <color name="TextColor_business_lv_shallow">#b5ecda</color>
+    <color name="Color_333552">#333552</color>
+    <color name="Color_b6b6b6">#b6b6b6</color>
+    <color name="hui_B3B9C6">#B3B9C6</color>
+
+    <color name="app_color_white_transparent">#E0DBDBDB</color>
+    <color name="app_color_grey">#393a3e</color>
+    <color name="app_color_fa5f37">#fa5f38</color>
+    <color name="app_color_e8e8e8">#e8e8e8</color>
+    <color name="app_color_5087ec">#5087ec</color>
+    <color name="app_color_52a3fb">#52a3fb</color>
+    <color name="app_color_68bbc4">#68bbc4</color>
+    <color name="app_color_fa572c">#fa572c</color>
+    <color name="app_color_00df7f">#00df7f</color>
+
+    <color name="date_duration_bg">#41D2C4</color>
+    <color name="text_main_tab_select">#F25D5F</color>
+    <color name="date_time_tv">#ffffff</color>
+    <color name="text_lable">#41D2C4</color>
+    <color name="color_f4ce98">#f4ce98</color>
+    <color name="color_de868f">#de868f</color>
+    <color name="color_c4def9">#c4def9</color>
 
 </resources>

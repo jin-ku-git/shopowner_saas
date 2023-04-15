@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_40dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+
+        <com.xuexiang.xui.widget.button.SmoothCheckBox
+            android:id="@+id/yes_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:scb_color_checked="@color/main_color"
+            app:scb_stroke_width="@dimen/size_1dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/size_8dp"
+
+            />
+        <TextView
+            android:id="@+id/causeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="商品名称"
+            android:textSize="@dimen/size_14dp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/size_10dp"
+            />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

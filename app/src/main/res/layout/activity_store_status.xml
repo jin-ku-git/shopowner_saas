@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.youwu.shopowner_saas.ui.set_up.StoreStatusViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_white"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white_f9"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="营业状态"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="@dimen/dp150"
+            android:layout_height="@dimen/dp150"
+            android:src="@mipmap/loading"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp30"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="惠民早餐（先每店）"
+            android:textSize="@dimen/dp15"
+            android:textColor="@color/main_black"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp8"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/radius_c4def9_10dp"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginEnd="@dimen/dp20"
+            android:paddingStart="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp15"
+            >
+            <View
+                android:layout_width="@dimen/dp13"
+                android:layout_height="@dimen/dp13"
+                android:background="@drawable/bth_yuan_52a3fb"
+                android:layout_marginEnd="@dimen/dp5"
+                android:layout_gravity="center"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="营业中"
+                android:textColor="@color/main_black"
+                android:layout_gravity="center"
+                android:textSize="@dimen/dp15"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp10"
+            android:paddingStart="@dimen/dp15"
+            android:paddingEnd="@dimen/dp15"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="停业后，门店将不再接受新订单，不再会自动回复营业"
+                android:layout_gravity="center"
+
+                android:textSize="@dimen/dp14"
+                android:layout_marginBottom="@dimen/dp8"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp45"
+                android:text="停止营业"
+                android:textColor="@color/main_black"
+                android:gravity="center"
+                android:background="@drawable/radius_hui_xian_45dp"
+
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

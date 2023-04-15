@@ -79,6 +79,7 @@
         <attr name="label_text_size" format="float"/>
     </declare-styleable>
 
+
     <style name="WhiteEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#CACACA</item>
         <item name="colorControlActivated">@color/main_yellow</item>
@@ -108,4 +109,121 @@
         <item name="android:textColor">@color/font_black</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="MyTabItem" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="MyTabItem_15" parent="TextAppearance.AppCompat.Button">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#CACACA</item>
+        <item name="colorControlActivated">@color/main_color</item>
+    </style>
+
+    <declare-styleable name="AnimShopButton">
+        <!--加按钮是否开启fill模式 默认是stroke(false)-->
+        <attr name="isAddFillMode" format="boolean"/>
+        <!--加按钮的背景色前景色-->
+        <attr name="addEnableBgColor" format="color"/>
+        <attr name="addEnableFgColor" format="color"/>
+        <!--加按钮不可用时的背景色前景色-->
+        <attr name="addDisableBgColor" format="color"/>
+        <attr name="addDisableFgColor" format="color"/>
+
+        <!--减按钮是否开启fill模式 默认是stroke(false)-->
+        <attr name="isDelFillMode" format="boolean"/>
+        <!--减按钮的背景色前景色-->
+        <attr name="delEnableBgColor" format="color"/>
+        <attr name="delEnableFgColor" format="color"/>
+        <!--减按钮不可用时的背景色前景色-->
+        <attr name="delDisableBgColor" format="color"/>
+        <attr name="delDisableFgColor" format="color"/>
+
+        <!--圆的半径-->
+        <attr name="buttonRadius" format="dimension"/>
+        <!--圆圈的宽度-->
+        <attr name="circleStrokeWidth" format="dimension"/>
+        <!--线(+ - 符号)的宽度-->
+        <attr name="lineWidth" format="dimension"/>
+
+        <!--两个圆之间的间距-->
+        <attr name="gapBetweenCircle" format="dimension"/>
+        <!--绘制数量的textSize-->
+        <attr name="numTextSize" format="dimension"/>
+        <!--最大数量和当前数量-->
+        <attr name="maxCount" format="integer"/>
+        <attr name="count" format="integer"/>
+
+        <!-- 增加一个开关 ignoreHintArea：UI显示、动画是否忽略hint收缩区域-->
+        <attr name="ignoreHintArea" format="boolean"/>
+
+        <!--数量为0时，hint文字 背景色前景色 大小,圆角值-->
+        <attr name="hintText" format="string"/>
+        <attr name="hintBgColor" format="color"/>
+        <attr name="hintFgColor" format="color"/>
+        <attr name="hingTextSize" format="dimension"/>
+        <attr name="hintBgRoundValue" format="dimension"/>
+
+        <attr name="perAnimDuration" format="integer"/>
+
+        <!--in replenish -->
+        <attr name="replenishTextColor" format="color"/>
+        <attr name="replenishTextSize" format="dimension"/>
+        <attr name="replenishText" format="string"/>
+
+    </declare-styleable>
+    <declare-styleable name="LeanTextView">
+        <attr name="degree" format="dimension" />
+    </declare-styleable>
+
+    <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabTextAppearance">@style/TabText</item>
+        <item name="tabSelectedTextColor">?attr/colorAccent</item>
+        <item name="tabTextColor">@color/xui_config_color_gray_6</item>
+    </style>
+    <!--TabLayout-->
+    <style name="TabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">@color/selector_tab_text_color</item>
+        <item name="android:textSize">?attr/xui_config_size_content_text</item>
+    </style>
+
+    <declare-styleable name="ArcProgressBar">
+        <attr name="arc_max_progress" format="float"/>
+        <attr name="arc_bg_color" format="color"/>
+        <attr name="arc_stroke_width" format="dimension"/>
+        <attr name="arc_progress" format="float"/>
+        <attr name="arc_progress_color" format="color"/>
+        <attr name="arc_first_text" format="string"/>
+        <attr name="arc_first_text_color" format="color"/>
+        <attr name="arc_first_text_size" format="dimension"/>
+        <attr name="arc_second_text" format="string"/>
+        <attr name="arc_second_text_color" format="color"/>
+        <attr name="arc_second_text_size" format="dimension"/>
+        <attr name="arc_three_text" format="string"/>
+        <attr name="arc_three_text_color" format="color"/>
+        <attr name="arc_three_text_size" format="dimension"/>
+        <attr name="arc_angle_size" format="float"/>
+        <attr name="arc_start_angle" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="MyCalendar">
+        <attr name="dateformat" format="string"></attr>
+        <attr name="titleSize" format="dimension"></attr>
+        <attr name="titleColor" format="color"></attr>
+        <attr name="goIcon" format="reference"></attr>
+        <attr name="preIcon" format="reference"></attr>
+        <attr name="dayInMonthColor" format="color"></attr>
+        <attr name="dayOutMonthcolor" format="color"></attr>
+        <attr name="todayColor" format="color"></attr>
+        <attr name="todayEmptycircleColor" format="color"></attr>
+        <attr name="todayFillcircleColor" format="color"></attr>
+        <attr name="calendarbackground" format="color|reference"></attr>
+    </declare-styleable>
 </resources>

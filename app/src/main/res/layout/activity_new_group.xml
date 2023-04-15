@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.youwu.shopowner_saas.ui.group.NewGroupViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/main_white"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/color_hui"
+            >
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{viewModel.TopName}"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+
+        </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/radius_white_10dp"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:padding="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp55"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/dp10"
+                        android:layout_height="wrap_content"
+                        android:text="*"
+                        android:textColor="@color/color_red"
+                        android:textSize="@dimen/dp14"
+
+                        />
+                    <TextView
+                        android:layout_width="@dimen/dp90"
+                        android:layout_height="wrap_content"
+                        android:text="群组名称："
+                        android:textColor="@color/main_black_85"
+                        android:textSize="@dimen/dp14"
+
+                        />
+                    <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_45dp"
+
+                        android:background="@null"
+                        android:hint="请输入群组名称"
+
+                        android:text="@={viewModel.GroupName}"
+                        android:selectAllOnFocus="true"
+                        android:textSize="@dimen/size_14dp"
+                        android:theme="@style/WhiteEditText" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:background="@color/color_hui"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_width="@dimen/dp100"
+                        android:layout_height="wrap_content"
+                        android:text="群组描述："
+                        android:textColor="@color/main_black_85"
+                        android:textSize="@dimen/dp14"
+
+                        />
+                    <EditText
+
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/size_45dp"
+
+                        android:background="@null"
+                        android:hint="请输入群组描述"
+
+                        android:text="@={viewModel.GroupMS}"
+                        android:selectAllOnFocus="true"
+                        android:textSize="@dimen/size_14dp"
+                        android:theme="@style/WhiteEditText" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp80"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.FoundAndDelete}"
+                    android:textColor="@color/main_black_85"
+                    android:paddingTop="@dimen/dp10"
+                    android:paddingBottom="@dimen/dp10"
+                    android:gravity="center"
+                    android:background="@drawable/radius_hui_xian_5dp"
+                    android:layout_marginRight="@dimen/dp20"
+                    android:layout_weight="1"
+                    binding:onClickCommand="@{viewModel.DeleteOnClick}"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.PreserveAndAccomplish}"
+                    android:textColor="@color/main_white"
+                    android:paddingTop="@dimen/dp10"
+                    android:paddingBottom="@dimen/dp10"
+                    android:gravity="center"
+                    android:background="@drawable/radius_blue_5dp"
+                    android:layout_marginLeft="@dimen/dp20"
+                    android:layout_weight="1"
+                    binding:onClickCommand="@{viewModel.AccomplishOnClick}"
+                    />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

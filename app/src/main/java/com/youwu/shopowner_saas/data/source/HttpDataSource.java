@@ -130,4 +130,18 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> GOODS_List(String store_id, String page, String limit);
     //更新商品信息
     Observable<BaseBean<Object>> UPDATE_STORE_GOODS(String type, String goods_sku, String package_id, String GoodsName, String GoodsPrice, String MarketValue, String status, String GoodsStock, String store_goods_id, String store_goods_sku);
+    //订单列表
+    Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address);
+    //退款订单列表
+    Observable<BaseBean<Object>> NEW_REFUND_ORDER_LIST(String refund_type,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit);
+    //修改订单状态
+    Observable<BaseBean<Object>> NEW_UPDATE_ORDER(String status, String order_sn);
+    //审核退款订单
+    Observable<BaseBean<Object>> NEW_AUDIT_REFUND(String audit_status, String refund_sn,String remark);
+    //更新门店信息
+    Observable<BaseBean<Object>> NEW_UPDATE_STORE(String is_order);
+    //获取门店信息
+    Observable<BaseBean<Object>> NEW_STORE_INFO();
+
+
 }

@@ -32,7 +32,9 @@ import com.youwu.shopowner_saas.mqtt.service.MQTTService;
 import com.youwu.shopowner_saas.mqtt.service.MQTTServiceConnction;
 import com.youwu.shopowner_saas.queue.LogTask;
 import com.youwu.shopowner_saas.queue.TaskPriority;
+import com.youwu.shopowner_saas.ui.fragment.DianPuFragment;
 import com.youwu.shopowner_saas.ui.fragment.FourFragment;
+import com.youwu.shopowner_saas.ui.fragment.MyFragment;
 import com.youwu.shopowner_saas.ui.fragment.OneFragment;
 import com.youwu.shopowner_saas.ui.fragment.ThreeFragment;
 import com.youwu.shopowner_saas.ui.fragment.TwoFragment;
@@ -58,8 +60,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
     private OneFragment mOneFragment;
     private TwoFragment mTowFragment;
+
     private ThreeFragment mThreeFragment;
     private FourFragment mFourFragment;
+    private DianPuFragment mDianPuFragment;
+    private MyFragment mMyFragment;
 
     private FragmentManager manager;
     private FragmentTransaction transaction;
@@ -167,6 +172,17 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
 
                         setSwPage(4);
                         EventBus.getDefault().post("4");
+                        break;
+
+                    case 5:
+
+                        setSwPage(5);
+                        EventBus.getDefault().post("5");
+                        break;
+                    case 6:
+
+                        setSwPage(6);
+                        EventBus.getDefault().post("6");
                         break;
 
                 }
@@ -315,6 +331,26 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                     transaction.show(mFourFragment);
                 }
                 break;
+            case 5:
+                binding.dianPuHome.setonSelected(true);
+                if (mDianPuFragment == null) {
+                    mDianPuFragment = new DianPuFragment();
+                    transaction.add(R.id.frame, mDianPuFragment);
+                } else {
+                    //对应的Fragment已经实例化，则直接显示出来
+                    transaction.show(mDianPuFragment);
+                }
+                break;
+            case 6:
+                binding.myHome.setonSelected(true);
+                if (mMyFragment == null) {
+                    mMyFragment = new MyFragment();
+                    transaction.add(R.id.frame, mMyFragment);
+                } else {
+                    //对应的Fragment已经实例化，则直接显示出来
+                    transaction.show(mMyFragment);
+                }
+                break;
         }
         transaction.commit();
     }
@@ -325,6 +361,8 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         binding.twoHome.setonSelected(false);
         binding.threeHome.setonSelected(false);
         binding.fourHome.setonSelected(false);
+        binding.dianPuHome.setonSelected(false);
+        binding.myHome.setonSelected(false);
         if (mOneFragment != null) {
             transaction.hide(mOneFragment);
         }
@@ -336,6 +374,12 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
         }
         if (mFourFragment != null) {
             transaction.hide(mFourFragment);
+        }
+        if (mDianPuFragment != null) {
+            transaction.hide(mDianPuFragment);
+        }
+        if (mMyFragment != null) {
+            transaction.hide(mMyFragment);
         }
     }
     //声明一个long类型变量：用于存放上一点击“返回键”的时刻

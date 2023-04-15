@@ -446,4 +446,76 @@ public interface DemoApiService {
     @POST("goods_manage/update_store_goods")
     Observable<BaseBean<Object>> UPDATE_STORE_GOODS(@Field("type") String type, @Field("goods_sku") String goods_sku, @Field("package_id") String package_id,@Field("goods_name") String goods_name,@Field("goods_price") String goods_price
             ,@Field("market_price") String market_price,@Field("status") String status,@Field("stock") String stock,@Field("store_goods_id") String store_goods_id,@Field("store_goods_sku") String store_goods_sku);
+
+    /**
+     *  订单列表
+     *
+     * @param appointment_time                  预约配送日期
+     * @param type                              订单类型 1全部 2已取消
+     * @param order_taking_status               门店接单状态 1待接单 2待出餐
+     * @param order_sn                          订单编号
+     * @param goods_name                        商品名称
+     * @param member_phone                      用户手机号
+     * @param member_address                    用户地址
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/new_order_list")
+    Observable<BaseBean<Object>> NEW_ORDER_LIST(@Field("appointment_time") String appointment_time, @Field("type") String type, @Field("order_taking_status") String order_taking_status, @Field("order_sn") String order_sn,
+                                                @Field("goods_name") String goods_name,@Field("member_phone") String member_phone,@Field("member_address") String member_address);
+    /**
+     *  退款订单列表
+     * @param refund_type                       1待退款 2已退款
+     * @param order_sn                          订单编号
+     * @param goods_name                        商品名称
+     * @param member_phone                      用户手机号
+     * @param member_address                    用户地址
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/new_refund_order_list")
+    Observable<BaseBean<Object>> NEW_REFUND_ORDER_LIST(@Field("refund_type") String refund_type,@Field("order_sn") String order_sn,
+                                                @Field("goods_name") String goods_name,@Field("member_phone") String member_phone,@Field("member_address") String member_address,
+                                                       @Field("page") String page,@Field("limit") String limit);
+
+    /**
+     * 修改订单状态
+     *
+     * @param status    2.接单 3.拒单 4.出餐
+     * @param order_sn    订单号
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/new_update_order")
+    Observable<BaseBean<Object>> NEW_UPDATE_ORDER(@Field("status") String status, @Field("order_sn") String order_sn);
+    /**
+     * 审核退款订单
+     *
+     * @param audit_status  //审核退款 1同意 2拒绝
+     * @param refund_sn    订单号
+     * @param remark        备注
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/new_audit_refund")
+    Observable<BaseBean<Object>> NEW_AUDIT_REFUND(@Field("audit_status") String audit_status, @Field("refund_sn") String refund_sn, @Field("remark") String remark);
+    /**
+     * 更新门店信息
+     *
+     * @param is_order   是否自动接单 1是 2否
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("setting/new_update_store")
+    Observable<BaseBean<Object>> NEW_UPDATE_STORE(@Field("is_order") String is_order);
+    /**
+     * 获取门店信息
+     *
+     * @return
+     */
+
+    @POST("setting/new_store_info")
+    Observable<BaseBean<Object>> NEW_STORE_INFO();
+
+
 }

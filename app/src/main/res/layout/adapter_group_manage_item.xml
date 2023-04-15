@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+   >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@drawable/radius_white_10dp"
+        android:layout_marginBottom="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新店特惠"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/dp14"
+                />
+            <TextView
+                android:id="@+id/goods_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3个商品"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/dp14"
+                android:layout_marginTop="@dimen/dp5"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+        <TextView
+            android:id="@+id/NewGoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新建商品"
+            android:textSize="@dimen/dp13"
+            android:textColor="@color/main_black"
+            android:background="@drawable/radius_hui_xian_45dp"
+            android:paddingLeft="@dimen/dp15"
+            android:paddingRight="@dimen/dp15"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingTop="@dimen/dp5"
+            />
+        <TextView
+            android:id="@+id/tv_bianji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:textSize="@dimen/dp13"
+            android:textColor="@color/main_black"
+            android:background="@drawable/radius_hui_xian_45dp"
+            android:paddingLeft="@dimen/dp15"
+            android:paddingRight="@dimen/dp15"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingTop="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
