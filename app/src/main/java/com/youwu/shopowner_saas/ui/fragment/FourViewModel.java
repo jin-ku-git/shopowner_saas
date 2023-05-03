@@ -16,6 +16,10 @@ import com.youwu.shopowner_saas.ui.report_form.SalesOverviewActivity;
 import com.youwu.shopowner_saas.ui.set_up.ModifyPasswordActivity;
 import com.youwu.shopowner_saas.ui.set_up.OrderSetUpActivity;
 import com.youwu.shopowner_saas.ui.set_up.SettingsActivity;
+import com.youwu.shopowner_saas.ui.zaocan.DeliveryDetailsActivity;
+import com.youwu.shopowner_saas.ui.zaocan.GoodsTotalActivity;
+import com.youwu.shopowner_saas.ui.zaocan.PeriodTimeActivity;
+import com.youwu.shopowner_saas.ui.zaocan.PreparationTimeActivity;
 
 
 import io.reactivex.disposables.Disposable;
@@ -206,6 +210,82 @@ public class FourViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
+
+    //配送明细
+    public BindingCommand ZCDeliveryDetailsOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","早餐时段配送明细");
+            bundle.putString("channel_id","1");
+            startActivity(DeliveryDetailsActivity.class,bundle);
+        }
+    });
+    public BindingCommand ZCPeriodTimeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","早餐时段制作明细");
+            bundle.putString("channel_id","1");
+            startActivity(PeriodTimeActivity.class,bundle);
+        }
+    });
+    public BindingCommand ZCPreparationTimeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","早餐时段备料明细");
+            bundle.putString("channel_id","1");
+            startActivity(PreparationTimeActivity.class,bundle);
+        }
+    });
+    public BindingCommand ZCGoodsTotalOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","早餐商品总单");
+            bundle.putString("channel_id","1");
+            startActivity(GoodsTotalActivity.class,bundle);
+        }
+    });
+
+    //配送明细
+    public BindingCommand SCDeliveryDetailsOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","食材时段配送明细");
+            bundle.putString("channel_id","2");
+            startActivity(DeliveryDetailsActivity.class,bundle);
+        }
+    });
+    public BindingCommand SCPreparationTimeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","食材时段备料明细");
+            bundle.putString("channel_id","2");
+            startActivity(PreparationTimeActivity.class,bundle);
+        }
+    });
+    public BindingCommand SCPeriodTimeOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","食材时段制作明细");
+            bundle.putString("channel_id","2");
+            startActivity(PeriodTimeActivity.class,bundle);
+        }
+    });
+    public BindingCommand SCGoodsTotalOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Bundle bundle=new Bundle();
+            bundle.putString("TopName","食材商品总单");
+            bundle.putString("channel_id","2");
+            startActivity(GoodsTotalActivity.class,bundle);
+        }
+    });
 
     //商品管理
     public BindingCommand GoodsSetUpOnClick = new BindingCommand(new BindingAction() {

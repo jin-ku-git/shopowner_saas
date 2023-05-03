@@ -35,7 +35,7 @@ class OrderDetailsAdapter(private val mContext: Context, private val mList: List
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.CommodityName.text = mList!![position].goods_name
-        holder.CommodityPrice.text = ""+mList!![position].goods_price
+        holder.CommodityPrice.text = ""+mList!![position].goods_pay_price
         holder.CommodityNum.text = "x"+mList!![position].goods_quantity
 
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:layout_weight="1">
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+        <TextView
+            android:id="@+id/tv_position"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="60"
+            android:textColor="#ff2e2e2e"
+            android:textSize="12dp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+
+        <TextView
+            android:id="@+id/goodsName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="商品名称"
+            android:textColor="#ff2e2e2e"
+            android:layout_weight="1"
+            android:textSize="12dp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="商品数量"
+            android:layout_weight="1"
+            android:textColor="#ff2e2e2e"
+            android:textSize="12dp" />
+
+
+
+
+    </LinearLayout>
+
+    <View
+
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E8E8" />
+
+
+
+</LinearLayout>

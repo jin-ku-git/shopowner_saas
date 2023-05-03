@@ -132,6 +132,10 @@ public class FourFragment extends BaseFragment<FragmentFourBinding,FourViewModel
         viewModel.nameEvent.set(AppApplication.spUtils.getString("Name"));
         viewModel.telEvent.set(AppApplication.spUtils.getString("tel"));
 
+        binding.viewOne.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        binding.viewTwo.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        binding.viewThree.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        binding.viewFour.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
     }
 
 

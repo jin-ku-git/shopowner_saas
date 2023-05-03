@@ -466,8 +466,8 @@ public class HttpDataSourceImpl implements HttpDataSource {
      * @return
      */
     @Override
-    public Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address) {
-        return apiService.NEW_ORDER_LIST(appointment_time,type,order_taking_status,order_sn,goods_name,member_phone,member_address);
+    public Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit) {
+        return apiService.NEW_ORDER_LIST(appointment_time,type,order_taking_status,order_sn,goods_name,member_phone,member_address,page,limit);
     }
     /**
      * 退款订单列表
@@ -513,5 +513,59 @@ public class HttpDataSourceImpl implements HttpDataSource {
     @Override
     public Observable<BaseBean<Object>> NEW_STORE_INFO() {
         return apiService.NEW_STORE_INFO();
+    }
+    /**
+     * 早餐/食材 时段配送明细
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_TIME_ORDER_INFO(String channel_id,String store_id,String appointment_time,String community_id) {
+        return apiService.GET_TIME_ORDER_INFO(channel_id,store_id,appointment_time,community_id);
+    }
+    /**
+     * 早餐/食材 时段备料明细
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_TIME_GOODS_NUM(String channel_id,String store_id,String appointment_time) {
+        return apiService.GET_TIME_GOODS_NUM(channel_id,store_id,appointment_time);
+    }
+    /**
+     * 早餐/食材 时段制作明细
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_TIME_GOODS_INFO(String channel_id,String store_id,String appointment_time) {
+        return apiService.GET_TIME_GOODS_INFO(channel_id,store_id,appointment_time);
+    }
+    /**
+     * 早餐/食材 商品总单
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_GOODS_NUM(String channel_id,String store_id,String appointment_time) {
+        return apiService.GET_GOODS_NUM(channel_id,store_id,appointment_time);
+    }
+    /**
+     * 获取社区
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_COMMUNITY(String store_id,String name) {
+        return apiService.GET_COMMUNITY(store_id,name);
+    }
+    /**
+     * 获取已取消订单数量
+     *
+     * @return
+     */
+    @Override
+    public Observable<BaseBean<Object>> GET_ORDER_NUM(String appointment_time) {
+        return apiService.GET_ORDER_NUM(appointment_time);
     }
 }

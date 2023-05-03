@@ -131,7 +131,7 @@ public interface HttpDataSource {
     //更新商品信息
     Observable<BaseBean<Object>> UPDATE_STORE_GOODS(String type, String goods_sku, String package_id, String GoodsName, String GoodsPrice, String MarketValue, String status, String GoodsStock, String store_goods_id, String store_goods_sku);
     //订单列表
-    Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address);
+    Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit);
     //退款订单列表
     Observable<BaseBean<Object>> NEW_REFUND_ORDER_LIST(String refund_type,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit);
     //修改订单状态
@@ -142,6 +142,18 @@ public interface HttpDataSource {
     Observable<BaseBean<Object>> NEW_UPDATE_STORE(String is_order);
     //获取门店信息
     Observable<BaseBean<Object>> NEW_STORE_INFO();
+    //早餐/食材时段配送明细
+    Observable<BaseBean<Object>> GET_TIME_ORDER_INFO(String channel_id,String store_id,String appointment_time,String community_id);
+    //早餐/食材时段备料明细
+    Observable<BaseBean<Object>> GET_TIME_GOODS_NUM(String channel_id,String store_id,String appointment_time);
+    //早餐/食材时段制作明细
+    Observable<BaseBean<Object>> GET_TIME_GOODS_INFO(String channel_id,String store_id,String appointment_time);
+    //早餐/食材商品总单
+    Observable<BaseBean<Object>> GET_GOODS_NUM(String channel_id,String store_id,String appointment_time);
+    //获取社区
+    Observable<BaseBean<Object>> GET_COMMUNITY(String store_id,String name);
+    //获取已取消订单数量
+    Observable<BaseBean<Object>> GET_ORDER_NUM(String appointment_time);
 
 
 }

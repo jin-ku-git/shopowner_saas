@@ -37,9 +37,9 @@
         <item name="srlAccentColor">@color/black</item>
 
         <!-- 上拉加载提示文字-->
-        <item name="srlTextLoading">客官莫急</item>
+<!--        <item name="srlTextLoading">客官莫急</item>-->
         <!-- 上下拉状态提示文字设置-->
-        <item name="srlTextPulling">下拉进行刷新</item>
+<!--        <item name="srlTextPulling">下拉进行刷新</item>-->
         <!-- 松开刷新的文字设置-->
         <item name="srlTextRelease">松开刷新</item>
         <!-- 正在刷新中的状态文字设置-->

@@ -7,3 +7,4 @@ include ':update'
 include ':shapeloading'
 include ':app'
 
+include ':form'

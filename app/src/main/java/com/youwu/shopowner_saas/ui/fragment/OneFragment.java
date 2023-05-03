@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.google.android.material.tabs.TabLayout;
@@ -40,8 +41,9 @@ import com.youwu.shopowner_saas.service.HttpCallback;
 import com.youwu.shopowner_saas.service.HttpHelper;
 import com.youwu.shopowner_saas.service.MyHashMap;
 import com.youwu.shopowner_saas.toast.RxToast;
-import com.youwu.shopowner_saas.ui.fragment.adapter.AfterSalesOrderAdapter;
+
 import com.youwu.shopowner_saas.ui.fragment.adapter.OneOrderAdapter;
+import com.youwu.shopowner_saas.ui.fragment.adapter.OneShouHouOrderAdapter;
 import com.youwu.shopowner_saas.ui.fragment.adapter.SpinnerAdapter;
 import com.youwu.shopowner_saas.ui.fragment.bean.MqttBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.OrderBean;
@@ -76,7 +78,8 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
 
     OneOrderAdapter oneOrderAdapter;
-    AfterSalesOrderAdapter afterSalesOrderAdapter;
+    OneShouHouOrderAdapter oneShouHouOrderAdapter;//售后
+
     int widths;//屏幕长
     int height;//屏幕宽
 
@@ -89,7 +92,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
     int num=0;
 
     int page=1;//页数
-    int limit=15;//每页多少条
+    int limit=10;//每页多少条
 
     int default_option=1;
 
@@ -114,6 +117,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
     public void onResume() {
         super.onResume();
         if (num!=0){
+            KLog.a("onResume();");
             initDatainfo();
         }
 
@@ -161,6 +165,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
                         }
 
                         KLog.d("展开了");
+
                         oneOrderAdapter.notifyDataSetChanged();
                         break;
                     case 3://收起
@@ -175,6 +180,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
                     case 6://拒单
                     case 7://退款审核同意
                     case 8://退款审核拒绝
+                        page=1;
                         initDatainfo();
                         break;
                     case 9:
@@ -196,24 +202,47 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
                 }else {
                     binding.wholeLayout.setVisibility(View.GONE);
                 }
+                page=1;
                 initDatainfo();
             }
         });
 
-        //
+        //订单
         viewModel.getOrder_list.observe(this, new Observer<ArrayList<OrderBean>>() {
             @Override
             public void onChanged(ArrayList<OrderBean> List) {
-                orderBeans.clear();
 
-                orderBeans.addAll(List);
+                if (page==1){
+                    orderBeans.clear();
+                    orderBeans.addAll(List);
+                }else {
+                    orderBeans.addAll(List);
 
-                initWMRecyclerView();
+                }
+                if (orderBeans.size()==0){
+                    viewModel.null_type.set(0);
+                }else {
+                    viewModel.null_type.set(1);
+                }
+
+                if (List.size()<limit){
+                    viewModel.DidData.set(0);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(false);//是否启用上拉加载功能
+                }else {
+                    viewModel.DidData.set(1);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(true);//是否启用上拉加载功能
+                }
+
+
+                sortList(default_option);
+
+                oneOrderAdapter.notifyDataSetChanged();
+
 
 
             }
         });
-
+        //售后订单
         viewModel.RefundOrderBeans_list.observe(this, new Observer<ArrayList<OrderBean>>() {
             @Override
             public void onChanged(ArrayList<OrderBean> orderBeans) {
@@ -232,7 +261,17 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
                 }else {
                     viewModel.null_type.set(1);
                 }
-                initASRecyclerView();
+
+                if (orderBeans.size()<limit){
+                    viewModel.SHDidData.set(0);
+                    binding.refundSmartRefreshLayout.setEnableLoadMore(false);//是否启用上拉加载功能
+                }else {
+                    viewModel.SHDidData.set(1);
+                    binding.refundSmartRefreshLayout.setEnableLoadMore(true);//是否启用上拉加载功能
+                }
+
+                oneShouHouOrderAdapter.notifyDataSetChanged();
+
 
             }
         });
@@ -240,6 +279,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         viewModel.status_order_one.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
+                page=1;
                 initDatainfo();
             }
         });
@@ -314,17 +354,14 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
 //        Collections.reverse(orderBeans); 反转数据
 
-
-        //刷新
-        binding.mainSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                initDatainfo();
-                refreshLayout.finishRefresh(true);
-            }
-        });
+        viewModel.DidData.set(1);
+        viewModel.SHDidData.set(1);
 
 
+        initWMRecyclerView();
+        initASRecyclerView();
+        binding.refundSmartRefreshLayout.setEnableAutoLoadMore(false);
+        binding.mainSmartrefreshlayout.setEnableAutoLoadMore(false);
         binding.refundSmartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -335,6 +372,25 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         });
         //加载
         binding.refundSmartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                //获取订单列表
+                initDatainfo();
+                refreshLayout.finishLoadMore(true);//加载完成
+            }
+        });
+
+        binding.mainSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
+                initDatainfo();
+                refreshLayout.finishRefresh(true);
+            }
+        });
+        //加载
+        binding.mainSmartrefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 page++;
@@ -411,12 +467,14 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
                 switch (tab.getPosition()){
                     case 0://订单
+                        page=1;
                         order_aftermarket=1;
                         binding.AfterSalesLayout.setVisibility(View.GONE);
                         binding.OrderLayout.setVisibility(View.VISIBLE);
                         initDatainfo();
                         break;
                     case 1://售后
+                        page=1;
                         order_aftermarket=2;
                         binding.AfterSalesLayout.setVisibility(View.VISIBLE);
                         binding.OrderLayout.setVisibility(View.GONE);
@@ -443,7 +501,8 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
     private void initDatainfo() {
         num++;
         if (order_aftermarket==1){
-            viewModel.new_order_list(appointment_time,viewModel.bth_one.get(),viewModel.bth_two.get());
+            viewModel.getOrderNum(appointment_time);
+            viewModel.new_order_list(appointment_time,viewModel.bth_one.get(),viewModel.bth_two.get(),page,limit);
         }else {
             viewModel.new_refund_order_list(page,limit);
         }
@@ -488,7 +547,6 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
      */
     private void initWMRecyclerView() {
 
-        sortList(default_option);
 
         //创建adapter
         oneOrderAdapter = new OneOrderAdapter(getContext(), orderBeans,viewModel.bth_two.get());
@@ -497,11 +555,18 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
 
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
-        binding.mainRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+//        binding.mainRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
+        binding.mainRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         //设置item的分割线
         if (binding.mainRecyclerView.getItemDecorationCount() == 0) {
             binding.mainRecyclerView.addItemDecoration(new DividerItemDecorations(getContext(), DividerItemDecorations.VERTICAL));
         }
+        binding.mainRecyclerView.setFocusableInTouchMode(false);
+        binding.mainRecyclerView.requestFocus();
+
+
+
         oneOrderAdapter.setOnClickListener(new OneOrderAdapter.OnClickListener() {
             @Override
             public void onClick(OrderBean data, int position,int type) {
@@ -577,9 +642,9 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
 
         //创建adapter
-        oneOrderAdapter = new OneOrderAdapter(getContext(), RefundOrderBeans,viewModel.bth_two.get());
+        oneShouHouOrderAdapter = new OneShouHouOrderAdapter(getContext(), RefundOrderBeans,viewModel.bth_two.get());
         //给RecyclerView设置adapter
-        binding.AfterSalesRecyclerView.setAdapter(oneOrderAdapter);
+        binding.AfterSalesRecyclerView.setAdapter(oneShouHouOrderAdapter);
         //设置layoutManager,可以设置显示效果，是线性布局、grid布局，还是瀑布流布局
 
         //参数是：上下文、列表方向（横向还是纵向）、是否倒叙
@@ -589,7 +654,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
             binding.AfterSalesRecyclerView.addItemDecoration(new DividerItemDecorations(getContext(), DividerItemDecorations.VERTICAL));
         }
 
-        oneOrderAdapter.setDrawbackOnClickListener(new OneOrderAdapter.DrawbackOnClickListener() {
+        oneShouHouOrderAdapter.setDrawbackOnClickListener(new OneShouHouOrderAdapter.DrawbackOnClickListener() {
             @Override
             public void DrawbackonOnClick(OrderBean.OrderRefundBean lists, int position, int type) {
                 if (type==5){//拒绝
@@ -609,7 +674,7 @@ public class OneFragment extends BaseFragment<FragmentOneBinding,OneViewModel> {
 
             }
         });
-        oneOrderAdapter.setPhoneOnClickListener(new OneOrderAdapter.PhoneOnClickListener() {
+        oneShouHouOrderAdapter.setPhoneOnClickListener(new OneShouHouOrderAdapter.PhoneOnClickListener() {
             @Override
             public void PhoneOnClick(OrderBean lists, int position) {
                 callPhone(lists.getMember_phone());

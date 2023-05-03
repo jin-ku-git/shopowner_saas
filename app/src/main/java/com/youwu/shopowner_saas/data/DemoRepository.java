@@ -463,8 +463,8 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      *
      */
     @Override
-    public Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address) {
-        return mHttpDataSource.NEW_ORDER_LIST(appointment_time,type,order_taking_status,order_sn,goods_name,member_phone,member_address);
+    public Observable<BaseBean<Object>> NEW_ORDER_LIST(String appointment_time,String type,String order_taking_status,String order_sn,String goods_name,String member_phone,String member_address,String page,String limit) {
+        return mHttpDataSource.NEW_ORDER_LIST(appointment_time,type,order_taking_status,order_sn,goods_name,member_phone,member_address,page,limit);
     }
 
     /**
@@ -514,5 +514,46 @@ public class DemoRepository extends BaseModel implements HttpDataSource, LocalDa
      */
     public Observable<BaseBean<Object>> NEW_STORE_INFO() {
         return mHttpDataSource.NEW_STORE_INFO();
+    }
+    /**
+     * 早餐/食材时段配送明细
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_TIME_ORDER_INFO(String channel_id,String store_id,String appointment_time,String community_id) {
+        return mHttpDataSource.GET_TIME_ORDER_INFO(channel_id,store_id,appointment_time,community_id);
+    }
+    /**
+     * 早餐/食材时段备料明细
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_TIME_GOODS_NUM(String channel_id,String store_id,String appointment_time) {
+        return mHttpDataSource.GET_TIME_GOODS_NUM(channel_id,store_id,appointment_time);
+    }    /**
+     * 早餐/食材时段制作明细
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_TIME_GOODS_INFO(String channel_id,String store_id,String appointment_time) {
+        return mHttpDataSource.GET_TIME_GOODS_INFO(channel_id,store_id,appointment_time);
+    }
+    /**
+     * 早餐/食材商品总单
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_GOODS_NUM(String channel_id,String store_id,String appointment_time) {
+        return mHttpDataSource.GET_GOODS_NUM(channel_id,store_id,appointment_time);
+    }
+    /**
+     * 获取社区
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_COMMUNITY(String store_id,String name) {
+        return mHttpDataSource.GET_COMMUNITY(store_id,name);
+    }
+    /**
+     * 获取已取消订单数量
+     * @return
+     */
+    public Observable<BaseBean<Object>> GET_ORDER_NUM(String appointment_time) {
+        return mHttpDataSource.GET_ORDER_NUM(appointment_time);
     }
 }

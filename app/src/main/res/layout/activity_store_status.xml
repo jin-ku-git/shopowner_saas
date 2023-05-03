@@ -92,6 +92,7 @@
                 android:textColor="@color/main_black"
                 android:layout_gravity="center"
                 android:textSize="@dimen/dp15"
+                android:textStyle="bold"
                 />
         </LinearLayout>
 
@@ -124,7 +125,7 @@
                 android:textColor="@color/main_black"
                 android:gravity="center"
                 android:background="@drawable/radius_hui_xian_45dp"
-
+                binding:onClickCommand="@{viewModel.SwitchOnClick}"
                 />
         </LinearLayout>
 

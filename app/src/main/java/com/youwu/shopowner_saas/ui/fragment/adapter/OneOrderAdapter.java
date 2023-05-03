@@ -21,11 +21,16 @@ import com.youwu.shopowner_saas.R;
 import com.youwu.shopowner_saas.toast.RxToast;
 import com.youwu.shopowner_saas.ui.fragment.bean.OrderBean;
 import com.youwu.shopowner_saas.ui.order_goods.ApplyReturnGoodsActivity;
+import com.youwu.shopowner_saas.ui.zaocan.bean.ChildData;
+import com.youwu.shopowner_saas.ui.zaocan.bean.MergeInfo;
 import com.youwu.shopowner_saas.utils_view.AnimationUtils;
 import com.youwu.shopowner_saas.utils_view.CountDownView;
 import com.youwu.shopowner_saas.utils_view.GridSpacingItemDecoration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import me.goldze.mvvmhabit.utils.KLog;
 
 /**
@@ -84,11 +89,7 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
         }
         holder.distance.setText(data.getJuli()+"KM");
         holder.user_address.setText(data.getPickup_address());
-//        if ("".equals(data.getMark())||data.getMark()==null){
-//            holder.remarks_layout.setVisibility(View.GONE);
-//        }else {
-//            holder.remarks.setText((data.getTableware_number()==0?"无需餐具；":data.getTableware_number()+"份餐具；")+data.getMark());
-//        }
+
         holder.remarks.setText((data.getTableware_number()==0?"无需餐具；":data.getTableware_number()+"份餐具；")+data.getMark());
 
         //商品信息
@@ -162,8 +163,10 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
         if (data.type==0){
             holder.develop_image.animate().rotation(0);
             holder.develop.setText("展开完整信息");
+            holder.xiala_layout.setVisibility(View.GONE);
             //隐藏动画
-            AnimationUtils.invisibleAnimator(holder.xiala_layout);
+//            AnimationUtils.invisibleAnimator(holder.xiala_layout);
+
 
             holder.pay_channel_name.setVisibility(View.VISIBLE);
             holder.pay_amount_one.setVisibility(View.VISIBLE);
@@ -173,8 +176,10 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
             //旋转90°
             holder.develop_image.animate().rotation(180);
             holder.develop.setText("收起");
+            holder.xiala_layout.setVisibility(View.VISIBLE);
             //显示动画
-            AnimationUtils.visibleAnimator(holder.xiala_layout);
+//            AnimationUtils.visibleAnimator(holder.xiala_layout);
+
 
             holder.pay_channel_name.setVisibility(View.GONE);
             holder.pay_amount_one.setVisibility(View.GONE);
@@ -187,9 +192,8 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
          2.使内部RecyclerView的adapter提供设置position的方法
          */
         holder.list.clear();
+        //合并重复的数据
         holder.list.addAll(mList.get(position).getOrder_details());
-
-
 
             if (holder.mRvAdapter == null) {
                 holder.mRvAdapter = new OrderDetailsAdapter(context, holder.list, position);
@@ -241,8 +245,9 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
                     //旋转90°
                     holder.develop_image.animate().rotation(180);
                     holder.develop.setText("收起");
+                    holder.xiala_layout.setVisibility(View.VISIBLE);
                     //显示动画
-                    AnimationUtils.visibleAnimator(holder.xiala_layout);
+//                    AnimationUtils.visibleAnimator(holder.xiala_layout);
 
                     holder.pay_channel_name.setVisibility(View.GONE);
                     holder.pay_amount_one.setVisibility(View.GONE);
@@ -252,8 +257,9 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
                     holder.develop_image.animate().rotation(0);
                     data.type=0;
                     holder.develop.setText("展开完整信息");
+                    holder.xiala_layout.setVisibility(View.GONE);
                     //隐藏动画
-                    AnimationUtils.invisibleAnimator(holder.xiala_layout);
+//                    AnimationUtils.invisibleAnimator(holder.xiala_layout);
 
                     holder.pay_channel_name.setVisibility(View.VISIBLE);
                     holder.pay_amount_one.setVisibility(View.VISIBLE);
@@ -270,9 +276,10 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
                     data.type=1;
                     //旋转90°
                     holder.develop_image.animate().rotation(180);
+                    holder.xiala_layout.setVisibility(View.VISIBLE);
                     holder.develop.setText("收起");
                     //显示动画
-                    AnimationUtils.visibleAnimator(holder.xiala_layout);
+//                    AnimationUtils.visibleAnimator(holder.xiala_layout);
 
                     holder.pay_channel_name.setVisibility(View.GONE);
                     holder.pay_amount_one.setVisibility(View.GONE);
@@ -282,8 +289,9 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
                     holder.develop_image.animate().rotation(0);
                     data.type=0;
                     holder.develop.setText("展开完整信息");
+                    holder.xiala_layout.setVisibility(View.GONE);
                     //隐藏动画
-                    AnimationUtils.invisibleAnimator(holder.xiala_layout);
+//                    AnimationUtils.invisibleAnimator(holder.xiala_layout);
 
                     holder.pay_channel_name.setVisibility(View.VISIBLE);
                     holder.pay_amount_one.setVisibility(View.VISIBLE);
@@ -374,136 +382,246 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
     private void renewView(OrderBean data, myViewHodler holder,int position) {
 
         //0、待支付 1、已支付 2、已取消 3、已退款
-        if (data.getOrder_status()==0){
-          holder.cancel_cause_layout.setVisibility(View.VISIBLE);
-          holder.tv_cancel_cause.setText("取消原因：用户超时未支付");
-
-
-        }else if (data.getOrder_status()==1){//已支付
-            //门店接单状态:1.待接单2,接单-待出餐3.拒单4.出餐
-            if (data.getOrder_taking_status()==1){
-                holder.Order_taking_name.setText("已下单");
-                holder.Order_taking_name_one.setText("已下单");
-                holder.DiningOut.setText("确认接单");
-                holder.Refusal.setVisibility(View.VISIBLE);
-                holder.DiningOut.setVisibility(View.VISIBLE);
-
-            }else if (data.getOrder_taking_status()==2){
-
-                holder.Order_taking_name.setText("备餐中，已用时");
-                holder.Order_taking_name_one.setText("备餐中");
-                holder.DiningOut.setText("出餐完成");
-                holder.DiningOut.setVisibility(View.VISIBLE);
-                if (data.getType()==0&&type==2){//展开还是收起 0、关闭 1、打开
+        switch (data.getOrder_status()){
+            case 0:
+                holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+                holder.tv_cancel_cause.setText("取消原因：用户超时未支付");
+                break;
+            case 1:
+                holder.cancel_cause_layout.setVisibility(View.GONE);
+                switch (data.getOrder_taking_status()){
+                    //门店接单状态:1.待接单2,接单-待出餐3.拒单4.出餐
+                    case 1:
+                        holder.Order_taking_name.setText("已下单");
+                        holder.Order_taking_name_one.setText("已下单");
+                        holder.DiningOut.setText("确认接单");
+                        holder.Refusal.setVisibility(View.VISIBLE);
+                        holder.DiningOut.setVisibility(View.VISIBLE);
+                        break;
+                    case 2:
+                        holder.Order_taking_name.setText("备餐中，已用时");
+                        holder.Order_taking_name_one.setText("备餐中");
+                        holder.DiningOut.setText("出餐完成");
+                        holder.DiningOut.setVisibility(View.VISIBLE);
+                        if (data.getType()==0&&type==2){//展开还是收起 0、关闭 1、打开
 //                holder.close_time_layout.setVisibility(View.VISIBLE);
-                    holder.DiningOutOne.setVisibility(View.VISIBLE);
-                    holder.top_user_info_layout.setVisibility(View.VISIBLE);
-                    holder.layout_all.setVisibility(View.GONE);
-                    holder.order_status_name.setVisibility(View.GONE);
+                            holder.DiningOutOne.setVisibility(View.VISIBLE);
+                            holder.top_user_info_layout.setVisibility(View.VISIBLE);
+                            holder.layout_all.setVisibility(View.GONE);
+                            holder.order_status_name.setVisibility(View.GONE);
+                        }else {
+                            holder.close_time_layout.setVisibility(View.GONE);
+                            holder.DiningOutOne.setVisibility(View.GONE);
+                            holder.top_user_info_layout.setVisibility(View.GONE);
+                            holder.layout_all.setVisibility(View.VISIBLE);
+                        }
+                        break;
+                    default :
+                        holder.DiningOut.setVisibility(View.GONE);
+                        holder.Order_taking_name.setText("已上报出餐完成");
+                        break;
+                }
+                break;
+            case 2://已取消
+                holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+                holder.tv_cancel_cause.setText("取消原因：用户取消订单");
+                break;
+            case 3:
+                holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+                holder.tv_cancel_cause.setText("取消原因：用户退款申请被系统自动通过");
+                break;
+
+        }
+        switch (data.getDelivery_method_id()){
+            //配送方式 3、自提 4、堂食 5、外卖配送 6、配送到柜
+            case 3://自提
+                holder.order_status_name_two.setText("自提");
+
+                if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
+                    holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
+
                 }else {
-                    holder.close_time_layout.setVisibility(View.GONE);
-                    holder.DiningOutOne.setVisibility(View.GONE);
-                    holder.top_user_info_layout.setVisibility(View.GONE);
-                    holder.layout_all.setVisibility(View.VISIBLE);
+                    holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
                 }
-            }else {
-                holder.DiningOut.setVisibility(View.GONE);
-                holder.Order_taking_name.setText("已上报出餐完成");
 
-            }
+                String time=" "+data.getAppointment_hour().substring(data.getAppointment_hour().indexOf("-"))+":00";
 
-        }else if (data.getOrder_status()==2){//已取消
-            holder.cancel_cause_layout.setVisibility(View.VISIBLE);
-            holder.tv_cancel_cause.setText("取消原因：用户取消订单");
+                holder.ziti_layout.setVisibility(View.VISIBLE);
+                holder.cdv_reckon_time.setTimeTextSize(13);
+                holder.cdv_reckon_time.setTimeTextColor(context.getResources().getColor(R.color.main_white));
+                holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
+                holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
+                holder.cdv_reckon_time.setColonTextColor(context.getResources().getColor(R.color.TextOrangeColor));
+                holder.cdv_reckon_time.initEndTime(data.getAppointment_time()+time)
+                        .calcTime()
+                        .startRun(1)
+                        .setCountDownEndListener(new CountDownView.CountDownEndListener() {
+                            @Override
+                            public void onCountDownEnd() {
+                                holder.cdv_reckon_time
+                                        .setTvHourText("00")
+                                        .setTvMinuteText("00")
+                                        .setTvMinuteText("00");
+                            }
+                        });
 
-        }else if (data.getOrder_status()==3){//已退款
-            holder.cancel_cause_layout.setVisibility(View.VISIBLE);
-            holder.tv_cancel_cause.setText("取消原因：用户退款申请被系统自动通过");
-
-        }
-        //配送方式 3、自提 4、堂食 5、外卖配送 6、配送到柜
-        if (data.getDelivery_method_id() == 3) {//自提
-
-            holder.order_status_name_two.setText("自提");
-
-            if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
-                holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
-
-            }else {
-                holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
-            }
-
-            String time=" "+data.getAppointment_hour().substring(data.getAppointment_hour().indexOf("-"))+":00";
-
-            holder.ziti_layout.setVisibility(View.VISIBLE);
-            holder.cdv_reckon_time.setTimeTextSize(13);
-            holder.cdv_reckon_time.setTimeTextColor(context.getResources().getColor(R.color.main_white));
-            holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
-            holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
-            holder.cdv_reckon_time.setColonTextColor(context.getResources().getColor(R.color.TextOrangeColor));
-            holder.cdv_reckon_time.initEndTime(data.getAppointment_time()+time)
-                    .calcTime()
-                    .startRun(1)
-                    .setCountDownEndListener(new CountDownView.CountDownEndListener() {
-                        @Override
-                        public void onCountDownEnd() {
-                            holder.cdv_reckon_time
-                                    .setTvHourText("00")
-                                    .setTvMinuteText("00")
-                                    .setTvMinuteText("00");
-                        }
-                    });
-
-            holder.cdv_reckon_time.setOnTimeEnd(new CountDownView.OnTimeEnd() {
-                @Override
-                public void onTimeEndt() {
-                    holder.ziti_layout.setVisibility(View.GONE);
-                }
-            });
-        }else if (data.getDelivery_method_id()==4){//堂食
-            holder.serviceTime.setVisibility(View.GONE);
-            holder.order_status_name_two.setText("堂食");
-        }else if (data.getDelivery_method_id()==5){//外卖配送
-            holder.serviceTime.setText("立即送达/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"前送达");
-            holder.DeliveryInformationLayout.setVisibility(View.VISIBLE);
-            holder.order_status_name_two.setText("外卖配送");
-        }else if (data.getDelivery_method_id()==6){//配送到柜
-            holder.order_status_name_two.setText("配送到柜");
-            if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
-                holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
-
-            }else {
-                holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
-            }
-        }
-
-
-        if (mList.get(position).getOrder_refund()!=null){
-            holder.RefundList.clear();
-            holder.RefundList.addAll(mList.get(position).getOrder_refund());
-
-            if (holder.shouHouOrderAdapter == null) {
-                holder.shouHouOrderAdapter = new ShouHouOrderAdapter(context, holder.RefundList, position);
-                GridLayoutManager layoutManage = new GridLayoutManager(context, 1);
-                holder.SHRecyclerView.setLayoutManager(layoutManage);
-                holder.SHRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 0, false));
-                holder.SHRecyclerView.setAdapter(holder.shouHouOrderAdapter);
-
-                holder.shouHouOrderAdapter.setOnClickListener(new ShouHouOrderAdapter.OnClickListener() {
+                holder.cdv_reckon_time.setOnTimeEnd(new CountDownView.OnTimeEnd() {
                     @Override
-                    public void onClick(OrderBean.OrderRefundBean lists, int position, int type) {
-
-                        if (mDrawbackClickListener!=null){
-                            mDrawbackClickListener.DrawbackonOnClick(lists,position,type);
-                        }
-
+                    public void onTimeEndt() {
+                        holder.ziti_layout.setVisibility(View.GONE);
                     }
                 });
+                break;
+            case 4://堂食
+                holder.serviceTime.setVisibility(View.GONE);
+                holder.order_status_name_two.setText("堂食");
+                break;
+            case 5://外卖配送
+                holder.serviceTime.setText("立即送达/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"前送达");
+                holder.DeliveryInformationLayout.setVisibility(View.VISIBLE);
+                holder.order_status_name_two.setText("外卖配送");
+                break;
+            case 6://配送到柜
+                holder.order_status_name_two.setText("配送到柜");
+                if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
+                    holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
 
-            } else {
-                holder.shouHouOrderAdapter.notifyDataSetChanged();
-            }
+                }else {
+                    holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
+                }
+                break;
         }
+
+        //0、待支付 1、已支付 2、已取消 3、已退款
+//        if (data.getOrder_status()==0){
+//
+//            holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+//            holder.tv_cancel_cause.setText("取消原因：用户超时未支付");
+//
+//        }else if (data.getOrder_status()==1){//已支付
+//            //门店接单状态:1.待接单2,接单-待出餐3.拒单4.出餐
+//            if (data.getOrder_taking_status()==1){
+//                holder.Order_taking_name.setText("已下单");
+//                holder.Order_taking_name_one.setText("已下单");
+//                holder.DiningOut.setText("确认接单");
+//                holder.Refusal.setVisibility(View.VISIBLE);
+//                holder.DiningOut.setVisibility(View.VISIBLE);
+//
+//            }else if (data.getOrder_taking_status()==2){
+//
+//                holder.Order_taking_name.setText("备餐中，已用时");
+//                holder.Order_taking_name_one.setText("备餐中");
+//                holder.DiningOut.setText("出餐完成");
+//                holder.DiningOut.setVisibility(View.VISIBLE);
+//                if (data.getType()==0&&type==2){//展开还是收起 0、关闭 1、打开
+////                holder.close_time_layout.setVisibility(View.VISIBLE);
+//                    holder.DiningOutOne.setVisibility(View.VISIBLE);
+//                    holder.top_user_info_layout.setVisibility(View.VISIBLE);
+//                    holder.layout_all.setVisibility(View.GONE);
+//                    holder.order_status_name.setVisibility(View.GONE);
+//                }else {
+//                    holder.close_time_layout.setVisibility(View.GONE);
+//                    holder.DiningOutOne.setVisibility(View.GONE);
+//                    holder.top_user_info_layout.setVisibility(View.GONE);
+//                    holder.layout_all.setVisibility(View.VISIBLE);
+//                }
+//            }else {
+//                holder.DiningOut.setVisibility(View.GONE);
+//                holder.Order_taking_name.setText("已上报出餐完成");
+//
+//            }
+//
+//        }else if (data.getOrder_status()==2){//已取消
+//            holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+//            holder.tv_cancel_cause.setText("取消原因：用户取消订单");
+//
+//        }else if (data.getOrder_status()==3){//已退款
+//            holder.cancel_cause_layout.setVisibility(View.VISIBLE);
+//            holder.tv_cancel_cause.setText("取消原因：用户退款申请被系统自动通过");
+//
+//        }
+//        //配送方式 3、自提 4、堂食 5、外卖配送 6、配送到柜
+//        if (data.getDelivery_method_id() == 3) {//自提
+//
+//            holder.order_status_name_two.setText("自提");
+//
+//            if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
+//                holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
+//
+//            }else {
+//                holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
+//            }
+//
+//            String time=" "+data.getAppointment_hour().substring(data.getAppointment_hour().indexOf("-"))+":00";
+//
+//            holder.ziti_layout.setVisibility(View.VISIBLE);
+//            holder.cdv_reckon_time.setTimeTextSize(13);
+//            holder.cdv_reckon_time.setTimeTextColor(context.getResources().getColor(R.color.main_white));
+//            holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
+//            holder.cdv_reckon_time.setTimeBackGroundResource(R.color.TextF2Color);
+//            holder.cdv_reckon_time.setColonTextColor(context.getResources().getColor(R.color.TextOrangeColor));
+//            holder.cdv_reckon_time.initEndTime(data.getAppointment_time()+time)
+//                    .calcTime()
+//                    .startRun(1)
+//                    .setCountDownEndListener(new CountDownView.CountDownEndListener() {
+//                        @Override
+//                        public void onCountDownEnd() {
+//                            holder.cdv_reckon_time
+//                                    .setTvHourText("00")
+//                                    .setTvMinuteText("00")
+//                                    .setTvMinuteText("00");
+//                        }
+//                    });
+//
+//            holder.cdv_reckon_time.setOnTimeEnd(new CountDownView.OnTimeEnd() {
+//                @Override
+//                public void onTimeEndt() {
+//                    holder.ziti_layout.setVisibility(View.GONE);
+//                }
+//            });
+//        }else if (data.getDelivery_method_id()==4){//堂食
+//            holder.serviceTime.setVisibility(View.GONE);
+//            holder.order_status_name_two.setText("堂食");
+//        }else if (data.getDelivery_method_id()==5){//外卖配送
+//            holder.serviceTime.setText("立即送达/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"前送达");
+//            holder.DeliveryInformationLayout.setVisibility(View.VISIBLE);
+//            holder.order_status_name_two.setText("外卖配送");
+//        }else if (data.getDelivery_method_id()==6){//配送到柜
+//            holder.order_status_name_two.setText("配送到柜");
+//            if (isToday(data.getAppointment_time()+" 00:00:00")){//判断是否是今天的订单
+//                holder.serviceTime.setText("预计/今日"+" "+data.getAppointment_hour()+"到店取餐");
+//
+//            }else {
+//                holder.serviceTime.setText("预计/"+data.getAppointment_time()+" "+data.getAppointment_hour()+"到店取餐");
+//            }
+//        }
+        //售后信息
+//        if (mList.get(position).getOrder_refund()!=null){
+//            holder.RefundList.clear();
+//            holder.RefundList.addAll(mList.get(position).getOrder_refund());
+//
+//            if (holder.shouHouOrderAdapter == null) {
+//                holder.shouHouOrderAdapter = new ShouHouOrderAdapter(context, holder.RefundList, position);
+//                GridLayoutManager layoutManage = new GridLayoutManager(context, 1);
+//                holder.SHRecyclerView.setLayoutManager(layoutManage);
+//                holder.SHRecyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 0, false));
+//                holder.SHRecyclerView.setAdapter(holder.shouHouOrderAdapter);
+//
+//                holder.shouHouOrderAdapter.setOnClickListener(new ShouHouOrderAdapter.OnClickListener() {
+//                    @Override
+//                    public void onClick(OrderBean.OrderRefundBean lists, int position, int type) {
+//
+//                        if (mDrawbackClickListener!=null){
+//                            mDrawbackClickListener.DrawbackonOnClick(lists,position,type);
+//                        }
+//
+//                    }
+//                });
+//
+//            } else {
+//                holder.shouHouOrderAdapter.notifyDataSetChanged();
+//            }
+//        }
 
 
     }
@@ -562,7 +680,7 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
         private TextView btCopy;//复制
         private TextView OrderSn;//单号
         private LinearLayout xiala_layout;//订单商品信息
-        private LinearLayout ShouHouLayout;//售后信息
+
         private LinearLayout DeliveryInformationLayout;//配送地址和距离
         private LinearLayout cancel_cause_layout;//取消订单展示
         private TextView tv_cancel_cause;//取消原因
@@ -614,7 +732,7 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
 
             develop=itemView.findViewById(R.id.develop);
             xiala_layout=itemView.findViewById(R.id.xiala_layout);
-            ShouHouLayout=itemView.findViewById(R.id.ShouHouLayout);
+
             PickUpNumber=itemView.findViewById(R.id.PickUpNumber);
             develop_image=itemView.findViewById(R.id.develop_image);
             btCopy=itemView.findViewById(R.id.btCopy);
@@ -623,6 +741,7 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
             view_two=itemView.findViewById(R.id.view_two);
             view_three=itemView.findViewById(R.id.view_three);
             view_four=itemView.findViewById(R.id.view_four);
+
             cdv_count_down=itemView.findViewById(R.id.cdv_count_down);
             cdv_count_down_one=itemView.findViewById(R.id.cdv_count_down_one);
             DiningOut=itemView.findViewById(R.id.DiningOut);
@@ -683,6 +802,7 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
 
 
 
+
             //点击事件放在adapter中使用，也可以写个接口在activity中调用
             //方法一：在adapter中设置点击事件
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -700,6 +820,8 @@ public class OneOrderAdapter extends RecyclerView.Adapter<OneOrderAdapter.myView
 
 
     }
+
+
 
 
     //按钮的监听的回调

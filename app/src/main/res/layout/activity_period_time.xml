@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="com.youwu.shopowner_saas.ui.zaocan.PeriodTimeViewModel" />
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="PeriodTimeViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F7F7F7"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_45dp"
+            android:background="@drawable/bg_white_bottom"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/fanhui_img_30dp"
+                android:layout_height="@dimen/fanhui_img_30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/size_10dp"
+                android:padding="@dimen/size_3dp"
+                android:src="@mipmap/fanhui"
+                binding:onClickCommand="@{viewModel.returnOnClick}"
+                />
+
+            <TextView
+                android:id="@+id/text_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@{viewModel.TopNameField}"
+                android:textColor="@color/md_black_1000"
+                android:textSize="@dimen/size_16dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/dp50"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/radius_white"
+                android:padding="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="配送日期："
+                        android:textColor="@color/main_black"
+                        android:textSize="@dimen/dp15"
+                        android:layout_gravity="center"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@drawable/xian_hui_4dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp"
+                        binding:onClickCommand="@{viewModel.TimeOnClick}"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:text="@{viewModel.TimeField}"
+                            android:textColor="@color/main_black"
+                            android:layout_marginLeft="6dp"
+                            />
+                    </LinearLayout>
+                    <ImageView
+                        android:layout_width="@dimen/dp20"
+                        android:layout_height="@dimen/dp20"
+                        android:src="@mipmap/develop"
+                        android:layout_marginLeft="@dimen/size_5dp"
+                        android:layout_gravity="center"
+                        binding:onClickCommand="@{viewModel.TimeOnClick}"
+                        />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dp26"
+                    android:layout_height="@dimen/dp26"
+                    android:src="@mipmap/sousuo"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    binding:onClickCommand="@{viewModel.ConfirmOnClick}"
+                    android:visibility="gone"
+                    />
+            </LinearLayout>
+
+
+            <com.bin.david.form.core.SmartTable
+                android:id="@+id/periodTable"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp"
+                android:visibility="@{viewModel.null_type!=0?View.VISIBLE:View.GONE}"
+                />
+            <!-- 空视图 -->
+            <LinearLayout
+                android:id="@+id/null_view_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/main_white"
+                android:visibility="@{viewModel.null_type==0?View.VISIBLE:View.GONE}"
+                >
+                <ImageView
+                    android:layout_width="@dimen/size_175dp"
+                    android:layout_height="@dimen/size_175dp"
+                    android:src="@mipmap/null_view"
+                    android:scaleType="center"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dp30"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无数据"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/text_15sp"
+                    android:textColor="@color/main_color"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bottom_text"
+            android:textSize="@dimen/dp12"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+</layout>

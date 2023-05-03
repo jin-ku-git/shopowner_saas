@@ -9,7 +9,9 @@ import com.google.gson.Gson;
 import com.youwu.shopowner_saas.app.AppApplication;
 import com.youwu.shopowner_saas.data.DemoRepository;
 import com.youwu.shopowner_saas.toast.RxToast;
+import com.youwu.shopowner_saas.ui.fragment.bean.OneRowsOrdersBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.OrderBean;
+import com.youwu.shopowner_saas.ui.fragment.bean.OrderCancelBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.RowsMainOrdersBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.UserBean;
 import com.youwu.shopowner_saas.ui.main.sousuo.SubscribeOrderActivity;
@@ -48,6 +50,10 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
     public SingleLiveEvent<Integer> status_order_one=new SingleLiveEvent<>();//状态 1 全部 2、已取消
     public ObservableField<Integer> bth_two=new ObservableField<>();//状态 0 全部 1、待接单 2、待出餐
     public SingleLiveEvent<Integer> status_order=new SingleLiveEvent<>();//状态 0 全部 1、待接单 2、待出餐
+
+
+    public ObservableField<Integer> DidData=new ObservableField<>();//状态 下拉刷新有没有数据
+    public ObservableField<Integer> SHDidData=new ObservableField<>();//状态 下拉刷新有没有数据
 
 
 
@@ -248,19 +254,62 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
 
 
     /**
+     * 获取已取消数量
+     */
+    public void getOrderNum(String appointment_time) {
+        model.GET_ORDER_NUM(appointment_time)
+                .compose(RxUtils.schedulersTransformer()) //线程调度
+                .compose(RxUtils.exceptionTransformer())
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(Disposable disposable) throws Exception {
+//                        showDialog();
+                    }
+                })
+                .subscribe(new DisposableObserver<BaseBean<Object>>() {
+                    @Override
+                    public void onNext(BaseBean<Object> response) {
+                        if (response.isOk()){
+                            String submitJsonData = new Gson().toJson(response.data);
+
+                            OrderCancelBean orderCancelBean= JSON.parseObject(toPrettyFormat(submitJsonData), OrderCancelBean.class);
+                            order_Canceled.set(orderCancelBean.getCancel_order()+"");
+
+
+                        }else {
+                            RxToast.normal(response.getMessage());
+                        }
+                    }
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //关闭对话框
+//                        dismissDialog();
+                        if (throwable instanceof ResponseThrowable) {
+                            ToastUtils.showShort(((ResponseThrowable) throwable).message);
+                        }
+                    }
+                    @Override
+                    public void onComplete() {
+                        //关闭对话框
+//                        dismissDialog();
+                    }
+                });
+    }
+
+    /**
      * 订单列表
      * @param appointment_time  预约配送日期
      * @param type  预约配送日期  订单类型 1全部 2已取消
      * @param order_taking_status  预约配送日期  	门店接单状态 0全部 1待接单 2待出餐
      *
      */
-    public void new_order_list(String appointment_time,int type,int order_taking_status) {
+    public void new_order_list(String appointment_time,int type,int order_taking_status,int page,int limit) {
         int finalOrder_taking_status = order_taking_status;
         if (type==2){
             order_taking_status=0;
         }
 
-        model.NEW_ORDER_LIST(appointment_time,type+"",order_taking_status+"","","","","")
+        model.NEW_ORDER_LIST(appointment_time,type+"",order_taking_status+"","","","","",page+"",limit+"")
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -276,54 +325,58 @@ public class OneViewModel extends BaseViewModel<DemoRepository> {
 
                         if (response.isOk()){
                             String JsonData = new Gson().toJson(response.data);
-                            ArrayList<OrderBean> orderBeans = AppApplication.getObjectList(JsonData, OrderBean.class);
+                            OneRowsOrdersBean OneRowsOrdersBean= JSON.parseObject(toPrettyFormat(JsonData), OneRowsOrdersBean.class);
+                            ArrayList<OrderBean> orderBeans=new ArrayList<>();
+                            for (int i=0;i<OneRowsOrdersBean.getRows().size();i++){
+                                orderBeans.add(OneRowsOrdersBean.getRows().get(i));
+                            }
+//                            ArrayList<OrderBean> orderBeans = AppApplication.getObjectList(JsonData, OrderBean.class);
                             KLog.i("订单列表："+orderBeans.size());
 
 
                             getOrder_list.setValue(orderBeans);
 
-                            order_num.set(getOrder_list.getValue().size()+"");
+                            order_num.set(OneRowsOrdersBean.getTotal()+"");
+
                             KLog.i("order_list："+getOrder_list.getValue().size());
-                            if (getOrder_list.getValue().size()==0){
-                                null_type.set(0);
-                            }else {
-                                null_type.set(1);
-                            }
+
                             int Canceled_num=0;//已取消
                             int in_progress=0;//进行中
 
-                            for (int i=0;i<orderBeans.size();i++){
-                                //必须在待接单或待出餐状态同时支付状态是已支付状态
-                                if ((orderBeans.get(i).getOrder_taking_status()==1||orderBeans.get(i).getOrder_taking_status()==2)&&orderBeans.get(i).getOrder_status()==1){
-                                    in_progress++;
-                                }
-                                if (orderBeans.get(i).getOrder_status()==2){
-                                    Canceled_num++;
-                                }
 
-
-                            }
+//                            for (int i=0;i<orderBeans.size();i++){
+//                                //必须在待接单或待出餐状态同时支付状态是已支付状态
+//                                if ((orderBeans.get(i).getOrder_taking_status()==1||orderBeans.get(i).getOrder_taking_status()==2)&&orderBeans.get(i).getOrder_status()==1){
+//                                    in_progress++;
+//                                }
+//                                if (orderBeans.get(i).getOrder_status()==2){
+//                                    Canceled_num++;
+//                                }
+//
+//
+//                            }
                             order_in_progress.set(in_progress+"");
-                            order_Canceled.set(Canceled_num+"");
+//                            order_Canceled.set(Canceled_num+"");
 
-                            if (finalOrder_taking_status ==0){
-                                int order_wait_count=0;//待接单
-                                int order_mak_count=0;//待接单
-                                for (int i=0;i<orderBeans.size();i++){
-
-                                        if (orderBeans.get(i).getOrder_taking_status()==1&&orderBeans.get(i).getOrder_status()==1){
-                                            order_wait_count++;
-                                        }
-                                        if (orderBeans.get(i).getOrder_taking_status()==2){
-                                            order_mak_count++;
-                                        }
-
-                                        DJD_num.set(order_wait_count);
-                                        DCC_num.set(order_mak_count);
-
-                                }
-                            }
-
+//                            if (finalOrder_taking_status ==0){
+//                                int order_wait_count=0;//待接单
+//                                int order_mak_count=0;//待接单
+//                                for (int i=0;i<orderBeans.size();i++){
+//
+//                                        if (orderBeans.get(i).getOrder_taking_status()==1&&orderBeans.get(i).getOrder_status()==1){
+//                                            order_wait_count++;
+//                                        }
+//                                        if (orderBeans.get(i).getOrder_taking_status()==2){
+//                                            order_mak_count++;
+//                                        }
+//
+//                                        DJD_num.set(order_wait_count);
+//                                        DCC_num.set(order_mak_count);
+//
+//                                }
+//                            }
+                            DJD_num.set(0);
+                            DCC_num.set(0);
 
 
                         }else {

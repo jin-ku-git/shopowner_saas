@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.lxj.xpopup.XPopup;
 import com.lxj.xpopup.util.XPopupUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youwu.shopowner_saas.BR;
 import com.youwu.shopowner_saas.R;
@@ -67,6 +68,10 @@ public class SubscribeOrderActivity extends BaseActivity<ActivityOrderSubscribeB
 
     int num=0;
     int default_option=1;//默认降序
+
+
+    int page=1;//页数
+    int limit=10;//每页多少条
     @Override
     public SubscribeOrderViewModel initViewModel() {
         //使用自定义的ViewModelFactory来创建ViewModel，如果不重写该方法，则默认会调用LoginViewModel(@NonNull Application application)构造方法
@@ -104,16 +109,28 @@ public class SubscribeOrderActivity extends BaseActivity<ActivityOrderSubscribeB
         viewModel.open_close.set("展开");
 
         viewModel.null_type.set(1);
-
+        viewModel.DidData.set(1);
         appointment_time=getTime(getBeginDayOfTomorrow());
         initDatainfo();
 
-
+        initWMRecyclerView();
+        binding.mainSmartrefreshlayout.setEnableAutoLoadMore(false);
         binding.mainSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
                 initDatainfo();
                 refreshLayout.finishRefresh(true);
+            }
+        });
+        //加载
+        binding.mainSmartrefreshlayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                //获取订单列表
+                initDatainfo();
+                refreshLayout.finishLoadMore(true);//加载完成
             }
         });
 
@@ -128,7 +145,7 @@ public class SubscribeOrderActivity extends BaseActivity<ActivityOrderSubscribeB
 
     private void initDatainfo() {
         num++;
-            viewModel.new_order_list(appointment_time);
+            viewModel.new_order_list(appointment_time,page,limit);
     }
 
     /**
@@ -258,10 +275,31 @@ public class SubscribeOrderActivity extends BaseActivity<ActivityOrderSubscribeB
         viewModel.getOrder_list.observe(this, new Observer<ArrayList<OrderBean>>() {
             @Override
             public void onChanged(ArrayList<OrderBean> List) {
-                orderBeans.clear();
-                orderBeans.addAll(List);
 
-                    initWMRecyclerView();
+
+                if (page==1){
+                    orderBeans.clear();
+                    orderBeans.addAll(List);
+                }else {
+                    orderBeans.addAll(List);
+
+                }
+                if (orderBeans.size()==0){
+                    viewModel.null_type.set(0);
+                }else {
+                    viewModel.null_type.set(1);
+                }
+                if (List.size()<limit){
+                    viewModel.DidData.set(0);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(false);//是否启用上拉加载功能
+                }else {
+                    viewModel.DidData.set(1);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(true);//是否启用上拉加载功能
+                }
+
+                sortList(default_option);
+
+                oneOrderAdapter.notifyDataSetChanged();
 
 
             }

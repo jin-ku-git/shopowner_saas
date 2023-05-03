@@ -462,7 +462,7 @@ public interface DemoApiService {
     @FormUrlEncoded
     @POST("order/new_order_list")
     Observable<BaseBean<Object>> NEW_ORDER_LIST(@Field("appointment_time") String appointment_time, @Field("type") String type, @Field("order_taking_status") String order_taking_status, @Field("order_sn") String order_sn,
-                                                @Field("goods_name") String goods_name,@Field("member_phone") String member_phone,@Field("member_address") String member_address);
+                                                @Field("goods_name") String goods_name,@Field("member_phone") String member_phone,@Field("member_address") String member_address,@Field("page") String page,@Field("limit") String limit);
     /**
      *  退款订单列表
      * @param refund_type                       1待退款 2已退款
@@ -516,6 +516,72 @@ public interface DemoApiService {
 
     @POST("setting/new_store_info")
     Observable<BaseBean<Object>> NEW_STORE_INFO();
+
+    /**
+     * 早餐/食材时段配送明细
+     *
+     * @param channel_id                1早餐/2食材
+     * @param store_id                  门店id
+     * @param appointment_time          时间戳（配送时间）
+     * @param community_id              社区id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("report/get_time_order_info")
+    Observable<BaseBean<Object>> GET_TIME_ORDER_INFO(@Field("channel_id") String channel_id,@Field("store_id") String store_id,@Field("appointment_time") String appointment_time,@Field("community_id") String community_id);
+
+    /**
+     * 早餐/食材时段备料明细
+     *
+     * @param channel_id                1早餐/2食材
+     * @param store_id                  门店id
+     * @param appointment_time          时间戳（配送时间）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("report/get_time_goods_num")
+    Observable<BaseBean<Object>> GET_TIME_GOODS_NUM(@Field("channel_id") String channel_id,@Field("store_id") String store_id,@Field("appointment_time") String appointment_time);
+    /**
+     * 早餐/食材时段制作明细
+     *
+     * @param channel_id                1早餐/2食材
+     * @param store_id                  门店id
+     * @param appointment_time          时间戳（配送时间）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("report/get_time_goods_info")
+    Observable<BaseBean<Object>> GET_TIME_GOODS_INFO(@Field("channel_id") String channel_id,@Field("store_id") String store_id,@Field("appointment_time") String appointment_time);
+    /**
+     * 早餐/食材商品总单
+     *
+     * @param channel_id                1早餐/2食材
+     * @param store_id                  门店id
+     * @param appointment_time          时间戳（配送时间）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("report/get_goods_num")
+    Observable<BaseBean<Object>> GET_GOODS_NUM(@Field("channel_id") String channel_id,@Field("store_id") String store_id,@Field("appointment_time") String appointment_time);
+    /**
+     * 获取社区
+     *
+     * @param store_id          门店id
+     * @param name              社区名称（可为空）
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("setting/get_community")
+    Observable<BaseBean<Object>> GET_COMMUNITY(@Field("store_id") String store_id,@Field("name") String name);
+    /**
+     * 获取已取消订单数量
+     *
+     * @param appointment_time          时间
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("order/new_get_order_num")
+    Observable<BaseBean<Object>> GET_ORDER_NUM(@Field("appointment_time") String appointment_time);
 
 
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="53dp"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+
+        <TextView
+            android:id="@+id/goods_name"
+            android:layout_width="@dimen/size_180dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="格子编号"
+            android:textColor="#ff2e2e2e"
+            android:textSize="15sp"
+            />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+
+        <TextView
+            android:id="@+id/total_package_num"
+            android:layout_width="@dimen/size_100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="预约数量"
+
+            android:textColor="#ff2e2e2e"
+            android:textSize="15sp" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#E8E8E8" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E8E8E8" />
+
+
+</LinearLayout>

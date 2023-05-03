@@ -42,10 +42,10 @@ public class OrderBean implements Serializable {
     private String dining_code;
     private String appointment_time;
     private String appointment_hour;
-    private double order_status;          //支付状态   0、待支付 1、已支付 2、已取消 3、已退款
-    private double order_taking_status;  //门店接单状态:1.待接单2,接单-待出餐3.拒单4.出餐
-    private double pickup_status;       //取餐状态 0、待配送 1、已配送 2、已签收 3、已评价
-    private double delivery_method_id;       //配送方式 3、自提 4、堂食 5、外卖配送 6、配送到柜
+    private int order_status;          //支付状态   0、待支付 1、已支付 2、已取消 3、已退款
+    private int order_taking_status;  //门店接单状态:1.待接单2,接单-待出餐3.拒单4.出餐
+    private int pickup_status;       //取餐状态 0、待配送 1、已配送 2、已签收 3、已评价
+    private int delivery_method_id;       //配送方式 3、自提 4、堂食 5、外卖配送 6、配送到柜
 
     private String member_name;
     private String member_phone;
@@ -90,8 +90,17 @@ public class OrderBean implements Serializable {
          */
 
         private String goods_name;
-        private double goods_price;
+        private double goods_price;//商品加个
+        private double goods_pay_price;//实付
         private int goods_quantity;
+
+        public double getGoods_pay_price() {
+            return goods_pay_price;
+        }
+
+        public void setGoods_pay_price(double goods_pay_price) {
+            this.goods_pay_price = goods_pay_price;
+        }
 
         public String getGoods_name() {
             return goods_name;
@@ -287,13 +296,7 @@ public class OrderBean implements Serializable {
         this.channel_name = channel_name;
     }
 
-    public double getDelivery_method_id() {
-        return delivery_method_id;
-    }
 
-    public void setDelivery_method_id(double delivery_method_id) {
-        this.delivery_method_id = delivery_method_id;
-    }
 
     public int getType() {
         return type;
@@ -343,28 +346,36 @@ public class OrderBean implements Serializable {
         this.appointment_hour = appointment_hour;
     }
 
-    public double getOrder_status() {
+    public int getOrder_status() {
         return order_status;
     }
 
-    public void setOrder_status(double order_status) {
+    public void setOrder_status(int order_status) {
         this.order_status = order_status;
     }
 
-    public double getOrder_taking_status() {
+    public int getOrder_taking_status() {
         return order_taking_status;
     }
 
-    public void setOrder_taking_status(double order_taking_status) {
+    public void setOrder_taking_status(int order_taking_status) {
         this.order_taking_status = order_taking_status;
     }
 
-    public double getPickup_status() {
+    public int getPickup_status() {
         return pickup_status;
     }
 
-    public void setPickup_status(double pickup_status) {
+    public void setPickup_status(int pickup_status) {
         this.pickup_status = pickup_status;
+    }
+
+    public int getDelivery_method_id() {
+        return delivery_method_id;
+    }
+
+    public void setDelivery_method_id(int delivery_method_id) {
+        this.delivery_method_id = delivery_method_id;
     }
 
     public String getMember_name() {

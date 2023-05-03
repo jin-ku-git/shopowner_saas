@@ -83,6 +83,10 @@
         <activity android:name="com.youwu.shopowner_saas.ui.set_up.StoreCodeActivity" />
         <activity android:name="com.youwu.shopowner_saas.ui.set_up.OrderSetUpActivity" />
         <activity android:name="com.youwu.shopowner_saas.ui.set_up.StoreStatusActivity" />
+        <activity android:name="com.youwu.shopowner_saas.ui.zaocan.DeliveryDetailsActivity" />
+        <activity android:name="com.youwu.shopowner_saas.ui.zaocan.PeriodTimeActivity" />
+        <activity android:name="com.youwu.shopowner_saas.ui.zaocan.GoodsTotalActivity" />
+        <activity android:name="com.youwu.shopowner_saas.ui.zaocan.PreparationTimeActivity" />
 
         <service android:name="org.eclipse.paho.android.service.MqttService" /> <!-- //自带服务 -->
         <service

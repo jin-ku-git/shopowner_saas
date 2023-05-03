@@ -1,14 +1,18 @@
 package com.youwu.shopowner_saas.ui.main.sousuo;
 
+import static com.youwu.shopowner_saas.app.AppApplication.toPrettyFormat;
+
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.youwu.shopowner_saas.app.AppApplication;
 import com.youwu.shopowner_saas.data.DemoRepository;
 import com.youwu.shopowner_saas.toast.RxToast;
+import com.youwu.shopowner_saas.ui.fragment.bean.OneRowsOrdersBean;
 import com.youwu.shopowner_saas.ui.fragment.bean.OrderBean;
 
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ public class SubscribeOrderViewModel extends BaseViewModel<DemoRepository> {
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
 
     public ObservableField<Integer> null_type=new ObservableField<>();
-
+    public ObservableField<Integer> DidData=new ObservableField<>();//状态 下拉刷新有没有数据
     public SubscribeOrderViewModel(@NonNull Application application, DemoRepository repository) {
         super(application,repository);
     }
@@ -87,9 +91,9 @@ public class SubscribeOrderViewModel extends BaseViewModel<DemoRepository> {
      * @param appointment_time       预约配送日期
      *
      */
-    public void new_order_list(String appointment_time) {
+    public void new_order_list(String appointment_time,int page,int limit) {
 
-        model.NEW_ORDER_LIST(appointment_time,"0","0","","","","")
+        model.NEW_ORDER_LIST(appointment_time,"0","0","","","","",page+"",limit+"")
                 .compose(RxUtils.schedulersTransformer()) //线程调度
                 .compose(RxUtils.exceptionTransformer())
                 .doOnSubscribe(new Consumer<Disposable>() {
@@ -105,19 +109,20 @@ public class SubscribeOrderViewModel extends BaseViewModel<DemoRepository> {
 
                         if (response.isOk()){
                             String JsonData = new Gson().toJson(response.data);
-                            ArrayList<OrderBean> orderBeans = AppApplication.getObjectList(JsonData, OrderBean.class);
-                            KLog.i("订单列表："+orderBeans.size());
 
+
+
+                            OneRowsOrdersBean OneRowsOrdersBean= JSON.parseObject(toPrettyFormat(JsonData), OneRowsOrdersBean.class);
+                            ArrayList<OrderBean> orderBeans=new ArrayList<>();
+                            for (int i=0;i<OneRowsOrdersBean.getRows().size();i++){
+                                orderBeans.add(OneRowsOrdersBean.getRows().get(i));
+                            }
+                            KLog.i("订单列表："+orderBeans.size());
 
                             getOrder_list.setValue(orderBeans);
 
-                            order_num.set(getOrder_list.getValue().size()+"");
+                            order_num.set(OneRowsOrdersBean.getTotal()+"");
 
-                            if (getOrder_list.getValue().size()==0){
-                                null_type.set(0);
-                            }else {
-                                null_type.set(1);
-                            }
 
                         }else {
                             RxToast.normal(response.getMessage());

@@ -18,6 +18,7 @@ import me.goldze.mvvmhabit.binding.command.BindingCommand;
 import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 import me.goldze.mvvmhabit.http.BaseBean;
 import me.goldze.mvvmhabit.http.ResponseThrowable;
+import me.goldze.mvvmhabit.utils.KLog;
 import me.goldze.mvvmhabit.utils.RxUtils;
 import me.goldze.mvvmhabit.utils.ToastUtils;
 
@@ -97,6 +98,7 @@ public class ModifyPasswordViewModel extends BaseViewModel<DemoRepository> {
 
                             RxToast.normal("修改成功");
                             IntegerEvent.setValue(3);
+                            KLog.a();
 
                         }else {
                             RxToast.normal(response.getMessage());

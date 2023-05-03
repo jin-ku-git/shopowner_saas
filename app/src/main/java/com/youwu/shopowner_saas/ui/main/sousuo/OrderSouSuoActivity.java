@@ -77,7 +77,7 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
     int num=0;
 
     int page=1;
-    int limit=15;
+    int limit=10;
 
     int default_option=1;//默认降序 1、降序  2、升序
     @Override
@@ -119,7 +119,18 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
         mContext=this;
         appointment_time=getTime(getDayBegin());
         viewModel.null_type.set(0);
+        viewModel.DidData.set(1);
         initSpinner();
+
+
+        if (type==1){
+            initWMRecyclerView();
+        }else {
+            initASRecyclerView();
+        }
+
+
+        binding.mainSmartrefreshlayout.setEnableAutoLoadMore(false);
 
         binding.mainSmartrefreshlayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -152,7 +163,7 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
         num++;
 
         if (type==1){
-            viewModel.new_order_list(appointment_time,1,0,select_type);
+            viewModel.new_order_list(appointment_time,1,0,select_type,page,limit);
         }else {
             viewModel.new_refund_order_list(select_type,page,limit);
         }
@@ -219,7 +230,7 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
     }
 
     /**
-     * 小程序订单
+     * 小程序订单列表
      */
     private void initWMRecyclerView() {
 
@@ -276,22 +287,7 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
                         initDatainfo();
                         break;
                     case 2://排序
-                        new XPopup.Builder(mContext)
-//                        .isCenterHorizontal(true)
-                                .isDestroyOnDismiss(true) //对于只使用一次的弹窗，推荐设置这个
-                                .atView(binding.bthSort)
-                                .hasShadowBg(false) // 去掉半透明背景
-//                        .offsetX(XPopupUtils.dp2px(getContext(), 20))
-                                .offsetY(XPopupUtils.dp2px(mContext, 6))
-                                .asCustom(new CustomBubbleAttachPopup(mContext)
-//                                .setArrowOffset(-XPopupUtils.dp2px(getContext(), 40))  //气泡箭头偏移
-                                                .setBubbleBgColor(getResources().getColor(R.color.main_white))  //气泡背景
-                                                .setArrowWidth(XPopupUtils.dp2px(mContext, 5))
-                                                .setArrowHeight(XPopupUtils.dp2px(mContext, 6))
-//                                .setBubbleRadius(100)
-                                                .setArrowRadius(XPopupUtils.dp2px(mContext, 3))
-                                )
-                                .show();
+
 
                         CustomBubbleAttachPopup popup= (CustomBubbleAttachPopup) new XPopup.Builder(mContext)
 
@@ -331,11 +327,33 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
         viewModel.getOrder_list.observe(this, new Observer<ArrayList<OrderBean>>() {
             @Override
             public void onChanged(ArrayList<OrderBean> List) {
-                orderBeans.clear();
 
-                orderBeans.addAll(List);
+                if (page==1){
+                    orderBeans.clear();
+                    orderBeans.addAll(List);
+                }else {
+                    orderBeans.addAll(List);
 
-                initWMRecyclerView();
+                }
+                if (orderBeans.size()==0){
+                    viewModel.null_type.set(0);
+                }else {
+                    viewModel.null_type.set(1);
+                }
+
+                if (List.size()<limit){
+                    viewModel.DidData.set(0);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(false);//是否启用上拉加载功能
+                }else {
+                    viewModel.DidData.set(1);
+                    binding.mainSmartrefreshlayout.setEnableLoadMore(true);//是否启用上拉加载功能
+                }
+
+
+
+                sortList(default_option);
+
+                oneOrderAdapter.notifyDataSetChanged();
 
             }
         });
@@ -355,7 +373,8 @@ public class OrderSouSuoActivity extends BaseActivity<ActivityOrderSousuoBinding
                 }else {
                     viewModel.null_type.set(1);
                 }
-                initASRecyclerView();
+                oneOrderAdapter.notifyDataSetChanged();
+
             }
         });
 

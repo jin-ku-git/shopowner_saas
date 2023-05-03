@@ -3,6 +3,7 @@ package com.youwu.shopowner_saas.ui.set_up;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.ObservableField;
 
 import com.youwu.shopowner_saas.data.DemoRepository;
 
@@ -18,6 +19,7 @@ import me.goldze.mvvmhabit.bus.event.SingleLiveEvent;
 public class StoreStatusViewModel extends BaseViewModel<DemoRepository> {
 
     public SingleLiveEvent<Integer> IntegerEvent = new SingleLiveEvent<>();
+    public ObservableField<Boolean> TypeEvent = new ObservableField<>();
 
 
     public StoreStatusViewModel(@NonNull Application application, DemoRepository repository) {
@@ -33,7 +35,14 @@ public class StoreStatusViewModel extends BaseViewModel<DemoRepository> {
         }
     });
 
-
+    //营业开关的点击事件
+    public BindingCommand SwitchOnClick = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            IntegerEvent.setValue(1);
+            TypeEvent.set(!TypeEvent.get());
+        }
+    });
 
 
     @Override

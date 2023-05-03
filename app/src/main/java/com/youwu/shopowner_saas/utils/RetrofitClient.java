@@ -47,8 +47,8 @@ public class RetrofitClient {
     private static final int CACHE_TIMEOUT = 10 * 1024 * 1024;
     //服务端根路径
 
-    public static String baseUrl = "https://saas-test-api.youwuu.com/app/";//测试 20022-12-16
-//    public static String baseUrl = "https://saasapi.youwuu.com/app/";//正式 20023-02-2
+//    public static String baseUrl = "https://saas-test-api.youwuu.com/app/";//测试 20022-12-16
+    public static String baseUrl = "https://saasapi.youwuu.com/app/";//正式 20023-02-2
 
     private int type=0;
 
@@ -100,7 +100,7 @@ public class RetrofitClient {
 //                .cache(cache)
                 .addInterceptor(new BaseInterceptor(headers))
                 .addInterceptor(new CacheInterceptor(mContext))
-                .addInterceptor(new MonitorInterceptor(mContext))//查看测试接口
+//                .addInterceptor(new MonitorInterceptor(mContext))//查看测试接口
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {

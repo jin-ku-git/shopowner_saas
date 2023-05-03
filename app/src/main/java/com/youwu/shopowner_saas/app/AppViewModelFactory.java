@@ -64,6 +64,9 @@ import com.youwu.shopowner_saas.ui.set_up.SettingsViewModel;
 import com.youwu.shopowner_saas.ui.set_up.StoreCodeViewModel;
 import com.youwu.shopowner_saas.ui.set_up.StoreSetUpViewModel;
 import com.youwu.shopowner_saas.ui.set_up.StoreStatusViewModel;
+import com.youwu.shopowner_saas.ui.zaocan.DeliveryDetailsViewModel;
+import com.youwu.shopowner_saas.ui.zaocan.GoodsTotalViewModel;
+import com.youwu.shopowner_saas.ui.zaocan.PeriodTimeViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -223,6 +226,12 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
             return (T) new StoreStatusViewModel(mApplication, mRepository);
         }else if (modelClass.isAssignableFrom(MoveAboutFragmentViewModel.class)) {//活动页面
             return (T) new MoveAboutFragmentViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(DeliveryDetailsViewModel.class)) {//早餐/晚餐配送明细页面
+            return (T) new DeliveryDetailsViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(PeriodTimeViewModel.class)) {//早餐/晚餐时段制作明细页面
+            return (T) new PeriodTimeViewModel(mApplication, mRepository);
+        }else if (modelClass.isAssignableFrom(GoodsTotalViewModel.class)) {//早餐/晚餐商品总单页面
+            return (T) new GoodsTotalViewModel(mApplication, mRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
